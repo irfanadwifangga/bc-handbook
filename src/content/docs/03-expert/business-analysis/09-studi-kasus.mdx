@@ -1,0 +1,178 @@
+---
+title: "3A.9 Studi kasus BRD, gap-fit dan UAT"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 9
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Gunakan satu paket contoh yang menautkan kebutuhan, keputusan desain dan test script tanpa mengarang hasil praktik.
+
+## Konsep singkat
+
+### BRD ringkas — draft simulasi
+
+Perusahaan dagang demo lima user (Buyer, Manager, Warehouse, Finance, Auditor) ingin mengganti pencatatan Purchase-to-Pay berbasis spreadsheet. Masalah yang diasumsikan: bukti approval tersebar, penerimaan parsial lambat diperbarui, dan pelunasan sulit ditelusuri. Temuan ini perlu dikonfirmasi melalui observasi E1.
+
+Tujuan pilot: proses terkontrol dari PO sampai application, kewajiban Department pada akun uji, dan akses auditor yang terbatas. Ukuran usulan: seluruh PO di atas batas demo melewati approval; kuantitas receipt/invoice dan saldo payment dapat direkonsiliasi. Baseline serta target waktu kerja masih perlu disetujui owner.
+
+Scope: master vendor, PO, receipt parsial, invoice, payment/application, dimension dan report. Di luar scope: integrasi bank nyata, migrasi produksi, deployment extension serta auto-notification. Gunakan CRONUS sandbox, LCY dan setup pajak demo yang ditinjau pembimbing. Risiko: permission, setup pajak/dimension, kesiapan data dan app terpasang. Semua keputusan bisnis/sign-off masih terbuka.
+
+### Process map simulasi
+
+As-is: Buyer mencatat permintaan → Manager menilai lewat pesan → Buyer memesan → Warehouse mencatat terima → Finance menagih dan mencatat bayar.
+
+To-be usulan: PO draft → request approval → keputusan. Cabang **Ya** → Release → receipt → invoice → payment/apply. Cabang **Tidak** → revisi draft → request ulang. Persetujuan tidak menggantikan pengecekan quantity/biaya oleh Warehouse/Finance.
+
+| Role | Input | Aktivitas | Output / handoff |
+| --- | --- | --- | --- |
+| Buyer | Permintaan tervalidasi | Buat PO dan ajukan | PO → Manager |
+| Manager | PO di atas batas demo | Approve atau reject | Keputusan → Buyer |
+| Warehouse | PO yang boleh diproses | Terima quantity aktual | Receipt → Finance |
+| Finance | Receipt dan invoice vendor | Invoice, payment, apply | Ledger/report → Auditor |
+| Auditor | Bukti dokumen/entry | Review read-only | Temuan → process owner |
+
+### Matriks sepuluh kebutuhan
+
+**Seluruh status adalah hipotesis, belum diverifikasi pada tenant.** Tanda tanya bukan keputusan final. Effort S/M/L hanya ukuran relatif untuk diskusi; bukan estimasi durasi/biaya. Owner bisnis harus menyetujui batas solusi dan bukti yang diperlukan.
+
+| ID | Kebutuhan | Modul | Status usulan | Fitur / halaman BC kandidat | Catatan / solusi | Prioritas | Effort |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R01 | Vendor demo memiliki ID unik dan data wajib konsisten | Purchasing | Fit? Config | Vendor Card/template | Review field, seri nomor dan duplikasi | High | S |
+| R02 | PO di atas 1.000 LCY demo memerlukan approval sebelum Release | Purchasing | Gap-Config? | Workflow/Approval User Setup | Uji requester, approver, threshold dan reject | High | M |
+| R03 | Gudang dapat menerima sebagian quantity PO | Inventory | Fit? | PO/Posted Purchase Receipt | Uji 5 dipesan, 2 diterima | High | S |
+| R04 | Invoice mengikuti quantity barang yang sudah diterima | Purchasing | Fit? | Qty. to Receive/Invoice | Uji invoice parsial dari PO yang sama | High | M |
+| R05 | Pembayaran vendor dicocokkan ke invoice yang benar | Finance | Fit? Config | Payment Journal/Apply Entries | Periksa Remaining Amount dan Open | High | S |
+| R06 | Department wajib pada transaksi akun latihan | Finance | Gap-Config? | Default Dimensions | Uji kosong ditolak dan value valid tersimpan | High | M |
+| R07 | Saldo aged payable cocok dengan ledger pada filter sama | Finance | Fit? | Report/ledger | Tinjau ending date, currency dan application | High | M |
+| R08 | Auditor membaca ledger tetapi tidak mengubah/posting | Security | Gap-Config? | Permission Sets/effective permissions | Uji seluruh assignment dan company scope | High | M |
+| R09 | PO tertunda ditinjau harian; owner awal meminta notifikasi otomatis | Purchasing | Workaround? | List/filter dan review manual | SOP harian diusulkan; otomatisasi belum dipenuhi | Medium | S |
+| R10 | Kode alasan pembelian terstruktur wajib sebelum request approval | Purchasing | Gap-Custom? | Perlu inspeksi field/app terpasang | FS-001 usulan; evaluasi standar/config/app/custom dahulu | Medium | L |
+
+### FS-001 — usulan untuk R10
+
+Tujuan: requester memilih kode alasan dari daftar yang dikelola pihak berizin sebelum mengirim approval. Periksa dahulu apakah standar atau extension terpasang sudah memenuhi kebutuhan. Jika belum, tim mengevaluasi konfigurasi, app atau custom extension; implementasinya tidak dikerjakan pada fase ini.
+
+Acceptance usulan: **Given** requester membuat PO tanpa kode alasan, **When** Send Approval Request, **Then** pengajuan ditolak dengan pesan yang membantu dan tidak membuat approval baru. Dengan kode aktif valid, request diproses sesuai workflow. Kode tidak aktif tidak boleh dipilih untuk request baru. Tentukan kebijakan pengubahan sesudah approval, akses master, audit dan penanganan dokumen lama sebelum desain dianggap siap. Field/object/event teknis belum ditentukan dan tidak diklaim tersedia.
+
+
+## Langkah di BC
+
+1. Salin draft ini ke dokumen latihan, tetapkan versi, owner dan batas proses; konfirmasi asumsi dengan wawancara/observasi simulasi.
+2. Jalankan E1 untuk meninjau as-is/to-be dan tiga pain point, lalu E2 untuk memverifikasi klasifikasi kebutuhan.
+3. Review FS-001 hanya sebagai usulan; R09/R10 tetap membutuhkan keputusan dan/atau bukti solusi tambahan.
+4. Siapkan baseline sandbox dan user uji, kemudian jalankan lima script UAT di bawah melalui E3.
+5. Isi actual result serta evidence setelah eksekusi, lakukan retest bila perlu, lalu minta keputusan owner. Lima script ini belum membuktikan seluruh sepuluh kebutuhan diterima.
+
+### UAT-01 — Approval PO
+
+**Trace:** R02. **Prasyarat/actor:** Buyer dan Manager; workflow/limit demo telah disiapkan; PO 1.500 LCY.
+
+1. Buyer mengajukan PO di atas batas 1.000 LCY.
+2. Buyer mencoba Release/Post saat pending.
+3. Manager menolak, Buyer merevisi dan mengajukan ulang.
+4. Manager menyetujui; Buyer melanjutkan sesuai hak.
+
+**Expected result:** Pending dibatasi; rejection/approval dapat ditelusuri; proses dapat dilanjutkan setelah persetujuan yang valid.
+
+**Actual result:** Belum diisi. **Status:** Belum dijalankan. **Executor/waktu/evidence/defect:** diisi saat praktik.
+
+### UAT-02 — Receipt dan invoice parsial
+
+**Trace:** R03, R04. **Prasyarat/actor:** Warehouse/Finance; PO Inventory lima unit, location sederhana, biaya demo valid.
+
+1. Catat stok/quantity awal.
+2. Terima dua dari lima unit dari PO tersebut.
+3. Invoice hanya dua unit yang diterima dari PO yang sama.
+4. Telusuri receipt, invoice, remaining quantity dan Item Ledger.
+
+**Expected result:** Barang masuk/invoice masing-masing dua unit; sisa tiga unit belum diterima/ditagih; tidak ada transaksi ganda.
+
+**Actual result:** Belum diisi. **Status:** Belum dijalankan. **Executor/waktu/evidence/defect:** diisi saat praktik.
+
+### UAT-03 — Payment dan laporan
+
+**Trace:** R05, R07. **Prasyarat/actor:** Finance; invoice UAT-02, bank demo dan filter tanggal/currency konsisten.
+
+1. Catat nilai invoice termasuk pajak demo.
+2. Buat payment dengan balancing bank demo dan apply ke invoice itu.
+3. Post setelah review lalu periksa Remaining Amount/Open.
+4. Jalankan aged payable pada ending date yang sesuai dan cocokkan ke ledger.
+
+**Expected result:** Invoice lunas penuh memiliki sisa nol/status tertutup; angka report sesuai scope dan waktu application.
+
+**Actual result:** Belum diisi. **Status:** Belum dijalankan. **Executor/waktu/evidence/defect:** diisi saat praktik.
+
+### UAT-04 — Dimension wajib
+
+**Trace:** R06. **Prasyarat/actor:** Finance; aturan Department pada akun latihan sudah direview.
+
+1. Buat jurnal/demo draft tanpa Department.
+2. Preview dan catat pesan validasi.
+3. Isi Department valid, preview kembali dan Post setelah review.
+4. Periksa dimension pada entry serta hasil filter.
+
+**Expected result:** Kasus kosong ditolak; value valid tersimpan dan dapat direkonsiliasi pada ledger.
+
+**Actual result:** Belum diisi. **Status:** Belum dijalankan. **Executor/waktu/evidence/defect:** diisi saat praktik.
+
+### UAT-05 — Data vendor dan akses auditor
+
+**Trace:** R01, R08. **Prasyarat/actor:** Admin konfigurasi dan Auditor berbeda sesi; vendor demo dan effective permissions ditinjau.
+
+1. Admin memeriksa ID vendor, field wajib dan template hasil latihan.
+2. Auditor membuka vendor/ledger dalam scope baca yang disetujui.
+3. Auditor mencoba mengubah data serta posting pada transaksi demo.
+4. Catat hasil baca, pesan penolakan, user dan company scope.
+
+**Expected result:** Record vendor valid; auditor dapat membaca data yang diizinkan, sedangkan perubahan/posting ditolak.
+
+**Actual result:** Belum diisi. **Status:** Belum dijalankan. **Executor/waktu/evidence/defect:** diisi saat praktik.
+
+### Catatan coverage dan sign-off
+
+R09 (workaround review harian) dan R10 (kode alasan terstruktur) belum memiliki bukti penerimaan. Tambahkan test/PoC sebelum menutup keduanya. Defect register mencatat ID, test/requirement, expected/actual, severity, owner, evidence, status dan retest. Sign-off tetap **Belum diminta**; tidak ada persetujuan bisnis yang dibuat oleh situs.
+
+## Cheat box
+
+<CheatBox>
+
+- BRD adalah draft simulasi.
+- R01–R10 berstatus hipotesis.
+- FS-001 belum diimplementasikan.
+- UAT-01–05 belum dijalankan.
+- R09/R10 masih terbuka.
+- Sign-off memerlukan keputusan owner.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyalin status Fit atau Pass tanpa bukti, menyebut asumsi sebagai hasil wawancara nyata, atau menutup R09/R10 hanya karena lima test case selesai.
+:::
+
+## Latihan terkait
+
+[E1 — Process mapping](/latihan/expert/e1-process-mapping/) · [E2 — Gap-fit analysis](/latihan/expert/e2-gap-fit/) · [E3 — UAT planning dan execution](/latihan/expert/e3-uat/).
+
+
+## Sumber resmi
+
+- [Requirements](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-define-requirements).
+- [Fit-to-standard dan fit-gap](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-fit-to-standard-fit-gap-analysis).
+- [Functional/technical design documents](https://learn.microsoft.com/en-us/dynamics365/guidance/patterns/create-functional-technical-design-document).
+- [Execution dan defect tracking](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/testing-strategy-run-tests).
+- [BC purchasing](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-record-purchases).
+- [BC purchase approval walkthrough](https://learn.microsoft.com/en-us/dynamics365/business-central/walkthrough-setting-up-and-using-a-purchase-approval-workflow).
+- [BC dimensions](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-dimensions).
+- [BC permissions](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-define-granular-permissions).
+- [BC vendor application](https://learn.microsoft.com/en-us/dynamics365/business-central/payables-how-apply-purchase-transactions-manually).
+- [BC report inventory](https://learn.microsoft.com/en-us/dynamics365/business-central/reports-available-reports).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

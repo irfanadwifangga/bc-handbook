@@ -1,0 +1,60 @@
+---
+title: "3A.3 Process mapping as-is dan to-be"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Gambarkan alur, keputusan dan perpindahan tanggung jawab secara konsisten.
+
+## Konsep singkat
+
+As-is mencatat proses yang diamati; to-be mengusulkan perubahan untuk tujuan bisnis. Swimlane memisahkan role pemilik langkah. Setiap keputusan memerlukan kondisi serta cabang, dan setiap handoff memerlukan input/output. Contoh teks di bawah adalah model simulasi, bukan pengamatan proses perusahaan nyata.
+
+## Langkah di BC
+
+1. Tetapkan batas Purchase-to-Pay: permintaan pembelian sampai invoice vendor dilunasi. Definisikan role Buyer, Manager, Warehouse dan Finance.
+2. Petakan as-is: Buyer mencatat permintaan di spreadsheet → Manager menilai lewat pesan → Buyer memesan → Warehouse mengirim catatan penerimaan → Finance mencatat tagihan dan pembayaran.
+3. Catat tiga pain point dengan bukti yang perlu dikumpulkan: approval sulit ditelusuri, penerimaan parsial tidak sinkron, dan invoice/payment tidak mudah dicocokkan.
+4. Usulkan to-be: PO draft → keputusan approval → receipt → invoice → payment/application. Untuk cabang ditolak: revisi draft lalu kirim ulang; jangan melewatkan approval.
+5. Buat swimlane berupa tabel role, input, aktivitas, output dan pengecualian. Hubungkan perubahan dengan requirement ID dan fitur kandidat BC.
+6. Walkthrough skenario parsial, reject dan payment belum diaplikasikan. Bandingkan dengan alur dokumen serta pilot Sales interaktif sebagai contoh pemisahan barang, tagihan dan uang.
+
+## Cheat box
+
+<CheatBox>
+
+- As-is berdasarkan observasi.
+- To-be adalah usulan.
+- Tandai awal dan akhir.
+- Setiap keputusan punya cabang.
+- Swimlane menunjukkan owner.
+- Hubungkan perubahan ke kebutuhan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menggambar semua langkah pada satu role, tidak menunjukkan cabang penolakan, atau memakai gambar to-be sebagai bukti konfigurasi BC sudah berhasil.
+:::
+
+## Latihan terkait
+
+[E1 — Process mapping](/latihan/expert/e1-process-mapping/).
+
+Lihat [cheatsheet process mapping](/cheatsheets/16-process-mapping/) dan [animasi alur Sales](/01-basic/alur-sales/) sebagai contoh pemisahan tahap.
+
+## Sumber resmi
+
+- [Process mapping](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-opportunity-optimization).
+- [BC purchasing](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-record-purchases).
+- [BC purchase approval walkthrough](https://learn.microsoft.com/en-us/dynamics365/business-central/walkthrough-setting-up-and-using-a-purchase-approval-workflow).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

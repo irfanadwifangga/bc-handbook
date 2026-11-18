@@ -1,0 +1,58 @@
+---
+title: "3A.2 Requirements gathering dan BRD"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Hasilkan kebutuhan terukur dari wawancara, workshop dan observasi.
+
+## Konsep singkat
+
+Wawancara menggali alasan; observasi menunjukkan pekerjaan nyata; workshop menyelaraskan perbedaan antarrole. Bedakan business requirement, aturan bisnis, kebutuhan data, kontrol akses dan kebutuhan nonfungsional. “Sistem harus mudah” belum dapat diuji tanpa persona, tugas, kondisi dan ukuran. BRD merangkum tujuan/scope; FRD merinci perilaku fungsional yang disepakati.
+
+## Langkah di BC
+
+1. Siapkan pertanyaan untuk Buyer, Warehouse, Finance, Manager dan Auditor demo: apa inputnya, siapa memutuskan, apa pengecualian, dan bukti selesai?
+2. Amati satu PO demo dari permintaan sampai pembayaran. Catat nomor dokumen fiktif dan handoff; jangan membawa data pihak nyata ke repo.
+3. Tulis kebutuhan dengan ID, sumber, owner, prioritas, alasan, acceptance dan asumsi. Misalnya R02: PO di atas batas demo memerlukan approval sebelum Release.
+4. Buat BRD ringkas: latar belakang, tujuan terukur, in/out of scope, stakeholder, proses, kebutuhan data/kontrol, risiko dan keputusan terbuka.
+5. Lakukan walkthrough kembali dengan process owner. Catat konflik dan pertanyaan belum terjawab sebagai open issue, bukan menebak jawabannya.
+6. Tetapkan baseline versi dan alur change request. Perubahan kebutuhan setelah baseline perlu analisis dampak ke desain, tes dan training.
+
+## Cheat box
+
+<CheatBox>
+
+- Tanyakan alasan bisnis.
+- Catat proses pengecualian.
+- Kebutuhan harus dapat diuji.
+- Owner berbeda dari pencatat.
+- Pisahkan scope dan asumsi.
+- Versikan keputusan dan perubahan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menulis nama solusi sebagai kebutuhan tanpa alasan, mengabaikan pengecualian/akses, atau menyebut jawaban wawancara simulasi sebagai fakta perusahaan.
+:::
+
+## Latihan terkait
+
+[E2 — Gap-fit analysis](/latihan/expert/e2-gap-fit/).
+
+
+## Sumber resmi
+
+- [Requirements](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-define-requirements).
+- [Functional/technical design documents](https://learn.microsoft.com/en-us/dynamics365/guidance/patterns/create-functional-technical-design-document).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

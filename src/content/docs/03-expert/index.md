@@ -7,9 +7,9 @@ sidebar:
 level: Expert
 ---
 
-Track prioritas belum tersedia:
+Track prioritas:
 
-- Business Analysis — Fase 5.6.
-- Integrasi & API — Fase 5.7.
+- [Business Analysis](./business-analysis/) — sembilan materi, studi kasus BRD/gap-fit/UAT, serta latihan E1–E3 tersedia.
+- Integrasi & API — belum tersedia, dilanjutkan pada Fase 5.7.
 
-Track AL Developer dan Admin/DevOps bersifat opsional.
+Jalur AL Developer menjadi prioritas tinggi dalam kurikulum terbaru; materi AL-1–AL-3 belum tersedia dan direncanakan pada Fase 5.7a–5.7c. Admin/DevOps tetap opsional.

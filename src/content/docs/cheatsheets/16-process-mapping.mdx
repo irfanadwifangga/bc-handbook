@@ -1,0 +1,38 @@
+---
+title: "Process Mapping Cheatsheet"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 16
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+**As-is** = proses yang diamati. **To-be** = perubahan usulan. Setiap peta memuat batas awal/akhir, role, input/output, keputusan dan pengecualian.
+
+| Simbol / elemen | Makna |
+| --- | --- |
+| Awal / akhir | Batas proses |
+| Proses | Aktivitas dengan kata kerja |
+| Keputusan | Pertanyaan; cabang Ya/Tidak atau kondisi jelas |
+| Panah | Arah aliran/handoff |
+| Swimlane | Role pemilik aktivitas |
+
+**Template:** proses/version/owner → batas → langkah per role → keputusan/cabang → input/output → pain point → perubahan to-be → requirement → bukti review.
+
+**Contoh Order-to-Cash demo:** Sales membuat Quote → Order → Warehouse mengirim → Finance membuat Invoice → mencatat Payment → Apply. Quote opsional; Ship/Invoice dapat digabung. Barang keluar, tagihan dan uang adalah kejadian berbeda.
+
+**Cabang approval contoh:** Request → Review → keputusan. Ya → proses lanjut; Tidak → revisi → review ulang. Jangan menggambar jalur revisi yang melewatkan approval. Kontrol approval harus diuji sesuai workflow.
+
+**Swimlane ringkas:** Sales: pesanan → Warehouse: shipment → Finance: invoice/payment/application. Untuk tiap handoff, catat dokumen, quantity/value dan pihak penerima. Buat tabel as-is → pain point → to-be → alasan perubahan; jangan menghapus exception dari peta.
+
+Lihat [alur Sales interaktif](/01-basic/alur-sales/) dan latihan [E1](/latihan/expert/e1-process-mapping/). Peta contoh bukan bukti transaksi/praktik sudah dilakukan.
+
+## Sumber resmi
+
+- [Process mapping](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-opportunity-optimization).
+- [Posting sales](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-sales).
+
+</div>

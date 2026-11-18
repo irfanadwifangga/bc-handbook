@@ -1,0 +1,59 @@
+---
+title: "3A.5 Functional specification"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Tulis perilaku yang cukup jelas untuk direview konsultan, developer dan tester.
+
+## Konsep singkat
+
+Spesifikasi menghubungkan kebutuhan dengan perilaku yang diinginkan: actor, trigger, input, validasi, hasil, exception, permission, logging dan acceptance. Detail teknis mendukung keputusan fungsional; template ini tidak mengharuskan BA menentukan table ID/event yang belum diverifikasi. Mock-up sederhana hanya dipakai bila membantu keputusan user.
+
+## Langkah di BC
+
+1. Pilih requirement yang telah direview, misalnya R10 tentang kode alasan pembelian terstruktur. Pastikan field/extension yang sudah terpasang diperiksa dahulu.
+2. Beri ID FS-001, versi, requirement asal, scope, asumsi dan pihak pemberi keputusan. Tandai desain sebagai usulan sampai disetujui.
+3. Definisikan contoh perilaku: saat requester mengirim approval, kode alasan wajib terisi dari pilihan yang disepakati. Tentukan apa yang terjadi bila kosong/tidak valid.
+4. Tentukan role yang boleh mengubah pilihan alasan, akses pembaca, perubahan sesudah approval, serta bukti audit yang diperlukan.
+5. Tulis acceptance positif dan negatif dengan Given/When/Then; sertakan kebutuhan migrasi data lama dan batas yang tidak ditangani.
+6. Review solusi standar/config/app/custom dengan tim teknis. Jangan menjanjikan implementasi atau menulis ID object/signature event berdasarkan dugaan.
+
+## Cheat box
+
+<CheatBox>
+
+- Tautkan requirement ID.
+- Definisikan trigger dan actor.
+- Tulis hasil serta exception.
+- Sertakan permission dan audit.
+- Acceptance positif dan negatif.
+- Pisahkan usulan dari persetujuan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Spesifikasi hanya berupa screenshot, tidak menjelaskan data tidak valid, atau memberi nama field/object seolah sudah tersedia pada BC standar.
+:::
+
+## Latihan terkait
+
+[E2 — Gap-fit analysis](/latihan/expert/e2-gap-fit/) · [E3 — UAT planning dan execution](/latihan/expert/e3-uat/).
+
+
+## Sumber resmi
+
+- [Functional/technical design documents](https://learn.microsoft.com/en-us/dynamics365/guidance/patterns/create-functional-technical-design-document).
+- [Documenting extensions](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/extend-your-solution).
+- [Requirements](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-define-requirements).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

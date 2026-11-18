@@ -18,7 +18,7 @@ for (const route of routes) {
   });
 }
 
-for (const route of ['/03-expert/business-analysis/', '/03-expert/integrasi-api/', '/03-expert/developer-al/', '/03-expert/admin-devops/', '/halaman-tidak-ada/', '/cheatsheets/tidak-ada/']) {
+for (const route of ['/03-expert/integrasi-api/', '/03-expert/developer-al/', '/03-expert/admin-devops/', '/halaman-tidak-ada/', '/cheatsheets/tidak-ada/']) {
   test(`404 ${route}`, async ({ page }) => {
     const response = await page.goto(route);
     expect(response?.status()).toBe(404);

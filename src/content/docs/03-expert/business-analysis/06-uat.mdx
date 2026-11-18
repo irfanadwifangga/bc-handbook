@@ -1,0 +1,59 @@
+---
+title: "3A.6 UAT, defect dan sign-off"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Susun test script dan hasil yang dapat dipertanggungjawabkan oleh user bisnis.
+
+## Konsep singkat
+
+UAT memvalidasi proses dari sudut pandang bisnis, bukan menggantikan unit/functional testing. Test scenario adalah alur yang dinilai; test script memuat prasyarat, actor, data, langkah dan expected result. Actual result serta bukti diisi saat eksekusi. Status Belum dijalankan, Blocked, Pass dan Fail tidak boleh dipertukarkan.
+
+## Langkah di BC
+
+1. Pilih lima skenario dari matriks kebutuhan. Hubungkan ID kebutuhan, process step, role dan acceptance ke tiap skenario.
+2. Siapkan company sandbox, user uji, versi/config baseline dan data demo. Pastikan functional testing cukup stabil sebelum user menjalankan UAT.
+3. Tuliskan langkah bernomor dan expected result yang dapat diamati pada dokumen/ledger/approval. Jangan menggunakan hasil “berhasil” tanpa ukuran.
+4. Saat praktik, isi actual result, waktu, executor, evidence dan status. Jika tidak ada akses/config, gunakan Blocked dengan alasan; jangan menulis Pass.
+5. Laporkan defect berisi langkah reproduksi, expected/actual, severity, owner dan bukti. Bedakan defect terhadap spesifikasi dari kebutuhan baru yang harus masuk change request.
+6. Setelah perbaikan, lakukan retest/regression yang relevan. Sign-off memerlukan coverage, defect terbuka, risiko dan keputusan process owner; persentase lulus saja belum cukup.
+
+## Cheat box
+
+<CheatBox>
+
+- Trace ke kebutuhan dan proses.
+- Tentukan prasyarat dan data.
+- Expected berbeda dari actual.
+- Pass memerlukan bukti.
+- Blocked bukan Pass.
+- Owner menyetujui risiko dan sign-off.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengisi actual result sebelum praktik, menjadikan tester sebagai approver bisnis tanpa mandat, atau menutup defect tanpa retest.
+:::
+
+## Latihan terkait
+
+[E3 — UAT planning dan execution](/latihan/expert/e3-uat/).
+
+
+## Sumber resmi
+
+- [Testing strategy](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/testing-strategy).
+- [Test types dan UAT](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/testing-strategy-test-types).
+- [Execution dan defect tracking](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/testing-strategy-run-tests).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

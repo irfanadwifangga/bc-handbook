@@ -1,0 +1,59 @@
+---
+title: "3A.1 Peran BA dan alur deliverable"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Jelaskan tanggung jawab BA serta hubungan kebutuhan, desain dan bukti penerimaan.
+
+## Konsep singkat
+
+BA membantu pemilik proses menjelaskan masalah dan menilai solusi. BA tidak otomatis menjadi pemilik keputusan bisnis, administrator izin, atau pemberi sign-off. Rantai kerja yang dipakai pada track ini adalah kebutuhan ber-ID → process map → fit-gap → functional specification → test case → bukti → keputusan. Istilah BRD/FRD dan format dokumen di situs ini adalah template belajar yang bisa disesuaikan, bukan format wajib Microsoft.
+
+## Langkah di BC
+
+1. Tentukan sponsor, process owner, subject matter expert, konsultan konfigurasi, developer dan tester untuk perusahaan dagang demo lima user.
+2. Pilih satu proses CRONUS: Purchase-to-Pay. Batasi awal/akhir, owner dan hasil bisnis sebelum mendiskusikan fitur.
+3. Buat register deliverable: BRD, process map, matriks gap-fit, spesifikasi, UAT dan SOP. Catat owner, reviewer, versi dan keputusan yang diperlukan.
+4. Tinjau halaman BC bersama pembimbing untuk memahami istilah dokumen/ledger; jangan menyimpulkan kebutuhan hanya dari daftar tombol.
+5. Hubungkan setiap perubahan dengan requirement ID dan acceptance criterion. Pisahkan asumsi dari observasi serta keputusan yang sudah disetujui.
+6. Gunakan studi kasus pada akhir track sebagai contoh draft. Latihan E1–E3 meminta bukti praktik sendiri, bukan menyalin status lulus dari situs.
+
+## Cheat box
+
+<CheatBox>
+
+- Tentukan process owner.
+- Tulis masalah sebelum solusi.
+- Setiap kebutuhan punya ID.
+- Pisahkan fakta dan asumsi.
+- Hubungkan desain dengan UAT.
+- Sign-off milik pihak berwenang.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap semua permintaan user harus menjadi customization, menyamakan demo dengan persetujuan bisnis, atau meminta developer menebak acceptance criteria.
+:::
+
+## Latihan terkait
+
+[E1 — Process mapping](/latihan/expert/e1-process-mapping/) · [E2 — Gap-fit analysis](/latihan/expert/e2-gap-fit/).
+
+
+## Sumber resmi
+
+- [Requirements](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-define-requirements).
+- [Fit-to-standard dan fit-gap](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-fit-to-standard-fit-gap-analysis).
+- [Testing strategy](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/testing-strategy).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.

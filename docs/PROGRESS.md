@@ -6,11 +6,11 @@
 
 ## Ringkasan status terkini — 2026-11-18
 
-- Konten selesai dan di-commit sampai Fase 5.5. Fase 5.6 belum ditutup: 9 modul BA + indeks, 2 cheatsheet (#15–#16), dan 3 latihan (E1–E3) tersedia lokal tetapi belum dilacak Git. Ketersediaan berkas tidak menyatakan seluruh acceptance criteria atau praktik sandbox lulus.
+- Konten Fase 5.0–5.6 selesai dan terverifikasi sebagai situs: Fase 5.6 mencakup 9 modul BA + indeks, 2 cheatsheet (#15–#16) dan 3 latihan (E1–E3). Kelulusan latihan dan UAT tetap memerlukan bukti sandbox; bukan hasil tes situs.
 - U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
-- Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks latihan Expert masih menyebut E1–E3 belum tersedia; penyelarasan indeks dan ekspektasi tes 404 Business Analysis belum dilakukan.
+- Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7–5.9 tetap terbuka.
-- Verifikasi situs terakhir sebelum pembaruan dokumen: build 79 halaman, 3 tes unit dan 12 tes regresi urutan latihan lulus. Suite browser penuh belum dinyatakan lulus; detail dan batas ada pada log masing-masing pekerjaan. Tidak ada push/deploy.
+- Verifikasi situs terakhir: build 79 halaman, 3 tes unit, suite Playwright lengkap 388 lulus, audit BA 60 kondisi lulus, dan 2 tes PDF A4 lulus (6 cetak duplikat dilewati). Seluruh 8.301 tautan internal/anchor valid pada working tree yang menyertakan favicon lokal. Tidak ada push/deploy.
 - Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
 
 ## Fase Pembangunan Situs
@@ -21,7 +21,7 @@
 - [x] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
 - [x] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
 - [x] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
-- [ ] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
+- [x] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
 - [ ] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
 - [ ] **5.7a** — AL-1 Fundamentals + cheatsheet #17–#18 + latihan AL1–AL3
 - [ ] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
@@ -30,6 +30,28 @@
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.6 — 2026-11-18
+
+- Track Business Analysis selesai sebagai materi situs: sembilan modul, indeks track, cheatsheet #15–#16 dan E1–E3. Indeks Expert/latihan/cheatsheet dan keterangan ketersediaan di landing diselaraskan; ini bukan restruktur landing U5. Status AL mengikuti kurikulum terbaru tanpa memulai jalur AL.
+- Studi kasus berisi BRD simulasi, process map/swimlane, sepuluh kebutuhan, FS-001 dan lima script UAT. Status fit tetap hipotesis, actual result belum diisi, UAT Belum dijalankan, R09/R10 terbuka dan sign-off Belum diminta. Selesainya materi tidak menyatakan gate praktik BC lulus.
+- Verifikasi hasil akhir: bun run build berhasil (79 halaman dan Pagefind); bun test 3 lulus; audit struktur sembilan modul/tiga latihan dan 8.301 tautan internal/anchor lulus. bunx playwright test --workers 4 --max-failures 1 lulus penuh 388 tes tanpa pengecualian route BA.
+- Audit terarah bunx playwright test content.ui.ts --config .codex-tmp/phase-5.6/playwright.config.ts: 62 lulus/6 dilewati, terdiri dari 15 halaman × desktop 1280px/mobile 360px × light/dark = 60 kondisi (status, H1, Axe WCAG 2A/AA + 2.1A/AA, overflow, error JS, CheatBox dan hint keyboard) serta 2 cetak PDF. Tidak ada pelanggaran Axe, overflow body atau error JavaScript pada kondisi tersebut. Kedua cheatsheet masing-masing 1 halaman A4.
+- Percobaan audit dengan glob umum ikut mengumpulkan salinan tes draft lama dan gagal pada ekspektasi warna lama (272 lulus, 1 gagal, 2 terinterupsi, 503 belum dijalankan, 2 dilewati). Pemilihan diperjelas menjadi content.ui.ts tanpa mengubah ekspektasi; hasil ulang di atas lulus. Suite proyek sebenarnya sudah lulus penuh sebelumnya.
+- Artefak lokal ada di .codex-tmp/phase-5.6/: final-build.log, final-regression.log, final-content-only.log, screenshot dan print/. Preview tes berhenti; port 4323 tidak memiliki listener. Favicon lokal masih belum dilacak dan tidak dimasukkan ke commit BA; audit aset mencakup working tree tersebut, bukan checkout bersih tanpa favicon.
+- Batas: Firefox/WebKit, screen reader, macOS dan praktik sandbox/UAT belum diuji; Lighthouse tidak diulang pada fase ini. PDF diperiksa jumlah/ukuran halaman, tanpa inspeksi visual ulang hasil cetak terbaru. Warning i18n kosong, fallback 404 dan sitemap tanpa site tetap ada. Tidak ada komponen/CSS/dependensi baru, operasi tenant, push atau deploy; U3 dan jalur AL belum dimulai.
+- Commit message: `docs: add business analysis track and exercises`. Tahap konten berikutnya adalah Fase 5.7, belum dimulai.
+
+
+### Audit penutupan Fase 5.6 — 2026-11-18
+
+- Pemeriksaan ulang mendapati sembilan modul BA, indeks track, cheatsheet #15–#16 dan E1–E3 tersedia lokal. Studi kasus memuat BRD simulasi, sepuluh kebutuhan, FS-001 dan lima script UAT; status praktik tetap Belum dijalankan, R09/R10 serta sign-off terbuka.
+- Verifikasi nyata sebelum penerapan diff: build 79 halaman/Pagefind berhasil; bun test 3 lulus; audit struktur sembilan modul/tiga latihan dan 8.282 tautan internal/anchor lulus tanpa target hilang. Favicon lokal tersedia pada hasil build tetapi tetap di luar commit konten BA.
+- Sumber resmi fit-to-standard/fit-gap, jenis pengujian/UAT dan study guide MB-800 diperiksa ulang. Study guide masih memuat skills measured 30 Juni 2026. Ini pemeriksaan dokumen, bukan eksekusi fitur BC atau bukti kelulusan latihan.
+- Reproduksi terarah tes 404 Business Analysis pada desktop-light gagal: expected 404, received 200. Usulan menghapus hanya route yang sudah tersedia dari daftar 404; tes layout positif tetap mengikuti inventaris build. Indeks Expert/latihan/cheatsheet/landing diselaraskan dengan materi yang tersedia dan status AL pada kurikulum baru; tidak merestruktur landing U5.
+- Fase 5.6 belum ditutup. Setelah diff disetujui, build/regression browser serta cetak kedua cheatsheet perlu diverifikasi terhadap hasil akhir. Audit browser/Axe/cetak lama tidak dianggap pengujian ulang saat ini. Firefox/WebKit, screen reader dan praktik BC sandbox belum diuji; U3/AL tidak dimulai.
+- Commit message penutupan yang direncanakan: `docs: add business analysis track and exercises`.
+
 
 ### Hasil U2 — 2026-11-18
 

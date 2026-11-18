@@ -10,7 +10,7 @@
 ## Status penerapan dan keputusan proyek — 2026-11-18
 
 - Dokumen ini menggabungkan lampiran kurikulum terbaru dengan status proyek. Penambahan rencana tidak berarti materi, folder, sidebar, atau kode AL sudah diterapkan. Detail bukti dan batas pengujian berada di `docs/PROGRESS.md`.
-- Fase 5.0–5.5 selesai; Fase 5.6 memiliki 9 modul BA, indeks, cheatsheet #15–#16 dan latihan E1–E3 di working tree, tetapi belum ditutup atau di-commit. Fase 5.7, 5.7a–5.7c, 5.8 dan 5.9 belum selesai; jalur AL baru belum dimulai. Urutan implementasi tetap tabel Bagian 5 sampai pemilik menyetujui perubahan prioritas.
+- Fase 5.0–5.6 selesai sebagai materi situs; Fase 5.6 mencakup 9 modul BA, indeks, cheatsheet #15–#16 dan latihan E1–E3. Status ini tidak menyatakan praktik sandbox atau UAT sudah dijalankan. Fase 5.7, 5.7a–5.7c, 5.8 dan 5.9 belum selesai; jalur AL baru belum dimulai. Urutan implementasi tetap tabel Bagian 5 sampai pemilik menyetujui perubahan prioritas.
 - Pilot alur Sales interaktif (putar/jeda/ulang/per tahap) dan video referensi sudah tersedia. Perluasan ke materi lain belum dijadwalkan; perilaku komponen mengikuti `docs/DESIGN.md`.
 - Pembaruan UI mengikuti Lampiran A `docs/DESIGN.md`: U1–U2 selesai; perbaikan layout, TOC akhir halaman, dan urutan latihan Basic → Intermediate → Expert telah di-commit terpisah. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
 - Situs tetap lokal. Vercel/Cloudflare Pages adalah pilihan deployment kelak, bukan izin untuk push atau deploy sekarang.

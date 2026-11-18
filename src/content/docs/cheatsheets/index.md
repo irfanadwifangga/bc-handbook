@@ -6,7 +6,7 @@ sidebar:
   order: 0
 ---
 
-Delapan cheatsheet tersedia: tujuh ringkasan harian dan Configuration Worksheet / RapidStart. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
+Sepuluh cheatsheet tersedia: tujuh ringkasan harian, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
@@ -39,3 +39,11 @@ Delapan cheatsheet tersedia: tujuh ringkasan harian dan Configuration Worksheet 
 ## Configuration Worksheet / RapidStart
 
 [Buka cheatsheet](./14-configuration-worksheet/) — alur inisialisasi company baru; latihan terkait [M9](/latihan/intermediate/m9-rapidstart/).
+
+## Gap-Fit Analysis Template
+
+[Buka cheatsheet](./15-gap-fit-analysis/) — delapan kolom matriks, status hipotesis dan review solusi; latihan [E2](/latihan/expert/e2-gap-fit/).
+
+## Process Mapping
+
+[Buka cheatsheet](./16-process-mapping/) — elemen flowchart/swimlane, as-is/to-be dan contoh Order-to-Cash; latihan [E1](/latihan/expert/e1-process-mapping/).

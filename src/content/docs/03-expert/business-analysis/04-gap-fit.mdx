@@ -1,0 +1,59 @@
+---
+title: "3A.4 Gap-fit analysis"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Expert
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih pendekatan solusi dengan bukti, risiko dan keputusan owner.
+
+## Konsep singkat
+
+Mulai dari proses standar sebelum merancang perubahan. Pada template lokal ini, Fit berarti kebutuhan didukung standar pada scope yang diuji; Gap-Config menandai konfigurasi yang perlu dibuktikan; Gap-Custom menandai kandidat app/development; Workaround menandai proses alternatif dengan batas yang diterima bisnis. Label adalah triase, bukan vonis bahwa suatu fitur BC tidak tersedia. Semua contoh klasifikasi studi kasus masih hipotesis.
+
+## Langkah di BC
+
+1. Ambil sepuluh kebutuhan ber-ID dari BRD. Tetapkan acceptance dan prioritas sebelum membandingkan solusi.
+2. Demonstrasikan fitur standar kandidat di CRONUS: dokumen purchase, approval, dimensions, application dan permissions. Catat konfigurasi serta data uji.
+3. Isi matriks ID, kebutuhan, modul, status, fitur/halaman, catatan/solusi, prioritas dan effort. Tambahkan bukti, owner serta pertanyaan terbuka pada dokumen kerja.
+4. Untuk gap, bandingkan konfigurasi, perubahan proses, app dan customization. Catat biaya pemeliharaan, permission, upgrade serta ketergantungan.
+5. Jika memakai workaround, tulis kontrol kompensasi, pekerjaan manual dan batas yang belum terpenuhi. Jangan memberi status Fit hanya karena ada alternatif parsial.
+6. Review dengan process owner, simpan keputusan, lalu kirim gap yang disepakati ke functional specification dan UAT.
+
+## Cheat box
+
+<CheatBox>
+
+- Mulai dari standar.
+- Uji acceptance, bukan nama fitur.
+- Status awal adalah hipotesis.
+- Catat bukti dan owner.
+- Workaround punya batas.
+- Gap yang disetujui masuk spesifikasi.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menandai semua konfigurasi sebagai gap produk, membuat estimasi effort sebagai janji durasi, atau menutup kebutuhan tanpa bukti dan keputusan owner.
+:::
+
+## Latihan terkait
+
+[E2 — Gap-fit analysis](/latihan/expert/e2-gap-fit/).
+
+
+## Sumber resmi
+
+- [Fit-to-standard dan fit-gap](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-fit-to-standard-fit-gap-analysis).
+- [Requirements](https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-define-requirements).
+- [Functional/technical design documents](https://learn.microsoft.com/en-us/dynamics365/guidance/patterns/create-functional-technical-design-document).
+
+Panduan implementasi bersifat lintas Dynamics 365; contoh fitur BC harus diverifikasi pada CRONUS sandbox. Dokumen ini bukan bukti praktik, hasil UAT atau persetujuan stakeholder nyata.
