@@ -7,7 +7,7 @@
 ## Fase Pembangunan Situs
 
 - [x] **5.0** — Inisialisasi Astro Starlight, struktur folder, docs/PROGRESS.md, build lokal
-- [ ] **5.1** — Design tokens, landing page, search, dark mode, komponen inti, docs/DESIGN.md
+- [x] **5.1** — Design tokens, landing page, search, dark mode, komponen inti, docs/DESIGN.md
 - [ ] **5.2** — Level 0 Orientasi
 - [ ] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
 - [ ] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
@@ -22,6 +22,7 @@
 | Tanggal | Fase | Commit message | Catatan |
 |---|---|---|---|
 | 2026-11-18 | 5.0 | `chore: init starlight site and content structure` | Astro Starlight diinisialisasi dengan bun; struktur Bagian 2 tersedia; `bun run build` berhasil (4 halaman dan indeks Pagefind). |
+| 2026-11-18 | 5.1 | `fix: finish phase 5.1 checks and cheatsheet link` | Design tokens, landing, sidebar, dan komponen inti selesai; build, tes komponen/metadata, dan audit tautan lulus; Lighthouse mobile landing Performance 100, Accessibility 100. |
 
 ### Hasil Fase 5.0
 
@@ -33,14 +34,17 @@
 - Verifikasi nyata: `bun run build` exit code 0; menghasilkan 4 halaman statis dan indeks pencarian Pagefind.
 - Warning build: koleksi `i18n` kosong, entry `docs → 404` tidak ditemukan (fallback 404 tetap dihasilkan), dan sitemap dilewati karena opsi `site` belum ditentukan.
 - Interaksi search, dark mode, dan tampilan mobile belum diuji di browser. Tidak ada server yang dijalankan atau deploy; cakupan permintaan Fase 5.0 ini lokal.
-- Commit message di atas merupakan saran; belum dibuat commit Git.
-- Fase 5.1 menunggu persetujuan.
+- Setup awal dan implementasi UI tercakup dalam checkpoint `08246e0` (`chore: checkpoint handbook setup and phase 5.1 work`).
 
-### Fase 5.1 — implementasi, verifikasi belum selesai
+### Hasil Fase 5.1
 
 - Design tokens, landing, sidebar, VersionBadge, LevelBadge, CheatBox, dan halaman indeks sudah dibuat; format sidebar disesuaikan dengan Starlight 0.43.1.
 - Tes nyata: bun test lulus 3 tes; bun run build berhasil dengan 13 halaman dan indeks Pagefind.
 - Browser: search sandbox menghasilkan 2 hasil; tema terang/gelap berganti; landing pada viewport 360px tidak overflow horizontal (scrollWidth 345px).
-- Audit tautan terhenti: anchor /cheatsheets/#navigasi-shortcut tidak ditemukan. Menunggu persetujuan perbaikan; Fase 5.1 belum selesai.
-- Preview lokal sudah dihentikan. Lighthouse, uji negatif schema, print, dan audit keyboard lengkap belum dilakukan.
-- Git: branch main belum memiliki commit; file proyek masih untracked.
+- Anchor navigasi diperbaiki menjadi `/cheatsheets/#navigasi--shortcut`; audit 274 tautan internal/anchor di 13 halaman lulus.
+- Tes fixture sementara melalui build nyata: CheatBox, LevelBadge Expert, dan VersionBadge usang berhasil dirender; halaman tanpa `bc_version_verified` dan `last_verified` ditolak build sesuai harapan. Fixture dihapus dan build final kembali berhasil.
+- Audit source: tidak ada hex/px/font-family langsung dalam komponen; LevelBadge Basic ditemukan dalam HTML hasil build.
+- Lighthouse mobile pada landing lokal: Performance 100 dan Accessibility 100. Laporan lokal: `.codex-tmp/lighthouse-phase-5.1.report.html` dan `.json` (tidak masuk Git).
+- Warning build i18n kosong, fallback 404, dan sitemap tanpa `site` masih ada; build berhasil.
+- Preview lokal sudah dihentikan. Audit keyboard manual lengkap dan print preview belum dilakukan. Belum ada cheatsheet berisi materi; print diuji setelah kontennya tersedia. Skor Lighthouse terbatas pada landing dan satu pengukuran lokal, bukan jaminan semua halaman.
+- Fase 5.2 menunggu persetujuan. Tidak ada deploy atau push.
