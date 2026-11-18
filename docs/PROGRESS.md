@@ -19,6 +19,19 @@
 
 ## Log
 
+### Hasil U2 — 2026-11-18
+
+- src/styles/custom.css memakai warna netral light/dark DESIGN.md 3.1 dengan aksen teal/status tetap, radius md 8px/sm 6px, heading 600, tracking H1–H2 -0.02em/H3 -0.01em dan isi 0. Stack font tetap. Geist/U3, bobot label/sidebar 500, komponen/U4 serta landing/U5 belum dikerjakan. Tidak ada dependensi, markup, materi atau CSS lain yang diubah dalam U2.
+- Nama variabel diverifikasi pada Starlight 0.43.1: gray-7 → surface-2; bg-nav/backdrop-overlay → bg; blue/orange/green/red/purple-low → surface, base/high → info/warning/success/danger/expert. Sebanyak 24 variabel warna Expressive Code dipetakan untuk latar, border, gutter, tab editor, terminal, tombol copy/tooltip dan selection; daftar lokal .codex-tmp/phase-U2/additional-mappings.json. Header solid, border bawah 1px, tanpa blur/bayangan; sidebar aktif/hover surface-2, group-label muted.
+- Verifikasi nyata: bun run build berhasil (79 halaman dan Pagefind); bun test 3 lulus. Suite proyek bunx playwright test --workers 1 --max-failures 1: 79 lulus, 1 gagal, 300 belum dijalankan. Error e2e/layout.ui.ts:24 mengharapkan /03-expert/business-analysis/ berstatus 404 tetapi mendapat 200 karena materi Fase 5.6 sudah ada di working tree. Ekspektasi tersebut tidak diubah dalam U2.
+- Audit tambahan U2: 347 lulus, 21 skip (cetakan hanya desktop-light); 84 URL termasuk /404.html dan lima URL tidak tersedia × 1280px/360px × light/dark = 336 keadaan; Axe WCAG 2 A/AA dan 2.1 A/AA menemukan 0 pelanggaran. Status/H1 sesuai; 0 overflow, error JavaScript atau request font eksternal. Header/sidebar, skip-link, Ctrl+K, hasil search dan Escape diuji pada empat kondisi.
+- Kontras muted/link pada bg/surface, label badge, body/judul note/caution/danger dan kode inline memenuhi 4.5:1; minimum 4.81:1. Border netral terhadap bg di bawah 3:1: light #e4e4e7/#ffffff = 1.27:1, dark #262626/#0a0a0a = 1.31:1. Ini pemisah dekoratif; palet tidak diubah. Pasangan rinci di .codex-tmp/phase-U2/contrast.json.
+- Tujuh cheatsheet 01–07 dicetak menjadi PDF: masing-masing 1 halaman A4 (594.96 × 841.92 pt); tujuh render PNG diperiksa. Lighthouse mobile landing satu pengukuran lokal: Performance 100, Accessibility 100. Percobaan awal gagal ENOENT lighthouse-profile/chrome.pid karena direktori profil belum dibuat. Setelah direktori dibuat, percobaan di sandbox macet sebelum audit karena HTTP lokal tidak mendapat respons. Probe terisolasi gagal dalam 12 detik di sandbox, sedangkan probe yang sama di luar sandbox menerima HTTP 200 dalam 2137ms. Lighthouse di luar sandbox kemudian lulus 1 tes dalam 10.9 detik tanpa mengubah situs.
+- Capture sebelum/sesudah: 20/20 PNG untuk landing, modul RapidStart, cheatsheet navigasi, Orientasi dengan aside dan 404 pada empat kondisi; 4 tes capture sesudah lulus. Artefak, PDF dan laporan lokal berada di .codex-tmp/phase-U2/ dan diabaikan Git.
+- Satu-satunya perubahan ekspektasi tes: e2e/layout.ui.ts:56, surface dark rgb(21, 31, 43) → rgb(17, 17, 17), light rgb(246, 248, 250) → rgb(250, 250, 250), mengikuti token surface baru. Grep src/components untuk hex/px/font-family langsung: 0 temuan. git diff --check lulus.
+- Batas: Brave/Chromium Windows; Firefox/WebKit, screen reader, macOS dan praktik BC sandbox belum diuji. Suite proyek belum lulus penuh karena ekspektasi 404 lama; Lighthouse hanya landing/satu pengukuran lokal. Server dan browser tes dikelola runner. Pekerjaan Fase 5.6/favicon yang sudah ada tidak dimasukkan ke commit U2. Tidak ada push/deploy. Usulan layout lanjutan sudah disetujui terpisah untuk setelah penutupan U2; belum diterapkan pada hasil verifikasi ini. U3 belum dimulai.
+- Commit message: style: apply neutral color tokens and heading rhythm.
+
 ### Hasil U1 — 2026-11-18
 
 - DESIGN.md v2.0 yang disediakan pengguna dipertahankan apa adanya, tanpa mengedit isi. SHA-256: 5ebb98922ff23c284109d59e4d8f2e60883e14e4d919cf57f3132bec4ddb248b. Perbandingan memakai DESIGN.md 1.x dari HEAD sebelum commit U1.

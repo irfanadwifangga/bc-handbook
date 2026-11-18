@@ -53,7 +53,7 @@ test('istilah pada kolom pertama tidak terbelah di tengah kata', async ({ page }
 test('aside memakai palet desain dan konten lolos axe', async ({ page }, testInfo) => {
   await page.goto('/00-orientasi/');
   const dark = testInfo.project.use.colorScheme === 'dark';
-  const surface = dark ? 'rgb(21, 31, 43)' : 'rgb(246, 248, 250)';
+  const surface = dark ? 'rgb(17, 17, 17)' : 'rgb(250, 250, 250)';
   const info = dark ? 'rgb(96, 165, 250)' : 'rgb(29, 78, 216)';
   const warning = dark ? 'rgb(251, 191, 36)' : 'rgb(180, 83, 9)';
   await expect(page.locator('.starlight-aside--note')).toHaveCSS('background-color', surface);
