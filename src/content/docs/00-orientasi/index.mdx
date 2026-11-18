@@ -1,0 +1,209 @@
+---
+title: Orientasi
+description: Kenali Business Central, sandbox, company, navigasi, versi, dan lokalisasi sebelum mulai latihan.
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+sidebar:
+  order: 0
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Setelah materi ini, kamu bisa:
+
+- Menjelaskan fungsi Business Central (BC) dan area kerja utamanya.
+- Membedakan tenant, environment, company, serta sandbox dan production.
+- Membuka sandbox demo, mengganti company, dan mencari halaman melalui Tell Me.
+- Mengenali Role Center, FactBoxes, FastTabs, filter, Personalize, dan Page Inspection.
+- Menemukan informasi versi serta mengetahui batas lokalisasi Indonesia.
+
+Estimasi: 20–30 menit membaca dan 20–30 menit praktik. Persiapan: akun yang diberi akses ke **sandbox dengan company demo CRONUS**. Minta admin menyiapkannya bila belum tersedia.
+
+:::note[Batas verifikasi]
+Materi diperiksa terhadap dokumentasi Microsoft pada 18 November 2026 untuk keluarga BC 29.x. Langkah praktik belum dijalankan di sandbox kamu. Bahasa, role, permission, dan extension dapat mengubah tampilan; cocokkan versi lewat Help & Support sebelum praktik.
+:::
+
+## Konsep singkat
+
+### BC dipakai untuk apa?
+
+BC adalah solusi ERP untuk usaha kecil dan menengah. Data dan proses dari beberapa bagian bisnis dikelola dalam satu aplikasi. Fokus awal handbook ini:
+
+| Area | Pertanyaan bisnis yang dibantu |
+| --- | --- |
+| Finance | Bagaimana posisi keuangan dan pencatatan transaksi? |
+| Sales | Apa yang dijual, kepada siapa, dan sudah ditagih atau belum? |
+| Purchasing | Apa yang dibeli, dari vendor mana, dan sudah diterima atau belum? |
+| Inventory | Barang apa yang tersedia dan bagaimana pergerakannya? |
+
+Manufacturing, Warehouse, Service, dan Projects dapat dipelajari sesuai kebutuhan; belum menjadi target latihan awal. Sebagai BA, mulai dari proses dan kebutuhan bisnis, lalu cari bagaimana BC mendukungnya. Lihat [pengenalan kemampuan BC](https://learn.microsoft.com/en-us/training/modules/intro-dynamics-365-business-central/).
+
+### Online dan on-premises
+
+- **Online (SaaS):** layanan BC dikelola Microsoft. Admin organisasi mengatur akses dan environment melalui sarana administrasi yang tersedia.
+- **On-premises:** deployment dikelola organisasi atau partner pada infrastruktur yang mereka kelola. Pengelolaan instalasi dan upgrade berbeda dari layanan online.
+
+Contoh langkah di halaman ini memakai **web client BC online**. Jangan menganggap alamat, pengelolaan update, dan prosedur admin online berlaku sama pada on-premises. [Sumber: tipe environment](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/environment-types) dan [update BC 29.0](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/whatsnew-update-29-0).
+
+### Tenant, environment, dan company
+
+Urutan untuk memahami BC online: **Microsoft Entra tenant → environment BC → company**.
+
+| Istilah | Makna praktis |
+| --- | --- |
+| Microsoft Entra tenant | Lingkup identitas organisasi tempat user dan akses layanan dikaitkan. |
+| Environment | Lingkungan BC dengan tipe, versi, lokalisasi, dan kumpulan company tertentu. |
+| Company | Wadah data usaha dan pencatatan dalam environment; satu environment dapat berisi beberapa company. |
+| Production | Environment untuk kegiatan bisnis nyata. |
+| Sandbox | Environment untuk belajar, menguji, atau mengembangkan perubahan. |
+| Admin Center | Portal admin untuk mengelola environment BC online, akses, dan pengaturan operasional. |
+
+Mengganti **company** tidak otomatis mengganti **environment**. Nama company demo juga bukan bukti bahwa tipe environment-nya sandbox. Cek keduanya secara terpisah. Lihat [topologi BC online](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-environment-topology) dan [Admin Center](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center).
+
+:::caution[Sandbox dapat berisi data nyata]
+Sandbox dapat berasal dari salinan production. Untuk handbook ini, gunakan sandbox dengan data demo CRONUS yang dikonfirmasi admin, bukan salinan data pelanggan. Jangan mengubah integrasi atau mengirim dokumen keluar saat orientasi. [Sumber: production dan sandbox](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/environment-types).
+:::
+
+### Versi dan siklus rilis
+
+BC online mempunyai dua siklus major update per tahun, mulai sekitar April dan Oktober, disertai minor update pada bulan lainnya. Jadwal pemasangan pada environment kamu dapat berbeda. BC **29.0** menandai **2026 release wave 2**; angka setelah titik membantu membedakan update dalam keluarga major yang sama.
+
+Sejak September 2026, Microsoft menghentikan penerbitan release plans baru dan mengarahkan informasi kemampuan baru ke **AI at Work roadmap**. Release plans lama tetap berguna untuk konteks historis. Baca status fitur seperti preview atau general availability pada sumbernya; jangan menganggap semua fitur langsung tersedia di setiap environment.
+
+Sumber: [pengelolaan update](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-update-management) dan [catatan BC 29.0 beserta perubahan roadmap](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/whatsnew-update-29-0).
+
+### Lokalisasi Indonesia
+
+Microsoft mencantumkan Indonesia sebagai **partner localization** dengan base app **W1**. Kebutuhan lokal perlu dicocokkan dengan aplikasi partner yang digunakan. Jangan menganggap instalasi W1 saja sudah memenuhi seluruh kebutuhan PPN, e-Faktur, atau PPh.
+
+Untuk catatan BA, identifikasi nama app lokalisasi, penerbit, versi, serta fungsi yang dinyatakan didukung oleh partner. Jangan menyimpulkan kepatuhan pajak hanya dari keberadaan menu; minta penanggung jawab dan partner memvalidasinya. [Sumber: ketersediaan negara dan lokalisasi](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/compliance/apptest-countries-and-translations).
+
+### Peta antarmuka
+
+| Bagian | Cara mengenalinya |
+| --- | --- |
+| Role Center | Halaman awal sesuai role, berisi ringkasan dan pintasan pekerjaan. |
+| Tell Me | Pencarian halaman, report, dan action; buka dengan `Alt+Q` pada Windows. |
+| List dan card | List menampilkan banyak record; card menampilkan detail satu record. |
+| FactBoxes | Panel informasi terkait record yang sedang dipilih. |
+| FastTabs | Kelompok field yang dapat dibuka atau ditutup pada halaman detail. |
+| Filter | Membatasi record yang terlihat; periksa filter sebelum menyimpulkan data hilang. |
+| Personalize | Mengatur tampilan workspace, misalnya posisi atau visibilitas field, sesuai izin. |
+| Page Inspection | Melihat informasi teknis halaman, termasuk sumber tabel bila ada. |
+
+Tampilan awal dan nama action dapat berbeda menurut role atau bahasa. Mengubah role bukan cara memperoleh permission tambahan. Sumber: [My Settings](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-change-basic-settings), [kerja dengan antarmuka](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-work-product), [Personalize](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-personalization-user), dan [Page Inspection](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-inspecting-pages).
+
+## Langkah di BC
+
+### 1. Pastikan tempat latihan
+
+1. Buka tautan sandbox yang diberikan admin. Gunakan placeholder `<ENV>` jika menulis contoh alamat untuk dibagikan.
+2. Pastikan tipenya **Sandbox** melalui informasi environment dari admin atau Admin Center bila kamu mempunyai akses. Nama environment saja tidak cukup.
+3. Pastikan company demo CRONUS tersedia. Jika environment hanya berisi data nyata, hentikan praktik dan minta tempat latihan yang sesuai.
+4. Buka **Help & Support** dari menu bantuan. Catat versi aplikasi untuk catatan belajar pribadi; jangan menyalin tenant ID atau URL organisasi ke repo.
+
+Kamu tidak perlu membuat, menyalin, atau menghapus environment untuk latihan ini.
+
+### 2. Kenali dan ganti company
+
+1. Pilih **Settings → My Settings**.
+2. Periksa field **Company**, **Role**, dan **Language**.
+3. Pada **Company**, pilih company demo yang telah disetujui admin, lalu konfirmasi dengan **OK**.
+4. Periksa company aktif sesudah perpindahan. Jika tersedia dua company demo, coba pindah di antara keduanya dan kembali ke company awal. Jika hanya satu tersedia, minta admin menyediakan company demo kedua untuk menyelesaikan gate.
+
+Alternatif perpindahan tersedia melalui company switcher (`Ctrl+O`). Gunakan jalur yang sesuai dengan versi dan permission kamu. [Sumber: pengaturan dasar dan company](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-change-basic-settings).
+
+### 3. Cari halaman melalui Tell Me
+
+1. Tekan `Alt+Q`, lalu ketik **Customers**.
+2. Pilih hasil halaman yang sesuai. Jika tidak muncul, coba istilah menurut bahasa antarmuka dan periksa akses bersama admin.
+3. Kembali ke Role Center, lalu ulangi untuk **Vendors**, **Items**, dan **Chart of Accounts**. Cukup buka dan amati; jangan membuat atau memposting transaksi.
+4. Perhatikan bahwa hasil pencarian juga dapat memuat action dan report, bukan hanya halaman.
+
+Shortcut di sini ditujukan untuk Windows; layout keyboard atau browser dapat memengaruhi perilakunya. [Sumber: keyboard shortcuts](https://learn.microsoft.com/en-us/dynamics365/business-central/keyboard-shortcuts) dan [FAQ Tell Me](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-search-faq).
+
+### 4. Amati list, card, dan tampilan
+
+1. Pada list **Customers**, pilih satu customer demo untuk membuka detailnya. Amati FastTabs dan FactBoxes yang tersedia tanpa mengubah nilai field.
+2. Kembali ke list. Buka panel filter, pilih field **No.**, lalu masukkan nomor customer demo yang sedang kamu amati. Pastikan hasil menyempit; hapus filter sesudahnya.
+3. Jika tersedia, pilih **Settings → Personalize**. Kenali area yang bisa diatur, lalu keluar dengan **Done** tanpa memindahkan atau menyembunyikan field.
+4. Bedakan filter, personalisasi tampilan, dan perubahan data: ketiganya mempunyai tujuan berbeda.
+
+Sumber: [sorting, searching, dan filtering](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-enter-criteria-filters) dan [Personalize](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-personalization-user).
+
+### 5. Coba Page Inspection
+
+1. Pada halaman customer demo, tekan `Ctrl+Alt+F1`.
+2. Alternatifnya, buka **Help & Support → Inspect pages and data**.
+3. Amati nama halaman dan source table yang ditampilkan. Jika akses detail dibatasi, catat batasnya dan tanyakan ke admin; jangan mengubah permission sendiri.
+4. Tutup panel dan kembali ke halaman awal. Jangan menyalin isi record atau screenshot berisi data nyata ke dokumentasi bersama.
+
+[Sumber: Page Inspection](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-inspecting-pages).
+
+## Cheat box
+
+<CheatBox>
+  <ul>
+    <li>Belajar di sandbox dengan data demo CRONUS yang dikonfirmasi admin.</li>
+    <li>Tenant, environment, dan company adalah lingkup yang berbeda.</li>
+    <li>Ganti company lewat My Settings; pastikan company aktif sesudahnya.</li>
+    <li>Alt+Q membuka Tell Me pada Windows.</li>
+    <li>Ctrl+Alt+F1 membuka atau menutup Page Inspection.</li>
+    <li>Cek versi di Help & Support; informasi fitur baru ada di AI at Work roadmap.</li>
+    <li>Lokalisasi Indonesia berasal dari partner di atas W1; cek app yang digunakan.</li>
+  </ul>
+</CheatBox>
+
+## Kesalahan umum
+
+| Kesalahan | Cara menghindari |
+| --- | --- |
+| Menganggap company bernama CRONUS pasti berada di sandbox | Konfirmasi tipe environment dan asal data secara terpisah. |
+| Mengira pindah company berarti pindah environment | Periksa kedua konteks setiap kali mulai latihan. |
+| Menganggap semua user mempunyai Role Center dan menu yang sama | Catat role, bahasa, permission, dan extension yang relevan. |
+| Mengira record hilang padahal filter masih aktif | Periksa dan hapus filter pada list sebelum menyimpulkan. |
+| Menggunakan release plans lama untuk memastikan fitur terbaru | Periksa roadmap dan catatan update yang sesuai dengan versi. |
+| Menganggap W1 sudah mencakup seluruh kebutuhan pajak Indonesia | Konfirmasi cakupan aplikasi lokalisasi bersama partner. |
+
+## Latihan terkait
+
+### O0: Kenali tempat kerja BC
+
+**Tujuan:** membuktikan kamu bisa bergerak dalam sandbox dan memahami konteksnya. **Prasyarat:** akses sandbox dan dua company demo yang disetujui admin. **Estimasi:** 20–30 menit.
+
+1. Buka sandbox dan identifikasi company demo aktif.
+2. Pindah ke company demo kedua, lalu kembali ke company awal.
+3. Temukan Customers, Vendors, Items, dan Chart of Accounts melalui Tell Me.
+4. Amati satu card customer demo, filter list, lalu hapus filternya.
+5. Temukan versi aplikasi dan buka Page Inspection bila permission memungkinkan.
+6. Jelaskan dengan kata sendiri perbedaan tenant, environment, dan company; jelaskan alasan latihan dilakukan di sandbox.
+
+**Kriteria lulus / gate Level 0:** kamu berhasil membuka sandbox, benar-benar mengganti company demo, menemukan halaman lewat Tell Me, dan menjelaskan perbedaan sandbox dengan production. Catat sendiri hasil Pass/Belum, kendala, dan bantuan yang masih diperlukan. Jika company kedua atau akses belum tersedia, gate belum selesai; jangan tandai lulus hanya karena sudah membaca.
+
+<details>
+  <summary>Hint</summary>
+  <p>Mulai dari Settings → My Settings untuk company. Gunakan Alt+Q untuk Tell Me. Jika konteks environment belum jelas, minta admin memastikan tipenya sebelum meneruskan.</p>
+</details>
+
+Langkah berikutnya setelah gate terpenuhi: [Level 1 Basic](../01-basic/). Latihan navigasi B1 akan ditambahkan pada Fase 5.4; [indeks latihan Basic](../latihan/basic/) saat ini masih berupa kerangka.
+
+## Sumber resmi
+
+Dokumentasi diperiksa pada 18 November 2026. Semua penjelasan di atas ditulis ulang untuk kebutuhan belajar; detail mutakhir tetap dirujuk ke Microsoft.
+
+- [Pengenalan kemampuan Business Central](https://learn.microsoft.com/en-us/training/modules/intro-dynamics-365-business-central/).
+- [Topologi tenant, environment, dan company](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-environment-topology).
+- [Production dan sandbox environments](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/environment-types).
+- [Business Central Admin Center](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center).
+- [My Settings, role, dan company](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-change-basic-settings).
+- [Pengelolaan update](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-update-management).
+- [BC 29.0 dan perubahan roadmap](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/whatsnew-update-29-0).
+- [Ketersediaan negara dan lokalisasi](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/compliance/apptest-countries-and-translations).
+- [Bekerja dengan antarmuka BC](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-work-product).
+- [Keyboard shortcuts](https://learn.microsoft.com/en-us/dynamics365/business-central/keyboard-shortcuts).
+- [FAQ Tell Me](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-search-faq).
+- [Filter dan pencarian data](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-enter-criteria-filters).
+- [Personalize](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-personalization-user).
+- [Page Inspection](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-inspecting-pages).
