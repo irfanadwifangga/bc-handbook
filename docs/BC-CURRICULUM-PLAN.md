@@ -7,6 +7,18 @@
 
 ---
 
+## Status penerapan dan keputusan proyek — 2026-11-18
+
+- Dokumen ini menggabungkan lampiran kurikulum terbaru dengan status proyek. Penambahan rencana tidak berarti materi, folder, sidebar, atau kode AL sudah diterapkan. Detail bukti dan batas pengujian berada di `docs/PROGRESS.md`.
+- Fase 5.0–5.5 selesai; Fase 5.6 memiliki 9 modul BA, indeks, cheatsheet #15–#16 dan latihan E1–E3 di working tree, tetapi belum ditutup atau di-commit. Fase 5.7, 5.7a–5.7c, 5.8 dan 5.9 belum selesai; jalur AL baru belum dimulai. Urutan implementasi tetap tabel Bagian 5 sampai pemilik menyetujui perubahan prioritas.
+- Pilot alur Sales interaktif (putar/jeda/ulang/per tahap) dan video referensi sudah tersedia. Perluasan ke materi lain belum dijadwalkan; perilaku komponen mengikuti `docs/DESIGN.md`.
+- Pembaruan UI mengikuti Lampiran A `docs/DESIGN.md`: U1–U2 selesai; perbaikan layout, TOC akhir halaman, dan urutan latihan Basic → Intermediate → Expert telah di-commit terpisah. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
+- Situs tetap lokal. Vercel/Cloudflare Pages adalah pilihan deployment kelak, bukan izin untuk push atau deploy sekarang.
+- Klaim teknis versi/runtime, perubahan table extension, dan deprecation SOAP/OData pada lampiran belum diverifikasi ulang dalam pembaruan dokumen ini; tanggal verifikasi di bagian pembuka berasal dari lampiran. Verifikasi sumber resmi dan symbols diperlukan sebelum materi terkait dipublikasikan atau kode dianggap benar.
+- Temuan yang perlu keputusan: AL9 bersifat opsional pada Bagian 6.5 tetapi tercantum dalam gate AL-3; Bagian 6.6 menyebut capstone Invoice-to-BC, sementara Bagian 6.4 bernama Spreadsheet-to-BC. Isi lampiran dipertahankan sampai diputuskan. `AGENTS.md` masih menyebut AL opsional kecuali diminta; permintaan terbaru memasukkan AL ke rencana, tanpa memulai implementasinya.
+
+---
+
 ## 0. Aturan kerja untuk AI agent (WAJIB dibaca dulu)
 
 1. **Kerja per langkah kecil.** Selesaikan satu langkah → berikan *commit message* → update `docs/PROGRESS.md` → baru lanjut. Jangan membangun semuanya sekaligus.
@@ -16,6 +28,7 @@
 5. **Jika ragu soal fakta BC → tulis `> ⚠️ Verifikasi:` di halaman**, jangan mengarang. Nomor tabel/page/event signature harus dicek ke docs atau symbols AL sebelum dianggap final.
 6. Semua halaman harus **mobile-friendly** dan **bisa dicari** (full-text search) — situs ini dipakai sambil bekerja.
 7. **Semua keputusan UI mengikuti `docs/DESIGN.md`** (token, komponen, layout, larangan). Jika permintaan bertentangan dengan `docs/DESIGN.md`, `docs/DESIGN.md` menang; jika butuh komponen baru, **tambahkan dulu ke `docs/DESIGN.md`** lalu pakai. Jangan menambah font, warna, atau library UI di luar yang tercantum.
+8. **Aturan khusus kode AL.** (a) Agent tidak punya sandbox BC, jadi **semua snippet AL berstatus *belum dikompilasi*** sampai pemilik mengompilasi dan menjalankannya di sandbox sendiri; tandai di halaman dengan `:::caution[Belum dikompilasi]` dan ganti menjadi `:::tip[Dikompilasi di 29.x — <tanggal>]` setelah pemilik memverifikasi. (b) **Dilarang** menaruh kode, nama objek, ID range, skema, atau nama klien milik kantor/klien di repo; contoh memakai prefix demo `MYP` dan data CRONUS. (c) Kode AL yang dibuat dengan bantuan AI **wajib dikompilasi dan diuji**; signature event, nama field, dan nomor objek wajib dicocokkan dengan symbols, bukan dari ingatan model. (d) Pastikan bahasa `al` ter-highlight di code block; bila tidak didukung, pakai teks biasa dan laporkan — **jangan menambah dependensi**.
 
 ---
 
@@ -59,11 +72,14 @@ Alasan: tujuan utamanya *belajar & contekan*, bukan membuat produk web. Konten =
 │  ├─ 03-expert/
 │  │   ├─ business-analysis/
 │  │   ├─ integrasi-api/
-│  │   ├─ developer-al/
 │  │   └─ admin-devops/
+│  ├─ 04-al-developer/          # jalur paralel, lihat Bagian 3.1
+│  │   ├─ al-1-fundamentals/
+│  │   ├─ al-2-intermediate/
+│  │   └─ al-3-advanced/
 │  ├─ cheatsheets/
 │  ├─ latihan/
-│  │   ├─ basic/ ├─ intermediate/ └─ expert/
+│  │   ├─ basic/ ├─ intermediate/ ├─ expert/ └─ al/
 │  ├─ glosarium.md
 │  └─ referensi.md
 └─ astro.config.mjs
@@ -75,7 +91,7 @@ Alasan: tujuan utamanya *belajar & contekan*, bukan membuat produk web. Konten =
 
 ## 3. Kurikulum
 
-Estimasi total: **± 10–12 minggu** jika ±1–1,5 jam/hari. Setiap level punya *gate* (syarat lulus) sebelum lanjut.
+Estimasi total: **± 10–12 minggu** jika ±1–1,5 jam/hari. Setiap level punya *gate* (syarat lulus) sebelum lanjut. **Jalur AL Developer (Bagian 3.1) berjalan paralel dan menambah ± 8–11 minggu kerja bertahap** (perkiraan kasar, bukan data).
 
 ### Level 0 — Orientasi (1–2 hari)
 - Apa itu BC: ERP SMB berbasis cloud (SaaS), modul inti: Finance, Sales, Purchasing, Inventory, (opsional: Manufacturing, Warehouse, Service, Projects).
@@ -141,15 +157,11 @@ Estimasi total: **± 10–12 minggu** jika ±1–1,5 jam/hari. Setiap level puny
 - OData: `$filter`, `$select`, `$expand`, `$top`, `$orderby`, `$skiptoken`/paging; **ETag + `If-Match`** untuk PATCH/DELETE; deep insert; bound action `Microsoft.NAV.post`.
 - Pola integrasi: polling vs webhook, idempotency, retry/backoff, throttling (HTTP 429), logging & correlation ID.
 - Automation APIs (setup company/tenant) — kasus khusus.
+- **Perubahan platform yang memengaruhi integrasi:** di v29 halaman Microsoft tidak bisa lagi diekspos sebagai **SOAP** endpoint; mulai **v30** tidak bisa diekspos sebagai **OData** endpoint — salin kode halaman ke per-tenant extension (PTE) dan host di sana, atau gunakan API standar v2.0 / custom API page. ⚠️ Verifikasi di halaman *deprecated features* resmi.
 - **Output:** client Python (httpx) yang membuat Purchase Invoice draft dari data JSON; dokumentasi endpoint yang dipakai.
 
-#### Track 3C — AL Developer (opsional — jika dibutuhkan pekerjaan)
-- Setup: VS Code + AL Language extension, `app.json`, `launch.json`, ID range, prefix, symbols, sandbox publish (F5).
-- Object: Table, TableExtension, Page, PageExtension, Report, Codeunit, Enum, Query, XMLport, Permission set, **API page**.
-- **Event-driven**: EventSubscriber, publisher events, `IsHandled` pattern — *hindari modifikasi base app*; extend lewat event.
-- Data: Record, filter (`SetRange`, `SetFilter`), `FindSet`, `Modify`, FlowField/CalcFields, transaksi & `Commit`.
-- Kualitas: Test codeunit & Test Runner, Code Analyzer (CodeCop, PerTenantExtensionCop, UICop), telemetry (Application Insights), upgrade codeunit & obsolete pattern.
-- **Output:** satu extension kecil (field tambahan + validasi + API page + test).
+#### Track 3C — AL Developer (**prioritas tinggi** — pekerjaan di kantor)
+Karena AL menjadi tugas kerja, materi ini **tidak lagi satu track tipis**: dipecah menjadi **Jalur AL Developer (AL-1 → AL-3)** di Bagian 3.1 dan berjalan **paralel** dengan Level 2–3. Isi lama (setup, objek, event-driven, data, kualitas, output extension kecil) dipindahkan ke jalur tersebut.
 
 #### Track 3D — Admin & DevOps (opsional)
 - Admin Center: environments (create/copy/restore), update window, app management, telemetry.
@@ -158,7 +170,64 @@ Estimasi total: **± 10–12 minggu** jika ±1–1,5 jam/hari. Setiap level puny
 - CI/CD: AL-Go for GitHub (konsep), BcContainerHelper (konsep), artifact & Docker sandbox.
 - Observability: Application Insights/KQL untuk error & performa.
 
-**Gate Level 3:** minimal **Track 3A (Business Analysis) dan Track 3B (API) selesai dengan output masing-masing** (Bagian 6.3–6.4).
+**Gate Level 3:** minimal **Track 3A (Business Analysis) dan Track 3B (API) selesai dengan output masing-masing** (Bagian 6.3–6.4). **Jalur AL punya gate sendiri** (Bagian 3.1).
+
+### 3.1 Jalur AL Developer (AL-1 → AL-3) — **prioritas tinggi** (pekerjaan di kantor)
+
+**Kenapa jalur sendiri, bukan satu track:** AL menghasilkan *kode yang dikirim ke environment nyata*, jadi salah sedikit lebih mahal dan kurva belajarnya paling curam. Jalur ini berjalan **paralel** dengan Level 2–3: AL-1 boleh dimulai begitu Level 1 selesai. Estimasi (perkiraan kasar): AL-1 2–3 minggu · AL-2 3–4 minggu · AL-3 3–4 minggu.
+
+**Konteks versi (diverifikasi 2026-11-18; sebagian butir bersumber blog komunitas — cek ulang ke "What's new 29.0" di Microsoft Learn sebelum publish):**
+- BC 29 (2026 release wave 2) memakai **AL runtime 18.0**; BC 28 = 17.0, BC 27 = 16.0. Atur `"runtime"` di `app.json` sesuai target.
+- **Model data table extension berubah di v29:** semua field tabel AL (termasuk dari extension) disimpan dalam satu tabel SQL; kode AL tidak perlu diubah. Key/index kini dapat mencakup field base table + field table extension, dan index dapat diaktif/nonaktifkan dari kode AL. Compiler memberi peringatan **AL0914** (tabel) dan **AL0915** (table extension) bila jumlah field biasa terlalu banyak (batas kolom SQL).
+- **Perubahan yang memengaruhi integrasi:** v29 menghapus kemampuan mengekspos halaman Microsoft sebagai **SOAP**; mulai **v30** tidak bisa sebagai **OData** — salin kode halaman ke per-tenant extension (PTE).
+- Kerangka acuan topik sertifikasi: **MB-820** (BC Developer). Skills measured bisa berubah — cek halaman resmi.
+
+**Memakai AI untuk menulis AL:** beri konteks aturan komunitas **AL Guidelines** (alguidelines.dev, inisiatif "Vibe Coding for AL"), tetapi tetap wajib kompilasi + uji (aturan 8 di Bagian 0). Jangan mengandalkan signature event dari ingatan model.
+
+#### AL-1 — Fundamentals (`LevelBadge: Basic`)
+| Modul | Isi |
+|---|---|
+| AL-1.1 Peta extension model | Base app vs extension; **PTE vs AppSource app**; sandbox vs production; `app.json` (`id`, `name`, `publisher`, `version`, `platform`, `application`, **`runtime`**, `idRanges`, `dependencies`); prefix & ID range |
+| AL-1.2 Environment dev | VS Code + AL Language extension; `AL: Go!`; `launch.json` (sandbox online, authentication); `AL: Download Symbols`; publish (F5 / Ctrl+F5); AL Explorer. **Selalu sandbox sendiri, tidak pernah production.** |
+| AL-1.3 Dasar bahasa | Tipe data (Integer, Decimal, Text/Code, Boolean, Date/DateTime, Enum, List/Dictionary), `var`, procedure & aksesibilitas (`local`/`internal`), control flow, operator ternary, `Label`, `Message`/`Error`/`Confirm` |
+| AL-1.4 Objek inti | Table, TableExtension, Page (Card/List/Document), PageExtension, Enum/EnumExtension, Codeunit; properti penting (`Caption`, `ToolTip`, `ApplicationArea`, `DataClassification`) |
+| AL-1.5 Akses data | `Record`; `Get`, `FindSet`, `FindFirst`; `SetRange`/`SetFilter`; `Insert`/`Modify`/`Delete` dengan/tanpa trigger; `Validate` vs assignment; FlowField & `CalcFields`; `SetLoadFields`; transaksi & `Commit` (hindari) |
+| AL-1.6 Permission & setup | Objek Permission set (kenapa tiap objek butuh permission); pola Setup table + Setup page (single record) |
+| AL-1.7 Debug pertama | AL debugger, breakpoint, Page Inspection, membaca pesan error kompilasi |
+
+**Output AL-1:** extension "MYP Hello BC" (tableext + pageext + page + codeunit + permission set) terpublish di sandbox CRONUS.
+**Gate AL-1:** latihan AL1–AL3 lulus; bisa menjelaskan beda PTE vs AppSource dan fungsi `app.json`.
+
+#### AL-2 — Intermediate (`LevelBadge: Intermediate`)
+| Modul | Isi |
+|---|---|
+| AL-2.1 Event-driven | `EventSubscriber`; integration vs business events; pola `IsHandled`; parameter `var`; cara menemukan event (AL Explorer, Event Recorder ⚠️ verifikasi); `SingleInstance` & manual binding. **Jangan ubah base app — extend lewat event.** |
+| AL-2.2 Posting & dokumen | Alur posting Sales/Purchase (Codeunit 80 / 90 ⚠️ verifikasi); validasi sebelum posting dengan `ErrorInfo` (actionable error); menambah field ke dokumen terposting lewat event |
+| AL-2.3 Page lanjutan | Actions & pengelompokan (`area(Promoted)` / `actionref` ⚠️ verifikasi), FactBox, Document page, visibilitas dinamis, page background task (pengenalan) |
+| AL-2.4 Report | Report & ReportExtension; layout Word/Excel/RDLC; dataset; request page |
+| AL-2.5 Performa dasar | Query object, `SetCurrentKey`, `CalcSums`, `ModifyAll`/`DeleteAll`, `SetLoadFields`; implikasi v29 (satu tabel SQL, key lintas base + extension, AL0914/AL0915) |
+| AL-2.6 Keamanan & error | Permission set group, `Permissions`/`InherentPermissions`; `IsolatedStorage`, `SecretText` ⚠️ verifikasi; `TryFunction`, `ErrorInfo`, collectible errors; `DataClassification` |
+| AL-2.7 Pola ekstensibel | `interface`/`implements`, extensible enum, ekstensi interface; menyediakan event sendiri untuk extension lain |
+| AL-2.8 HTTP & JSON dari AL | `HttpClient`, `JsonObject`/`JsonToken`; OAuth 2.0 dari AL; pola memanggil API eksternal dengan retry |
+| AL-2.9 Custom API page | `PageType = API`, `APIPublisher`/`APIGroup`/`APIVersion`, `EntityName`/`EntitySetName`, `ODataKeyFields = SystemId`; versi API; hubungan dengan deprecation OData/SOAP (Track 3B) |
+
+**Output AL-2:** extension "Approval + validasi + API" (Setup, event yang memblokir posting dengan `ErrorInfo`, custom API page, satu report dengan layout Word, permission set).
+**Gate AL-2:** latihan AL4–AL6 lulus; semua signature event dicocokkan dengan symbols.
+
+#### AL-3 — Advanced (`LevelBadge: Expert`)
+| Modul | Isi |
+|---|---|
+| AL-3.1 Testing | Test codeunit (`Subtype = Test`), `[Test]`, `TestPage`, `[HandlerFunctions]`, library test (Library - Sales dst. ⚠️ verifikasi dependensi), pola Given/When/Then, AL Test Tool, isolasi test |
+| AL-3.2 Debug & diagnosa | Debugger lanjutan, snapshot debugging ⚠️ verifikasi, profiler; telemetry (`Session.LogMessage`, Feature Telemetry); Application Insights & KQL |
+| AL-3.3 Siklus hidup & upgrade | Install & Upgrade codeunit, upgrade tags, `ObsoleteState`/`ObsoleteReason`/`ObsoleteTag`, aturan breaking change, menaikkan `runtime`/`application` tiap wave |
+| AL-3.4 Kualitas kode | CodeCop, UICop, PerTenantExtensionCop, AppSourceCop; file ruleset; AL Guidelines komunitas |
+| AL-3.5 Performa & background | Set-based vs row-by-row, locking, `StartSession`/TaskScheduler/Job Queue, page background task |
+| AL-3.6 DevOps | Git; **AL-Go for GitHub** (template PTE); pipeline compile → test → publish ke sandbox; BcContainerHelper (konsep); terjemahan XLIFF |
+| AL-3.7 PTE vs AppSource (pengenalan) | Kapan PTE cukup; apa yang ditambah validasi AppSource |
+| AL-3.8 *(opsional)* AI di AL | Copilot extensibility, Azure OpenAI dari AL, pengembangan agent — ⚠️ status (GA/Preview) dan biaya |
+
+**Output AL-3:** capstone AL (Bagian 6.6).
+**Gate AL-3:** latihan AL7–AL9 + capstone AL lulus; semua snippet berstatus jelas (dikompilasi / belum).
 
 ### Modul opsional (hanya jika dibutuhkan pekerjaan)
 Manufacturing (BOM, Routing, Production Order), Warehouse (Location, Bin, Put-away/Pick), Service Management, Projects/Jobs, Cost Accounting, Consolidation, Localization Indonesia (PPN, e-Faktur, PPh — **ikuti app partner yang dipakai**), **AI/Agents/MCP** (Copilot, Sales Order Agent, Payables Agent, Agent Designer, MCP server BC — pelajari jika role berkembang ke arah AI integration).
@@ -185,6 +254,12 @@ Format tiap cheatsheet: **1 halaman, tabel/ringkas, bisa dicetak, ada tombol "co
 14. **Configuration Worksheet / RapidStart** — alur worksheet → package → template → questionnaire, urutan langkah export/import/apply, error umum; lihat Bagian 4.3.
 15. **Gap-Fit Analysis Template** — tabel kebutuhan bisnis × fitur BC standar → Fit / Gap / Workaround; kolom: prioritas, rekomendasi solusi, estimasi effort. Lihat Bagian 4.4.
 16. **Process Mapping Cheatsheet** — simbol flowchart/swimlane dasar, template as-is → to-be, contoh proses Order-to-Cash di BC.
+17. **AL: Project & `app.json`** — struktur project, field `app.json`, tabel runtime ↔ versi BC, prefix & ID range, `launch.json`; lihat Bagian 4.5.
+18. **AL: Sintaks & Tipe Data** — tipe data, procedure, control flow, `Label`, operator umum.
+19. **AL: Record & Filter** — `Get`/`Find*`, `SetRange`/`SetFilter` (sintaks filter), `CalcFields`/`CalcSums`, `SetLoadFields`, `Modify`/`Insert` dan trigger.
+20. **AL: Event & Pola Ekstensi** — kerangka `EventSubscriber`, cara menemukan event, `IsHandled`, `ErrorInfo`; ⚠️ signature wajib dicocokkan dengan symbols.
+21. **AL: Testing & Debugging** — kerangka test codeunit, handler, library test, langkah debug, pertanyaan telemetri dasar (KQL).
+22. **AL: Upgrade, Obsolete & Release Checklist** — Install/Upgrade codeunit, `Obsolete*`, apa yang dicek tiap wave (runtime, breaking changes, deprecation).
 
 ### 4.1 Isi minimal cheatsheet API
 
@@ -326,6 +401,16 @@ Aturan emas: prefix object, ID range sendiri, `DataClassification` wajib, tidak 
 
 **Cara pakai:** (1) kumpulkan kebutuhan bisnis dari wawancara/workshop → (2) isi kolom per baris → (3) tandai status setelah uji di sandbox → (4) review dengan stakeholder → (5) kebutuhan berstatus Gap menjadi input Functional Spec untuk developer.
 
+### 4.5 Isi minimal cheatsheet AL lanjutan (#17–#22)
+
+| Runtime AL | Dikirim bersama | Versi internal |
+|---|---|---|
+| 16.0 | BC 2025 release wave 2 | 27.0 |
+| 17.0 | BC 2026 release wave 1 | 28.0 |
+| 18.0 | BC 2026 release wave 2 | 29.0 |
+
+Aturan tiap cheatsheet AL: (1) kode berstatus *belum dikompilasi* sampai diverifikasi pemilik (aturan 8, Bagian 0); (2) maksimal satu halaman A4 saat dicetak — **tanpa komponen Tabs** (lihat `docs/DESIGN.md`); (3) memuat tag `bc_version_verified` dan catatan runtime; (4) memakai prefix demo `MYP` dan data CRONUS saja.
+
 ---
 
 ## 5. Rencana pembangunan situs (fase kecil — ikuti urutan)
@@ -334,7 +419,7 @@ Setiap fase = 1 siklus: kerjakan → tes lokal → **commit message** → update
 
 | Fase | Pekerjaan | Commit message (saran) |
 |---|---|---|
-| 5.0 | Inisialisasi Astro Starlight, struktur folder Bagian 2, `docs/PROGRESS.md`, deploy kosong ke Vercel | `chore: init starlight site and content structure` |
+| 5.0 | Inisialisasi Astro Starlight, struktur folder Bagian 2, `docs/PROGRESS.md`, build lokal; deploy ditunda sampai diminta | `chore: init starlight site and content structure` |
 | 5.1 | Tulis token & komponen dari `docs/DESIGN.md` ke `custom.css`; landing page + sidebar + search + dark mode + komponen VersionBadge/LevelBadge/CheatBox | `feat: design tokens, landing, search, core components` |
 | 5.2 | Level 0 (Orientasi) lengkap | `docs: add level 0 orientation` |
 | 5.3 | Cheatsheet #1–#7 (yang paling sering dipakai harian) | `docs: add core cheatsheets (nav, flow, ledger, posting, errors)` |
@@ -342,10 +427,13 @@ Setiap fase = 1 siklus: kerjakan → tes lokal → **commit message** → update
 | 5.5 | Level 2 Intermediate + cheatsheet #14 (Configuration Worksheet) + latihan M1–M10 | `docs: add level 2 intermediate, rapidstart cheatsheet and exercises` |
 | 5.6 | Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3 | `docs: add business analysis track and exercises` |
 | 5.7 | Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone | `docs: add api track, cheatsheets and capstone` |
+| 5.7a | Jalur AL-1 + cheatsheet #17–#18 + latihan AL1–AL3; **perbarui `docs/DESIGN.md` 4.9 (grup sidebar "AL Developer") dan sidebar sebelum menambah halaman**; pindahkan folder `03-expert/developer-al/` ke `04-al-developer/` | `docs: add al developer path level 1 and cheatsheets` |
+| 5.7b | Jalur AL-2 + cheatsheet #19–#20 + latihan AL4–AL6 | `docs: add al developer path level 2` |
+| 5.7c | Jalur AL-3 + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL | `docs: add al developer path level 3 and capstone` |
 | 5.8 | Glosarium, referensi, release checklist, komponen *progress tracker* (checkbox tersimpan di `localStorage`) | `feat: glossary, references, progress tracker` |
 | 5.9 | Audit: link rusak, `last_verified`, tidak ada data rahasia, uji di mobile | `chore: content audit and link check` |
 
-**Prioritas konten jika waktu terbatas:** Cheatsheet harian (5.3) → Level 1 → Business Analysis (5.6) → API (5.7) → sisanya.
+**Prioritas konten jika waktu terbatas:** Cheatsheet harian (5.3) → Level 1 → Business Analysis (5.6) → API (5.7) → **AL-1 (5.7a)** → AL-2/AL-3 → sisanya. *Jika tugas pertama di kantor adalah AL, geser 5.7a sebelum 5.6 — cukup ubah baris ini dan urutan fase.*
 
 ---
 
@@ -388,7 +476,7 @@ Format setiap latihan: **Tujuan · Prasyarat · Langkah · Kriteria lulus (accep
 - **E6 Custom API page:** expose entity kustom, uji CRUD via REST client. *Lulus:* dokumentasi endpoint + contoh request.
 
 #### Opsional (E7–E8)
-- **E7 AL dasar:** TableExtension + PageExtension (field baru muncul di Customer Card) + validasi + EventSubscriber. *Lulus:* test codeunit hijau.
+- **E7 AL dasar:** *dipindahkan ke Jalur AL (AL1–AL4, Bagian 6.5).*
 - **E8 Agent/MCP (eksplorasi):** aktifkan & uji Sales Order Agent atau Payables Agent di sandbox; tulis evaluasi (akurasi, kasus gagal, review effort). *Lulus:* laporan 1 halaman berisi temuan & rekomendasi.
 
 ### 6.4 Capstone (menggabungkan Track 3A + 3B)
@@ -400,6 +488,29 @@ Format setiap latihan: **Tujuan · Prasyarat · Langkah · Kriteria lulus (accep
 5. **UAT & dokumentasi** — test scenario + eksekusi di sandbox + laporan hasil.
 **Kriteria lulus:** company sandbox terkonfigurasi & bisa dipakai posting transaksi; data master berhasil diimpor via API tanpa error; dokumen BRD + gap-fit + UAT lengkap; tidak ada secret di repo.
 
+### 6.5 Latihan Jalur AL (AL1–AL9)
+
+Semua dikerjakan di **sandbox milik sendiri** dengan data CRONUS dan prefix demo `MYP`. Format sama dengan latihan lain (tujuan · prasyarat · langkah · kriteria lulus · estimasi · hint tertutup).
+
+#### AL-1
+- **AL1 Hello extension:** `AL: Go!` → atur `runtime` sesuai BC 29 (18.0), prefix & ID range → TableExtension Customer + 1 field → PageExtension → publish ke sandbox. *Lulus:* field tampil di Customer Card; extension muncul di Extension Management.
+- **AL2 Data & filter:** codeunit yang menghitung total Sales Line per Customer memakai `SetRange`/`SetFilter`/`CalcSums`, dipanggil dari action di page, dengan `SetLoadFields`. *Lulus:* hasil cocok dengan laporan standar; tidak ada loop N+1.
+- **AL3 Setup + dokumen kustom:** Setup table + Setup page (single record) dan satu dokumen kustom "MYP Request" (Table + Card + List) bernomor lewat No. Series. *Lulus:* nomor berurut; permission set minimal bekerja untuk user uji.
+
+#### AL-2
+- **AL4 Event subscriber:** blokir posting Sales Invoice jika field kustom kosong lewat event (tanpa mengubah base app), dengan `ErrorInfo` + action. *Lulus:* skenario positif/negatif dijalankan manual; signature event dicocokkan dengan symbols.
+- **AL5 Report:** report daftar Open Vendor Ledger Entries dengan layout Word, diekspor ke PDF. *Lulus:* layout dipakai; angka cocok dengan Vendor Ledger.
+- **AL6 HTTP dari AL:** `HttpClient` memanggil API publik/dummy, parse JSON, tangani error/timeout. *Lulus:* error tampil sebagai pesan yang bisa ditindaklanjuti; tidak ada secret di kode. *(E6 — custom API page — dikerjakan bersama jalur ini.)*
+
+#### AL-3
+- **AL7 Testing:** test codeunit untuk AL3 dan AL4 (≥ 1 test negatif per perilaku). *Lulus:* semua test hijau di AL Test Tool.
+- **AL8 Upgrade & obsolete:** versi 1.0 → 1.1: tambah field baru, tandai field lama `ObsoleteState = Pending`, Upgrade codeunit memigrasi data. *Lulus:* data tidak hilang; upgrade tag tercatat.
+- **AL9 CI pipeline *(opsional bila kantor sudah punya pipeline)*:** repo GitHub berisi hanya kode demo dengan AL-Go for GitHub (template PTE): compile + test di CI. *Lulus:* workflow hijau; tidak ada secret/data nyata di repo.
+
+### 6.6 Capstone AL — "BC-side Invoice Staging"
+Sisi BC dari capstone Invoice-to-BC (jika dikerjakan bersama Track 3B): extension PTE yang menerima data invoice lewat **custom API page** ke tabel staging "MYP Vendor Invoice Staging", memvalidasi vendor/item, lalu membuat **Purchase Invoice draft** (belum diposting) lewat tombol/action.
+**Kriteria lulus:** (1) API page menerima create/read dengan `SystemId` sebagai key; (2) validasi vendor/item gagal dengan `ErrorInfo` yang jelas dan tercatat; (3) pembuatan draft idempotent (data yang sama tidak membuat dokumen ganda); (4) permission set minimal; (5) ≥ 6 test (positif + negatif) hijau; (6) Upgrade codeunit untuk perubahan versi; (7) pipeline CI sederhana (opsional); (8) tidak ada data/kode kantor di repo; semua snippet berstatus jelas.
+
 ---
 
 ## 7. Sumber referensi (tautkan, jangan salin)
@@ -409,7 +520,10 @@ Format setiap latihan: **Tujuan · Prasyarat · Langkah · Kriteria lulus (accep
 - Autentikasi S2S & Automation APIs: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication
 - Ketersediaan negara/lokalisasi: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/compliance/apptest-countries-and-translations
 - Contoh kode resmi: GitHub `microsoft/BCTech` (OAuth2 flows, samples)
-- Sertifikasi (verifikasi kode & status terbaru): MB-800 (Functional Consultant); ada juga jalur Developer — cek halaman Microsoft Learn
+- Sertifikasi (verifikasi kode & status terbaru): MB-800 (Functional Consultant) dan **MB-820 (Business Central Developer)** — study guide: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/mb-820
+- Memilih versi runtime AL: https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-choosing-runtime
+- Fitur yang dihapus/diganti (termasuk SOAP/OData halaman Microsoft): https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform
+- Pedoman kode AL komunitas (juga untuk konteks AI): https://alguidelines.dev/docs/vibe-coding
 - Roadmap fitur baru: **AI at Work roadmap** (pengganti Release Plans sejak September 2026)
 
 ---
@@ -421,21 +535,25 @@ Format setiap latihan: **Tujuan · Prasyarat · Langkah · Kriteria lulus (accep
 | Konten cepat usang (wave tiap 6 bulan) | `bc_version_verified` + `last_verified` di tiap halaman; review tiap April & Oktober |
 | Salah fakta (nomor objek, nama field, signature event) | Tandai `⚠️ Verifikasi`, cek di sandbox/symbols sebelum publish |
 | Kebocoran data perusahaan/klien | Larangan Bagian 0 poin 4; audit di Fase 5.9 |
-| Scope terlalu luas (semua modul BC) | Prioritaskan Level 1–2 + Track 3A (BA) / 3B (API); track lain & modul opsional hanya bila ada kebutuhan kerja |
+| Scope terlalu luas (BA + API + AL sekaligus) | Prioritaskan Level 1–2, lalu satu fokus utama per minggu; Jalur AL berjalan paralel tapi bertahap (AL-1 dulu); modul opsional hanya bila ada kebutuhan kerja |
+| Kode AL salah/tidak terkompilasi (agent tidak punya sandbox) | Semua snippet berstatus *belum dikompilasi* sampai pemilik memverifikasi; signature dicocokkan dengan symbols (aturan 8) |
+| Kode/skema/IP kantor atau klien bocor ke repo publik | Hanya kode demo (prefix `MYP`, CRONUS); audit khusus di Fase 5.9 |
+| Perubahan platform v29/v30 (table extension, SOAP/OData) | Catat versi di tiap halaman; baca "What's new" dan *deprecated features* tiap wave |
 | Terlalu lama membangun situs | Starlight + Markdown; batasi fase pembangunan; konten > fitur |
 | Pelanggaran hak cipta | Tulis ulang, ringkas, tautkan sumber resmi |
 | Belajar tanpa praktik | Setiap modul wajib terhubung ke latihan; gate di tiap level |
 | Fitur AI/agent berubah cepat & ada yang masih preview | Tandai status (GA/Preview) + tanggal verifikasi; cek AI at Work roadmap; track ini sekarang opsional |
 
-**Asumsi:** pemilik punya akses sandbox BC (online), bekerja terutama dengan Python, dan tujuan utamanya adalah mampu bekerja dengan BC sebagai **Business Analyst** yang memahami API untuk kebutuhan integrasi — bukan menjadi developer AL atau AI engineer.
+**Asumsi:** pemilik punya akses sandbox BC (online), bekerja dengan Python dan **AL**, dan tujuan utamanya adalah mampu bekerja dengan BC sebagai **Business Analyst** yang memahami API untuk integrasi **sekaligus AL developer** (kode dikerjakan di sandbox pemilik) — bukan AI engineer.
 
 ---
 
 ## 9. Definition of Done
 
 - [ ] Semua level (0–3) punya halaman materi dengan template Bagian 2.
-- [ ] 16 cheatsheet selesai & bisa dicetak 1 halaman.
-- [ ] Latihan B1–B8, M1–M10, E1–E6 + capstone terdokumentasi lengkap dengan kriteria lulus.
+- [ ] 22 cheatsheet (#1–#22) selesai & bisa dicetak 1 halaman.
+- [ ] Latihan B1–B8, M1–M10, E1–E6, AL1–AL9 + capstone (BA/API dan AL) terdokumentasi lengkap dengan kriteria lulus.
+- [ ] Semua snippet AL berstatus jelas (`Belum dikompilasi` / `Dikompilasi di 29.x`) dan tidak ada kode/IP kantor di repo.
 - [ ] Semua UI lolos checklist di akhir `docs/DESIGN.md`.
 - [ ] Search berfungsi; situs nyaman di mobile.
 - [ ] Setiap halaman punya `bc_version_verified` & `last_verified`; tidak ada `⚠️ Verifikasi` yang tersisa tanpa keputusan.

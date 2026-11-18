@@ -4,6 +4,15 @@
 
 ---
 
+## Ringkasan status terkini — 2026-11-18
+
+- Konten selesai dan di-commit sampai Fase 5.5. Fase 5.6 belum ditutup: 9 modul BA + indeks, 2 cheatsheet (#15–#16), dan 3 latihan (E1–E3) tersedia lokal tetapi belum dilacak Git. Ketersediaan berkas tidak menyatakan seluruh acceptance criteria atau praktik sandbox lulus.
+- U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
+- Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks latihan Expert masih menyebut E1–E3 belum tersedia; penyelarasan indeks dan ekspektasi tes 404 Business Analysis belum dilakukan.
+- Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7–5.9 tetap terbuka.
+- Verifikasi situs terakhir sebelum pembaruan dokumen: build 79 halaman, 3 tes unit dan 12 tes regresi urutan latihan lulus. Suite browser penuh belum dinyatakan lulus; detail dan batas ada pada log masing-masing pekerjaan. Tidak ada push/deploy.
+- Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
+
 ## Fase Pembangunan Situs
 
 - [x] **5.0** — Inisialisasi Astro Starlight, struktur folder, docs/PROGRESS.md, build lokal
@@ -14,6 +23,9 @@
 - [x] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
 - [ ] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
 - [ ] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
+- [ ] **5.7a** — AL-1 Fundamentals + cheatsheet #17–#18 + latihan AL1–AL3
+- [ ] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
+- [ ] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
 - [ ] **5.8** — Glosarium, referensi, release checklist, progress tracker component
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
