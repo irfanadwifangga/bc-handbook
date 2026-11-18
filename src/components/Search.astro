@@ -1,0 +1,18 @@
+---
+import DefaultSearch from '@astrojs/starlight/components/Search.astro';
+---
+
+<DefaultSearch {...Astro.props} />
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('site-search button[data-open-modal]');
+  const caption = button?.querySelector('span');
+  const shortcut = button?.querySelector('kbd');
+  if (button && caption && shortcut) {
+    // Pemisah menjaga teks terlihat dan nama aksesibel dibaca sebagai kata yang sama.
+    caption.after(' ');
+    shortcut.querySelector('kbd')?.after(' ');
+    const label = button.textContent?.trim();
+    if (label) button.setAttribute('aria-label', label);
+  }
+</script>

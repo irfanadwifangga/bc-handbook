@@ -124,15 +124,30 @@ a, button, select, summary { transition: background-color var(--bc-transition), 
 .bc-cheat-title { font-weight: var(--bc-weight-label); }
 .bc-footer-note { margin-top: var(--bc-space-5); color: var(--bc-text-muted); font-size: var(--bc-text-xs); }
 .bc-header-link { color: var(--bc-accent); font-size: var(--bc-text-sm); }
+starlight-theme-select select { width: auto; }
 .sl-markdown-content table { display: block; max-width: 100%; overflow: auto; border-collapse: collapse; font-size: var(--bc-text-sm); line-height: var(--bc-line-small); }
 .sl-markdown-content :is(th, td) { padding: var(--bc-space-2) var(--bc-space-3); border-bottom: var(--bc-border-width) solid var(--bc-border); }
 .sl-markdown-content th { position: sticky; top: 0; background: var(--bc-surface-2); font-weight: var(--bc-weight-label); }
 .sl-markdown-content pre { max-width: 100%; overflow-x: auto; white-space: pre; }
 .sl-markdown-content pre code { font-size: var(--bc-text-sm); }
-.bc-cheatsheet :is(th, td):first-child {
+.sl-markdown-content :is(th, td):first-child {
   overflow-wrap: normal;
   word-break: normal;
 }
+
+.pagination-links a, .sl-menu-button, .sl-skip-link {
+  box-shadow: none;
+}
+.starlight-aside {
+  --bc-aside-accent: var(--bc-info);
+  background: var(--bc-surface);
+  color: var(--bc-text);
+  border-color: var(--bc-aside-accent);
+}
+.starlight-aside--tip { --bc-aside-accent: var(--bc-success); }
+.starlight-aside--caution { --bc-aside-accent: var(--bc-warning); }
+.starlight-aside--danger { --bc-aside-accent: var(--bc-danger); }
+.starlight-aside__title { color: var(--bc-aside-accent); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }

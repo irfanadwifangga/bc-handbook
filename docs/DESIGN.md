@@ -25,7 +25,7 @@ Gradient, glassmorphism/blur, bayangan tebal, ilustrasi hero/stock photo, ikon d
 ## 2. Dasar teknis
 
 - Basis: **Astro Starlight** dengan tema bawaan. Kustomisasi **minimal** lewat satu file `src/styles/custom.css` (didaftarkan di `customCss` pada `astro.config.mjs`). **Jangan menulis ulang layout Starlight** kecuali tertulis di dokumen ini.
-- Komponen kustom: Astro components di `src/components/`. Interaktivitas (progress tracker) memakai satu *island* kecil; selain itu **zero JS**.
+- Komponen kustom: Astro components di `src/components/`. Interaktivitas (progress tracker) memakai satu *island* kecil; selain itu **zero JS**, dengan pengecualian enhancement aksesibilitas Search pada Bagian 4.10.
 - Bahasa halaman: `lang="id"`.
 - Tidak ada CDN/font/ikon eksternal. Ikon: SVG inline sederhana (stroke 1.5–2px) atau bawaan Starlight.
 - CSS variable Starlight diverifikasi pada versi 0.43.1 melalui `dist/style/props.css`; pemetaan warna, font, heading, dan lebar konten memakai variabel yang tersedia.
@@ -149,6 +149,14 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Cheatsheets selalu mudah dijangkau (grup tersendiri di sidebar + tautan di header).
 - Pencarian: Pagefind bawaan Starlight; shortcut `Ctrl/Cmd+K`.
 - Footer: teks "Catatan belajar tidak resmi — bukan produk Microsoft. Selalu cek Microsoft Learn." (tanpa logo Microsoft/Dynamics).
+
+---
+
+### 4.10 Search adapter (integrasi Starlight)
+- Wrapper tetap memakai Search bawaan Starlight beserta Pagefind dan shortcut-nya.
+- Skrip kecil memisahkan teks caption dan keycap dengan spasi, lalu menyelaraskan aria-label dengan teks tombol. Tidak menambah island atau library UI.
+- Selector tema memakai lebar intrinsik agar label bahasa Indonesia tampil utuh; tanpa ukuran baru di luar token.
+- Verifikasi mencakup axe, Ctrl/Cmd+K sesuai platform, Escape, mobile, serta tema terang/gelap. Pengujian Windows tidak dianggap bukti pengujian macOS.
 
 ---
 

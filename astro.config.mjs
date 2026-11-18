@@ -7,6 +7,7 @@ export default defineConfig({
       title: 'BC Handbook',
       customCss: ['./src/styles/custom.css'],
       components: {
+        Search: './src/components/Search.astro',
         PageTitle: './src/components/PageTitle.astro',
         SocialIcons: './src/components/HeaderLinks.astro',
         Footer: './src/components/Footer.astro',
