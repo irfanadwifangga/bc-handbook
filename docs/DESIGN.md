@@ -131,7 +131,7 @@ Bobot: 400 isi · 500 label UI/sidebar/nav · 600 semua heading dan judul kecil.
 - Skala spasi (basis 4px): `4 · 8 · 12 · 16 · 24 · 32 · 48 · 64` → token `--bc-space-1…8`.
 - Radius: `--bc-radius-sm: 6px` (badge, input, kode inline) · `--bc-radius-md: 8px` (kartu, CheatBox, code block).
 - Border: 1px `--bc-border`. Bayangan: **tidak dipakai** (pengecualian: dropdown/dialog search bawaan Starlight).
-- Lebar konten maksimum: **72ch** untuk teks; tabel & kode boleh lebih lebar dan **scroll horizontal di dalam kontainernya sendiri**.
+- Lebar konten maksimum: **72ch** untuk teks secara umum; khusus modul dengan TOC pada desktop mulai 72rem memakai token `--bc-module-width: 88ch`. Teks pada layar lebih sempit tetap mengikuti lebar kolom. tabel & kode boleh lebih lebar dan **scroll horizontal di dalam kontainernya sendiri**.
 - Gerak: hanya `transition: background-color, border-color, color 150ms ease-out`. Hormati `prefers-reduced-motion` (matikan transisi).
 - Breakpoint: `≤ 640px` mobile · `641–1024px` tablet · `≥ 1025px` desktop.
 
@@ -145,6 +145,15 @@ Bobot: 400 isi · 500 label UI/sidebar/nav · 600 semua heading dan judul kecil.
 | FlowPlayer / video | `--bc-flow-touch` (44px), `--bc-flow-columns` (3), `--bc-video-ratio` (16 / 9) |
 
 ---
+
+### 3.5 Geometri layout desktop
+- Container header dan halaman maksimum 1440px, terpusat; kolom sidebar kiri dan TOC kanan masing-masing 288px.
+- Artikel memakai sisa kolom; padding horizontal 48px. Modul desktop dengan TOC memakai batas baca 88ch; teks lain tetap 72ch sesuai 3.3. Tabel/kode tetap scroll di kontainer sendiri.
+- Logo di kiri; search dan kontrol header di kanan. Header solid dan border bawah tetap; sidebar/TOC tidak memakai garis vertikal sepanjang layar.
+- Padding atas konten sidebar, panel judul artikel dan isi TOC adalah 48px; posisi visual akhir juga mengikuti wrapper bawaan Starlight. TOC sticky dengan scroll internal sendiri.
+- Penerapan geometri tiga kolom dimulai 72rem, mengikuti breakpoint TOC Starlight terpasang; di bawahnya perilaku sidebar/menu/TOC tetap bawaan. Ini pengecualian operasional terhadap kategori desktop ≥1025px di 3.3, agar tidak mengubah skrip menu/fokus Starlight.
+- Kustomisasi melalui CSS pada markup Starlight terpasang, tanpa mengganti komponen layout. Font, isi, urutan materi, landing dan code block tidak dikerjakan dalam usulan ini.
+- Ukuran ini keputusan proyek berdasarkan screenshot referensi, bukan salinan CSS atau pengukuran situs Next.js. Geometri diterapkan setelah U2 selesai; U3 tetap menunggu persetujuan tersendiri.
 
 ## 4. Komponen (daftar tertutup)
 
@@ -195,13 +204,19 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Di mobile: kontainer `overflow-x: auto`, kolom pertama boleh `position: sticky; left: 0`.
 - Kolom pertama memakai pemenggalan kata normal (istilah seperti *Inventory* tidak boleh terpotong di tengah kata); scroll terjadi di dalam tabel.
 
+- Cheatsheet desktop mulai 72rem: kontainer artikel memakai seluruh kolom tersedia, tabel/kode lebar 100%; paragraf dan list tetap maksimum 72ch. TOC pada sepuluh cheatsheet individual tetap dinonaktifkan sesuai front-matter; indeks cheatsheet tetap memiliki TOC. Aturan mobile dan cetak tidak berubah.
+
 ### 4.9 Navigasi
 - Sidebar dikelompokkan: **Orientasi · Basic · Intermediate · Expert · Cheatsheets · Latihan · Referensi**.
 - Gaya sidebar: label grup `--bc-text-xs`, 600, `--bc-text-muted`, tanpa huruf kapital semua; item `--bc-text-sm`; hover dan item aktif memakai latar `--bc-surface-2`, item aktif berteks `--bc-text` bobot 500 (tanpa bayangan). Tidak ada ikon default.
 - Header: latar solid `--bc-bg` dengan border bawah 1px — **tanpa blur/translucent**.
 - TOC halaman di kanan ("Pada halaman ini") memakai komponen bawaan Starlight; teks `--bc-text-sm` muted, item aktif `--bc-text`.
+- Scrollbar sidebar kiri disembunyikan, tetapi overflow-y tetap auto; scroll mouse/touch, keyboard dan fokus ke item menu tetap bekerja. Tidak mematikan scroll atau menyembunyikan item menu.
+- TOC desktop mulai 72rem: satu garis vertikal 1px --bc-border; setiap item memiliki segmen garis transparan yang berubah menjadi --bc-text saat aktif. Teks aktif/hover --bc-text dan lainnya --bc-text-muted; ukuran 14px, line-height 1.5, padding vertikal 8px, indentasi 16px per tingkat. Tanpa JavaScript atau animasi baru; indikator mengikuti aria-current bawaan Starlight ketika klik/scroll.
 - Cheatsheets selalu mudah dijangkau (grup tersendiri di sidebar + tautan di header).
 - Pencarian: Pagefind bawaan Starlight; shortcut `Ctrl/Cmd+K`.
+- Metadata footer kosong (tidak memiliki elemen EditLink/LastUpdated) disembunyikan pada desktop mulai 72rem, sehingga tidak menyisakan margin/gap sebelum pagination. Metadata yang berisi elemen tetap tampil.
+- Pengecualian JavaScript navigasi: adapter kecil `src/scripts/toc-bottom.js` dimuat melalui wrapper Footer yang sudah ada. Pada halaman yang bisa digulir dan posisi scroll mencapai dasar (toleransi 1px), setiap TOC memilih link terakhir. Di luar dasar halaman, observer Starlight tetap mengatur penanda. Resize dan perubahan aria-current menjadwalkan satu requestAnimationFrame, tanpa animasi atau dependensi baru. Adapter memakai setter protected `current` Starlight 0.43.1 yang diverifikasi pada source terpasang; bila hook tidak ada, adapter tidak mengubah TOC. Saat Starlight di-upgrade, verifikasi ulang hook dan seluruh tes akhir halaman sebelum menerima perubahan.
 - Footer: teks "Catatan belajar tidak resmi — bukan produk Microsoft. Selalu cek Microsoft Learn." (tanpa logo Microsoft/Dynamics) dengan spasi eksplisit sebelum tautan.
 
 ### 4.10 Search adapter (integrasi Starlight)

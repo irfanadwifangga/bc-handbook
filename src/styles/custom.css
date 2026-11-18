@@ -197,6 +197,128 @@ starlight-theme-select select { width: auto; }
   --ec-uiSelFg: var(--bc-text);
 }
 
+/* Usulan layout desktop; belum diterapkan. */
+@media screen and (min-width: 72rem) {
+  :root {
+    --bc-layout-width: 1440px;
+    --bc-sidebar-width: 288px;
+    --bc-toc-width: 288px;
+    --sl-sidebar-width: var(--bc-sidebar-width);
+  }
+  header.header {
+    padding-inline: max(var(--bc-space-5), calc((100% - var(--bc-layout-width)) / 2 + var(--bc-space-5)));
+  }
+  header.header > .header {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: var(--bc-space-5);
+  }
+  [data-has-sidebar] .sidebar-pane {
+    inset-inline-start: max(0px, calc((100% - var(--bc-layout-width)) / 2));
+    width: var(--bc-sidebar-width);
+    border-inline-end: 0;
+  }
+  [data-has-sidebar] .sidebar-content {
+    padding-inline: var(--bc-space-5);
+    padding-top: var(--bc-space-7);
+  }
+  [data-has-sidebar] .main-frame {
+    --sl-content-margin-inline: 0;
+    width: 100%;
+    max-width: var(--bc-layout-width);
+    margin-inline: auto;
+    padding-inline-start: var(--bc-sidebar-width);
+  }
+  [data-has-sidebar] .main-frame > :has(> .main-pane) {
+    align-items: flex-start;
+  }
+  [data-has-sidebar][data-has-toc] .main-pane {
+    flex: 1;
+    min-width: 0;
+    width: calc(100% - var(--bc-toc-width));
+    --sl-content-margin-inline: 0;
+  }
+  [data-has-sidebar] .main-pane .content-panel {
+    padding-inline: var(--bc-space-7);
+  }
+  [data-has-sidebar] .main-pane .content-panel:first-child {
+    padding-top: var(--bc-space-7);
+  }
+  [data-has-sidebar] .right-sidebar-container {
+    flex: 0 0 var(--bc-toc-width);
+    width: var(--bc-toc-width);
+    margin-inline-start: 0;
+    position: sticky;
+    top: var(--sl-nav-height);
+  }
+  [data-has-sidebar] .right-sidebar {
+    position: static;
+    padding-top: var(--bc-space-7);
+    width: 100%;
+    height: calc(100vh - var(--sl-nav-height));
+    border-inline-start: 0;
+  }
+  [data-has-sidebar] .right-sidebar-panel {
+    padding-block: 0;
+    padding-inline: var(--bc-space-5);
+  }
+  [data-has-sidebar] .right-sidebar-panel .sl-container {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media screen {
+  .sidebar-pane {
+    scrollbar-width: none;
+    scrollbar-gutter: auto;
+  }
+  .sidebar-pane::-webkit-scrollbar { display: none; }
+}
+
+@media screen and (min-width: 72rem) {
+  .main-pane:has(.bc-cheatsheet) .content-panel > .sl-container {
+    max-width: none;
+  }
+  .bc-cheatsheet > :is(p, ul, ol, blockquote) {
+    max-width: var(--bc-content-width);
+  }
+  .bc-cheatsheet :is(table, .expressive-code) {
+    width: 100%;
+  }
+  .bc-cheatsheet :is(th, td):last-child { width: 100%; }
+  .right-sidebar-panel starlight-toc > nav > ul {
+    border-inline-start: var(--bc-border-width) solid var(--bc-border);
+  }
+  .right-sidebar-panel starlight-toc a {
+    margin-inline-start: calc(-1 * var(--bc-border-width));
+    border-inline-start: var(--bc-border-width) solid transparent;
+    border-radius: 0;
+    padding-block: var(--bc-space-2);
+    padding-inline: calc(var(--bc-space-4) * var(--depth, 0) + var(--bc-space-4)) var(--bc-space-2);
+    font-size: var(--bc-text-sm);
+    line-height: var(--bc-line-small);
+    color: var(--bc-text-muted);
+  }
+  .right-sidebar-panel starlight-toc a:hover {
+    color: var(--bc-text);
+  }
+  .right-sidebar-panel starlight-toc a[aria-current='true'] {
+    border-inline-start-color: var(--bc-text);
+    color: var(--bc-text);
+  }
+  .right-sidebar-panel starlight-toc h2 {
+    font-size: var(--bc-text-sm);
+  }
+}
+
+@media screen and (min-width: 72rem) {
+  :root { --bc-module-width: 88ch; }
+  [data-has-sidebar][data-has-toc] .main-pane {
+    --sl-content-width: var(--bc-module-width);
+  }
+  .main-pane footer > .meta:not(:has(*)) { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
 }

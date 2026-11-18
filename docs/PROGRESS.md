@@ -125,3 +125,14 @@
 - Tidak ada dependensi proyek baru. Alat tes sementara dan hasil cetak tidak dilacak Git. Browser tes serta server preview dihentikan setelah pemeriksaan.
 - Batas: transaksi sandbox belum dijalankan; Lighthouse tidak diulang untuk ketujuh cheatsheet. Warning i18n kosong, fallback 404, dan sitemap tanpa site masih ada; build berhasil. Tidak ada deploy atau push.
 - Fase 5.4 menunggu persetujuan.
+
+### Perbaikan layout dan TOC akhir halaman — 2026-11-18
+
+- Atas persetujuan pengguna, layout desktop memakai container 1440px, sidebar/TOC 288px, header sejajar, scrollbar sidebar disembunyikan tanpa mematikan scrolling, tabel cheatsheet memakai ruang tersedia, dan TOC memakai garis penanda vertikal. Batas baca modul desktop ber-TOC menjadi 88ch; stack font tidak berubah dan U3 tidak dimulai.
+- Opsi B yang disetujui diterapkan: pada General Ledger 1920px, artikel 621 → 759px, gap artikel–TOC 219 → 81px, jarak sebelum pagination 96 → 24px dengan menyembunyikan metadata footer kosong. DESIGN.md mencatat keputusan dan pengecualian ini.
+- Diagnosis menemukan 61/67 route ber-TOC tidak memilih bagian terakhir pada dasar halaman. Adapter src/scripts/toc-bottom.js diimpor melalui Footer.astro, menyelaraskan TOC desktop/mobile hanya pada dasar halaman; observer native tetap menangani posisi lain. Adapter memakai setter protected Starlight 0.43.1, bukan API publik stabil, sehingga wajib diuji ulang saat upgrade.
+- Verifikasi hasil build nyata tanpa injeksi prototipe: bun run build berhasil menghasilkan 79 halaman dan indeks Pagefind; bun test 3 lulus; tes TOC 12 lulus/6 dilewati, meliputi 67 route × 6 kondisi (1920/1280/360px, light/dark) = 402 keadaan tanpa overflow, serta kembali ke awal pada desktop/mobile.
+- Audit browser 347 lulus/21 dilewati: 84 URL × 4 kondisi = 336 keadaan, 0 pelanggaran Axe WCAG 2A/AA + 2.1A/AA, 0 overflow body, 0 error JavaScript. Tujuh cheatsheet 01–07 masing-masing tetap satu halaman A4. Tes interaksi terpilih 60 lulus. Lighthouse mobile landing Performance 97, Accessibility 100.
+- Suite Playwright penuh tanpa filter belum lulus: ekspektasi lama 404 untuk /03-expert/business-analysis/ sudah tidak cocok dengan materi lokal yang tersedia, sehingga kasus tersebut dikecualikan dari tes interaksi; audit tetap memeriksa route aktual. Proses browser pertama terputus dengan exit code 4; pengulangan selesai dengan exit code 0. Warning build lama i18n, fallback 404 dan sitemap tanpa site tetap ada.
+- Artefak dan screenshot hasil build: .codex-tmp/toc-bottom-verified/ (tidak masuk Git). Firefox/WebKit, screen reader, macOS, resize dan audit keyboard TOC khusus belum diuji. Tidak ada dependensi baru, push, deploy, atau perubahan materi; pekerjaan Fase 5.6/favicon yang sudah ada tidak dimasukkan ke perubahan ini.
+- Commit message usulan: `fix: align documentation layout and final toc section`.
