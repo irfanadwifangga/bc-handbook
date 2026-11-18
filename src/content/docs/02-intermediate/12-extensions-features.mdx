@@ -1,0 +1,58 @@
+---
+title: "2.12 Extensions dan Feature Management"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 12
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Tinjau perubahan aplikasi/fitur sebelum memengaruhi proses bisnis. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+App dari Marketplace/AppSource dan per-tenant extension menambah atau mengubah perilaku BC. Extension Management serta admin center memiliki konteks permission berbeda. Feature Management mengendalikan fitur yang masih opsional; fitur yang sudah mandatory tidak lagi memiliki pilihan nonaktif yang sama. Install, update, uninstall dan penghapusan data adalah tindakan yang berbeda.
+
+## Langkah di BC
+
+1. Di sandbox, inventaris nama app, publisher, versi, dependensi dan alasan bisnis. Gunakan Help app untuk memahami setup serta batas dukungan.
+2. Tinjau opsi pengelolaan pada Extension Management/admin center dengan administrator berizin; jangan berasumsi semua admin Microsoft 365 boleh install.
+3. Sebelum pemasangan/pembaruan demo, siapkan skenario UAT dan pemulihan yang disetujui. Jangan memakai uninstall/delete data sebagai langkah percobaan umum.
+4. Buka Feature Management dan baca detail satu fitur: status, cakupan environment, waktu mandatory serta kebutuhan migrasi data.
+5. Uji transaksi/report terdampak pada sandbox. Kemampuan menonaktifkan kembali harus dicek per fitur dan tahap migrasinya.
+6. Catat keputusan dan bukti UAT; perubahan produksi di luar cakupan fase ini. Jalur upload PTE dan UI dapat berbeda menurut versi/platform.
+
+## Cheat box
+
+<CheatBox>
+
+- Catat publisher dan dependensi.
+- App perlu izin dan setup.
+- Install berbeda dari update.
+- Uninstall berbeda dari delete data.
+- Fitur mandatory perlu diperhatikan.
+- Uji perubahan di sandbox dahulu.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengaktifkan fitur pada seluruh environment tanpa UAT, menganggap uninstall mengembalikan seluruh kondisi lama, atau memilih app hanya dari namanya.
+:::
+
+## Latihan terkait
+
+[M9 — Configuration Worksheet](/latihan/intermediate/m9-rapidstart/).
+
+## Sumber resmi
+
+- [Apps dan extensions](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-extensions).
+- [Feature Management](https://learn.microsoft.com/en-us/dynamics365/business-central/admin-feature-management).
+- [Mandatory features](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/feature-management-mandatory-features).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

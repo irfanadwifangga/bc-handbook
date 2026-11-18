@@ -1,0 +1,57 @@
+---
+title: "2.15 Audit dan tata kelola data"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 15
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Tentukan bukti perubahan yang perlu disimpan dan bedakan logging dari kebijakan penghapusan. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Change Log merekam perubahan pada tabel/field yang dipilih; bukan rekaman otomatis seluruh aktivitas bisnis. Retention Policies menghapus data lama pada tabel yang diizinkan. Klasifikasi data dan aturan retensi harus mengikuti kebutuhan organisasi serta kewajiban yang berlaku; contoh ini tidak menetapkan masa retensi legal.
+
+## Langkah di BC
+
+1. Di salinan CRONUS, pilih satu field master data demo dan tujuan audit yang jelas. Catat siapa yang boleh mengubah setup logging.
+2. Tinjau Change Log Setup, tabel/field dan jenis perubahan yang diperlukan. Hindari mengaktifkan semua field tanpa menilai volume serta data sensitif.
+3. Lakukan perubahan deskripsi demo, lalu tinjau Change Log Entries. Jika belum muncul, periksa sesi/refresh sesuai dokumentasi; jangan menyimpulkan tidak dicatat.
+4. Buat matriks kategori data → owner → kebutuhan audit → periode simpan yang harus disetujui. Gunakan label/pengganti untuk identitas nyata.
+5. Tinjau Retention Policies dan allowed tables tanpa Apply pada data produksi. Pahami bahwa policy otomatis dapat membuat job queue penghapusan.
+6. Catat cara review log dan perubahan policy. Bedakan posted ledger audit trail, Change Log, agent history dan job queue log.
+
+## Cheat box
+
+<CheatBox>
+
+- Pilih field audit yang relevan.
+- Change Log tidak mencakup semua aktivitas.
+- Perhatikan sesi saat melihat perubahan.
+- Retention dapat menghapus data.
+- Allowed tables membatasi cakupan.
+- Owner menyetujui kebijakan simpan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap Change Log adalah backup, menerapkan retention tanpa persetujuan, atau menyimpan data rahasia dalam screenshot/log pelatihan.
+:::
+
+## Latihan terkait
+
+[M8 — Permission auditor](/latihan/intermediate/m8-permissions/) · [M10 — Job Queue debugging](/latihan/intermediate/m10-job-queue/).
+
+## Sumber resmi
+
+- [Change Log](https://learn.microsoft.com/en-us/dynamics365/business-central/across-log-changes).
+- [Retention policies](https://learn.microsoft.com/en-us/dynamics365/business-central/admin-data-retention-policies).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

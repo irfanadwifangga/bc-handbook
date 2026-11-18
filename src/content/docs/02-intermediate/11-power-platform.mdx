@@ -1,0 +1,56 @@
+---
+title: "2.11 Power Platform"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 11
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Petakan peran Power Automate, Power Apps dan Dataverse pada skenario BC. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Connector menghubungkan produk Power Platform dengan API BC. Power Automate menjalankan flow; Power Apps membuat antarmuka; Dataverse menyediakan model data/integrasi tersendiri. Koneksi tidak membuat semua data tersinkron otomatis dan tidak menghapus batas permission, license, kapasitas atau retry.
+
+## Langkah di BC
+
+1. Pilih skenario demo: pemberitahuan internal saat record uji berubah. Tentukan trigger, aksi, owner dan kondisi selesai sebelum membuat flow.
+2. Tinjau connector/action BC yang tersedia pada tenant latihan. Catat environment, company dan hak koneksi tanpa menyalin nilai kredensial.
+3. Gunakan flow sandbox dengan penerima uji atau log internal. Jangan memakai auto-posting atau mengirim email nyata untuk demonstrasi awal.
+4. Untuk Power Apps, gambarkan input dan validasi sederhana; jelaskan record/API yang dibaca/diubah serta user yang menjalankan koneksi.
+5. Untuk Dataverse, tentukan tabel, arah sinkronisasi, mapping serta penanganan konflik. Bedakan virtual access dari penyalinan/synchronization data.
+6. Uji kasus gagal dan record ganda pada demo terkontrol; catat run history dan tetapkan owner yang memantau kegagalan sebelum pemakaian nyata.
+
+## Cheat box
+
+<CheatBox>
+
+- Connector memakai API.
+- Automate: alur kerja.
+- Apps: antarmuka.
+- Dataverse: model/integrasi data.
+- Permission dan license tetap berlaku.
+- Catat retry, duplikasi dan owner.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengira Dataverse selalu wajib, membangun flow tanpa owner, atau mengulang aksi tulis tanpa memeriksa duplikasi.
+:::
+
+## Latihan terkait
+
+[M10 — Job Queue debugging](/latihan/intermediate/m10-job-queue/).
+
+## Sumber resmi
+
+- [Power Platform integration](https://learn.microsoft.com/en-us/dynamics365/business-central/powerplatform-integration-overview).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

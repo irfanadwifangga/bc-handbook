@@ -1,0 +1,58 @@
+---
+title: "2.2 Posting Groups dan VAT"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Telusuri pemilihan akun serta pajak dari kombinasi posting groups. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+General Business × General Product menentukan akun transaksi pada General Posting Setup. Customer/Vendor Posting Group mengatur akun piutang/utang; Inventory Posting Setup mempertimbangkan location dan Inventory Posting Group. VAT Business × VAT Product merupakan kombinasi terpisah untuk metode, tarif dan akun pajak. Akun/tarif tidak universal antarcompany.
+
+## Langkah di BC
+
+1. Di salinan CRONUS, pilih satu customer, vendor dan item demo. Catat general, specific dan VAT posting groups masing-masing.
+2. Cari kombinasi aktual di General Posting Setup; telusuri akun Sales/Purchases serta akun terkait yang diperlukan skenario.
+3. Periksa Customer/Vendor Posting Group dan Inventory Posting Setup pada location yang dipakai. Jangan mengisi nomor akun dari contoh internet.
+4. Buka VAT Posting Setup dan tinjau pasangan VAT, calculation type, persentase serta akun sales/purchase VAT. Gunakan setup demo yang disetujui.
+5. Buat transaksi kecil dengan harga tidak termasuk pajak dan tanpa diskon. Preview, lalu cocokkan akun/nilai terhadap matriks setup sebelum Post.
+6. Untuk error setup, catat pasangan yang benar-benar dipakai pada baris transaksi. Perbaiki kombinasi itu lalu ulangi preview; jangan menghapus kombinasi bersama untuk bereksperimen.
+
+## Cheat box
+
+<CheatBox>
+
+- General groups memilih akun transaksi.
+- Specific groups menghubungkan subledger.
+- Inventory juga mempertimbangkan location.
+- VAT groups bukan General groups.
+- Tarif latihan bukan aturan pajak Indonesia.
+- Cocokkan setup dengan baris transaksi.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengganti Customer Posting Group untuk memperbaiki akun revenue, menganggap VAT otomatis sama di semua lokalisasi, atau memakai angka pajak demo pada transaksi nyata.
+:::
+
+## Latihan terkait
+
+[M1 — Posting group debugging](/latihan/intermediate/m1-posting-groups/) · [M2 — VAT demo](/latihan/intermediate/m2-vat/).
+
+## Sumber resmi
+
+- [Posting groups](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-posting-groups).
+- [VAT setup](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-vat).
+- [VAT pada transaksi](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-work-with-vat).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

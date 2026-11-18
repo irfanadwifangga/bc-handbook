@@ -1,0 +1,58 @@
+---
+title: "2.4 Approval dan Workflow"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Rancang persetujuan pembelian dengan requester dan approver yang berbeda. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Workflow menghubungkan event, kondisi dan response. Template adalah titik awal, bukan bukti proses sudah aman. Approval User Setup menentukan hubungan user dan limit; notifikasi hanya membantu memberi tahu, bukan pengganti approval entry. Pengujian harus mencakup threshold, penolakan, pembatalan dan batas permission.
+
+## Langkah di BC
+
+1. Gunakan dua user uji berlisensi/berizin sesuai sandbox. Tentukan threshold demo dan aturan bisnis dalam satu kalimat.
+2. Tinjau Approval User Setup: requester, approver, limit dan substitute bila dipakai. Jangan mengasumsikan administrator otomatis menjadi approver.
+3. Buat workflow dari template purchase approval yang tersedia. Tinjau event, kondisi amount, response dan status sebelum Enable.
+4. Atur notifikasi demo. Jika email dipakai, gunakan akun uji; jangan mengirim ke pihak nyata selama latihan.
+5. Buat PO di atas threshold sebagai requester, kirim approval dan periksa approval entries/status. Uji apakah Release/Post dibatasi saat pending.
+6. Masuk sebagai approver, setujui, lalu periksa requester dapat melanjutkan sesuai izin. Ulangi kasus reject dan PO di bawah threshold untuk memastikan kondisi benar.
+
+## Cheat box
+
+<CheatBox>
+
+- Template perlu ditinjau.
+- Pisahkan requester dan approver.
+- Limit approval harus konsisten.
+- Notifikasi bukan persetujuan.
+- Uji sebelum dan sesudah approve.
+- Catat approval entries.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengaktifkan workflow tanpa meninjau kondisi, menguji hanya dengan user SUPER, atau menyimpulkan approval berhasil hanya karena email terkirim.
+:::
+
+## Latihan terkait
+
+[M4 — Approval dua user](/latihan/intermediate/m4-approval/).
+
+## Sumber resmi
+
+- [Purchase approval walkthrough](https://learn.microsoft.com/en-us/dynamics365/business-central/walkthrough-setting-up-and-using-a-purchase-approval-workflow).
+- [Approval users](https://learn.microsoft.com/en-us/dynamics365/business-central/across-how-to-set-up-approval-users).
+- [Workflow notifications](https://learn.microsoft.com/en-us/dynamics365/business-central/across-how-to-specify-when-and-how-to-receive-notifications).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

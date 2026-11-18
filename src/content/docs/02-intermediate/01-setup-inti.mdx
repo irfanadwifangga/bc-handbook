@@ -1,0 +1,58 @@
+---
+title: "2.1 Setup inti"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Petakan setup yang memengaruhi posting sebelum mengubah konfigurasi company. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Setup inti mengikat aturan tanggal, nomor dokumen, penjualan, pembelian dan persediaan. Satu error transaksi dapat berasal dari setup lain. Accounting Periods membagi periode pelaporan; rentang tanggal posting dikontrol General Ledger Setup dan User Setup. Mengubah setup global agar satu transaksi lolos dapat memengaruhi transaksi berikutnya.
+
+## Langkah di BC
+
+1. Gunakan salinan CRONUS di sandbox. Catat company, work date, owner perubahan dan kondisi awal; hentikan integrasi demo yang tidak diperlukan.
+2. Dari Manual Setup, buka General Ledger Setup, Sales & Receivables Setup, Purchases & Payables Setup dan Inventory Setup. Buat matriks halaman → field → dampak → penanggung jawab.
+3. Di User Setup, bandingkan Allow Posting From/To dengan rentang company. Pilih tanggal latihan yang sah, tanpa membuka periode produksi.
+4. Tinjau No. Series dan penggunaannya pada dokumen demo. Pastikan seri serta rentang tanggalnya sesuai; jangan mengganti nomor dokumen terposting.
+5. Telusuri satu draft sales/purchase ke customer/vendor, item, posting groups dan akun. Gunakan Preview Posting sebagai pemeriksaan lintas setup.
+6. Simpan perubahan demo yang disetujui dan bukti sebelum/sesudah. Jika gagal, catat pesan asli serta kombinasi field, bukan mengubah semua setup sekaligus.
+
+## Cheat box
+
+<CheatBox>
+
+- Catat company dan work date.
+- Pisahkan tanggal posting dari accounting period.
+- Review setup Sales, Purchase dan Inventory.
+- No. Series mengatur penomoran.
+- Preview Posting sebelum Post.
+- Ubah satu penyebab yang sudah dipahami.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap work date selalu sama dengan posting date, membuka batas tanggal terlalu luas, atau mengubah setup company tanpa meninjau dampak pada user lain.
+:::
+
+## Latihan terkait
+
+[M1 — Posting group debugging](/latihan/intermediate/m1-posting-groups/) · [M9 — Configuration Worksheet](/latihan/intermediate/m9-rapidstart/).
+
+## Sumber resmi
+
+- [Setup overview](https://learn.microsoft.com/en-us/dynamics365/business-central/setup).
+- [Accounting periods](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-accounting-periods-and-fiscal-years).
+- [Posting groups](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-posting-groups).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

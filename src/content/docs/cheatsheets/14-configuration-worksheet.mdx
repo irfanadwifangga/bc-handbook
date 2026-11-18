@@ -1,0 +1,35 @@
+---
+title: "Configuration Worksheet / RapidStart"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 14
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+Untuk **company baru di sandbox CRONUS**, bukan impor rutin company produksi. Versi BC, schema dan extensions harus sesuai. Salin package bawaan sebelum mengubahnya.
+
+| Komponen | Peran |
+| --- | --- |
+| Configuration Worksheet | Susun tabel, kelompok dan pekerjaan; lalu Assign Package. |
+| Configuration Package | Pilih tabel/field (Include Field), data, serta urutan dependensi. |
+| Configuration Template | Default record master; review sebelum dipakai. |
+| Configuration Questionnaire | Pertanyaan setup; format jawaban perlu review manual. |
+
+**Urutan:** Worksheet → Assign Package → review field/relasi → export Excel → isi demo → import → Validate & cek Package Errors → Apply Package pada tujuan baru → cocokkan setup pages. Paket juga dapat dipindah sebagai .rapidstart.
+
+**Sebelum Apply:** company benar; data demo; izin tabel langsung; dependensi tersedia; validation aktif; Package Errors nol. Get Related Tables dapat melewatkan relasi bersyarat/terfilter. Jangan impor posted ledger. Questionnaire memakai Apply Answers setelah review, bukan menggantikan validasi package.
+
+**Jika gagal:** baca field/record error, periksa key, relasi dan format; perbaiki sumber lalu uji subset kecil. Import belum berarti data sudah diterapkan. Exclude Configuration Tables menentukan apakah metadata worksheet/template/questionnaire ikut dalam paket.
+
+Latihan rinci: [M9](/latihan/intermediate/m9-rapidstart/). Verifikasi dokumen; migrasi sandbox belum dijalankan penulis.
+
+## Sumber resmi
+
+- [Configuration packages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/set-up-standard-company-configuration-packages).
+- [Apply configuration packages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/apply-company-configuration-packages).
+
+</div>

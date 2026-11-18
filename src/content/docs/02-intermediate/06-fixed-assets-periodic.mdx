@@ -1,0 +1,59 @@
+---
+title: "2.6 Fixed Assets dan proses periodik"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Telusuri acquisition/depreciation dan bedakan proses periodik dari penutupan tahun. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Fixed Asset card mendefinisikan aset; depreciation book menentukan aturan perhitungan serta integrasi G/L. FA posting group menentukan akun terkait. Calculate Depreciation menyiapkan perhitungan/jurnal, bukan bukti bahwa penyusutan sudah terposting. Recurring Journal dan allocation membantu transaksi berkala; year-end closing memiliki rangkaian tersendiri.
+
+## Langkah di BC
+
+1. Di salinan CRONUS, pilih FA posting group dan depreciation book demo yang sudah ditinjau; catat metode, tanggal mulai, umur dan integrasi G/L.
+2. Buat aset uji dan hubungkan depreciation book. Gunakan FA G/L Journal untuk skenario yang terintegrasi; jangan mematikan integrasi sebagai jalan pintas.
+3. Catat acquisition cost demo melalui alur yang disetujui, preview dan Post. Periksa FA Ledger serta G/L terkait.
+4. Jalankan Calculate Depreciation untuk aset/periode latihan. Tinjau hasil jurnal, tanggal, hari serta jumlah sebelum Post.
+5. Bandingkan acquisition, accumulated depreciation dan book value. Cocokkan ke G/L hanya untuk book/type transaksi yang diintegrasikan.
+6. Tinjau satu recurring journal/aturan allocation demo tanpa menjalankan close year. Bedakan pembentukan baris periodik, posting jurnal dan penutupan income statement.
+
+## Cheat box
+
+<CheatBox>
+
+- FA card berbeda dari depreciation book.
+- Integration menentukan hubungan G/L.
+- Calculate belum sama dengan Post.
+- Preview tanggal dan hasil jurnal.
+- Rekonsiliasi FA Ledger dengan G/L.
+- Year-end bukan satu tombol universal.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menghitung depreciation dua kali untuk periode sama, memilih journal yang tidak sesuai integrasi, atau menjalankan penutupan tahun hanya untuk mencoba laporan.
+:::
+
+## Latihan terkait
+
+[M6 — Fixed asset dan depreciation](/latihan/intermediate/m6-fixed-asset/).
+
+## Sumber resmi
+
+- [Fixed asset setup](https://learn.microsoft.com/en-us/dynamics365/business-central/fa-how-setup-general).
+- [Depreciation](https://learn.microsoft.com/en-us/dynamics365/business-central/fa-how-depreciate-amortize).
+- [General journals](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-work-general-journals).
+- [Accounting periods](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-accounting-periods-and-fiscal-years).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

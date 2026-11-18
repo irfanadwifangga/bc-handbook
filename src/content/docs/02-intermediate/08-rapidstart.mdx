@@ -1,0 +1,59 @@
+---
+title: "2.8 Configuration Worksheet dan RapidStart"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 8
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Rencanakan migrasi setup ke company baru dengan tahapan review yang jelas. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Worksheet mengelompokkan tabel dan pekerjaan; Package membawa field/data; Template memberi default; Questionnaire mengumpulkan jawaban setup. RapidStart ditujukan untuk inisialisasi company, bukan alat impor rutin pada company produksi. Import ke package belum sama dengan Apply ke tabel tujuan.
+
+## Langkah di BC
+
+1. Buat company tujuan baru di sandbox; samakan versi BC, schema dan extensions sumber/tujuan. Salin package default, jangan ubah aslinya.
+2. Di Configuration Worksheet, susun tabel setup kecil, lalu Assign Package. Periksa relasi secara manual; Get Related Tables tidak menjamin semua relasi bersyarat ikut.
+3. Pada package, pilih field melalui Include Field dan urutkan dependensi. Hindari tabel posted ledger; jangan menonaktifkan validation agar data bermasalah lolos.
+4. Export Excel atau .rapidstart; isi data demo. Import kembali, tinjau Package Errors lalu Validate sebelum Apply Package ke company baru.
+5. Siapkan satu template default Customer dan questionnaire berisi tiga pertanyaan. Review format jawaban secara manual sebelum Apply Answers.
+6. Cocokkan hasil pada setup pages. Untuk migrasi master lewat Edit in Excel, lihat M7; untuk statement bank/Data Exchange Definition, lihat modul Bank. Keduanya bukan tahap yang otomatis dijalankan package.
+
+## Cheat box
+
+<CheatBox>
+
+- Worksheet: rencana.
+- Package: field dan data.
+- Template: default record.
+- Questionnaire: jawaban setup.
+- Import → Validate → review → Apply.
+- Company baru, versi/schema sesuai.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Apply ke company yang salah, mengimpor ledger terposting, mengabaikan dependensi relasi, atau menganggap questionnaire otomatis memvalidasi semua format jawaban.
+:::
+
+## Latihan terkait
+
+[M9 — Configuration Worksheet](/latihan/intermediate/m9-rapidstart/) · [M7 — Migrasi master lewat Excel](/latihan/intermediate/m7-migrasi-excel/).
+
+## Sumber resmi
+
+- [Configuration packages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/set-up-standard-company-configuration-packages).
+- [Apply configuration packages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/apply-company-configuration-packages).
+- [Open/Edit in Excel](https://learn.microsoft.com/en-us/dynamics365/business-central/across-work-with-excel).
+- [Customer templates](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-register-new-customers).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

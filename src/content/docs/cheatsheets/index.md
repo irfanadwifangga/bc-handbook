@@ -6,7 +6,7 @@ sidebar:
   order: 0
 ---
 
-Tujuh cheatsheet utama tersedia untuk pemakaian harian. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
+Delapan cheatsheet tersedia: tujuh ringkasan harian dan Configuration Worksheet / RapidStart. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
@@ -35,3 +35,7 @@ Tujuh cheatsheet utama tersedia untuk pemakaian harian. Gunakan contoh hanya di 
 ## Pre-posting checklist
 
 [Buka cheatsheet](./07-pre-posting-checklist/).
+
+## Configuration Worksheet / RapidStart
+
+[Buka cheatsheet](./14-configuration-worksheet/) — alur inisialisasi company baru; latihan terkait [M9](/latihan/intermediate/m9-rapidstart/).

@@ -1,0 +1,58 @@
+---
+title: "2.9 Permissions dan Users"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 9
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Tinjau akses efektif berdasarkan license, permission sets dan company scope. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+License memberi batas entitlement; permission sets menentukan akses dalam batas itu. Role/profile mengatur tampilan dan bukan pengamanan data. Untuk target BC 29.x, User Groups dibahas sebagai istilah legacy; gunakan Security Groups untuk pengelolaan kelompok. Permission set dapat menyertakan set lain, sehingga pemeriksaan tidak berhenti pada satu assignment.
+
+## Langkah di BC
+
+1. Di sandbox, inventaris user uji, license, company scope dan tugas yang benar-benar dibutuhkan. Jangan menyalin tenant/user nyata ke catatan publik.
+2. Buka Permission Sets dan tinjau Read/Insert/Modify/Delete/Execute, termasuk included/excluded permissions. Kelompok permission set bukan alasan mengasumsikan halaman bernama Permission Set Group tersedia.
+3. Tinjau Security Groups dan assignment langsung user. Perhatikan bahwa gabungan assignment dapat memberi akses lebih luas.
+4. Gunakan tampilan effective permissions pada user uji untuk memeriksa tabel dan company sasaran. Microsoft 365 access melalui Teams bukan pengganti otomatis license operasional BC.
+5. Uji user auditor: baca ledger yang disetujui harus berhasil; mengubah master data atau posting harus ditolak. Gunakan sesi user auditor sendiri, bukan impersonasi kesimpulan dari SUPER.
+6. Dokumentasikan izin minimum dan exception yang ditemukan. Hindari pemberian SUPER agar tes cepat lulus.
+
+## Cheat box
+
+<CheatBox>
+
+- License membatasi entitlement.
+- Profile bukan security boundary.
+- Tinjau effective permissions.
+- Periksa seluruh assignment.
+- User Groups adalah legacy.
+- Uji baca dan penolakan tulis.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyembunyikan tombol sebagai satu-satunya kontrol akses, menilai satu permission set tanpa assignment lain, atau menganggap semua Microsoft 365 user bisa posting BC.
+:::
+
+## Latihan terkait
+
+[M8 — Permission auditor](/latihan/intermediate/m8-permissions/).
+
+## Sumber resmi
+
+- [Permissions](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-define-granular-permissions).
+- [User Groups (legacy)](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-legacy-user-groups).
+- [Microsoft 365 access FAQ](https://learn.microsoft.com/en-us/dynamics365/business-central/admin-access-with-m365-license-faq).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

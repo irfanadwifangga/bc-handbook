@@ -11,13 +11,23 @@
 - [x] **5.2** — Level 0 Orientasi
 - [x] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
 - [x] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
-- [ ] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
+- [x] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
 - [ ] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
 - [ ] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
 - [ ] **5.8** — Glosarium, referensi, release checklist, progress tracker component
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.5 — 2026-11-18
+
+- Modul Intermediate 2.1–2.16, latihan M1–M10 dan cheatsheet #14 Configuration Worksheet / RapidStart tersedia. Seluruh halaman memuat metadata serta sumber Microsoft; modul memakai tujuh bagian dan CheatBox enam baris, latihan memakai kriteria daftar biasa dan hint tertutup. Modul 2.17 dan Intercompany tetap opsional/ditunda.
+- Verifikasi dokumen membedakan User Groups legacy dari Security Groups, permission efektif dari profile/license, serta VAT simulasi dari aturan pajak Indonesia. Availability agents diperiksa menurut region/bahasa/tenant; tidak ada aktivasi AI atau billing. Import, Validate dan Apply RapidStart dibedakan; package kecil tidak dianggap konfigurasi penuh company.
+- Sebelum penerapan diff indeks: build 64 halaman/Pagefind berhasil; bun test lulus; audit struktur 16 modul dan 10 latihan lulus. Audit seluruh HTML menemukan 5589 tautan internal/anchor valid dan hanya temuan aset /favicon.svg pada 64 halaman. Favicon tetap ditunda sesuai arahan pengguna, sehingga audit aset keseluruhan tidak dinyatakan bersih.
+- Audit browser 108 kombinasi halaman baru pada desktop 1280px/mobile 360px dan light/dark lulus: status 200, satu H1, axe, overflow body, error JavaScript, CheatBox, serta hint lewat keyboard. Satu pemeriksaan cetak lulus: PDF cheatsheet satu halaman A4; tiga pemeriksaan cetak di proyek lain sengaja dilewati. Artefak lokal di .codex-tmp/phase-5.5/.
+- Preview tes dihentikan otomatis. Tidak ada perubahan komponen/CSS/dependensi, operasi tenant, praktik sandbox, transfer bank, email nyata, push atau deploy. Warning i18n kosong, fallback 404 dan sitemap tanpa site tetap ada; build berhasil. Firefox/WebKit, screen reader dan gate praktik BC belum diuji.
+- Commit message: docs: add level 2 intermediate, rapidstart cheatsheet and exercises. Fase 5.6 belum dimulai.
+
 
 ### Hasil Fase 5.4 — 2026-11-18
 

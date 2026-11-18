@@ -1,0 +1,58 @@
+---
+title: "2.16 Assisted Setup dan Manual Setup"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 16
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih jalur setup sesuai kebutuhan company dan uji hasilnya, bukan hanya status wizard. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Assisted Setup memandu pekerjaan tertentu melalui wizard; Manual Setup mengelompokkan halaman konfigurasi. Company kosong, company berisi setup, dan salinan company memiliki titik awal berbeda. Copy Company tidak sama dengan mekanisme backup dan tidak berarti semua koneksi/integrasi ikut berfungsi.
+
+## Langkah di BC
+
+1. Tentukan tujuan latihan: company kosong untuk menguji package atau salinan CRONUS untuk eksperimen setup. Pilih sandbox dengan pembimbing berizin.
+2. Buka Companies dan tinjau pilihan Create New Company/Copy yang tersedia. Gunakan nama demo yang jelas; jangan menyalin company produksi untuk fase ini.
+3. Setelah proses selesai, pindah company melalui My Settings dan pastikan identitas company tujuan sebelum mengubah data.
+4. Gunakan Assisted Setup yang sesuai area, lalu tinjau halaman Manual Setup terkait. Catat apa yang disiapkan wizard dan apa yang masih perlu diisi.
+5. Review koneksi eksternal, email dan jadwal background pada company latihan; jangan berasumsi Copy menjaga semuanya aktif atau menjaga semuanya nonaktif.
+6. Uji preview transaksi kecil, posting groups dan laporan yang relevan. Selesainya wizard bukan bukti seluruh proses operasional siap.
+
+## Cheat box
+
+<CheatBox>
+
+- Pilih titik awal company.
+- Assisted Setup memandu tugas.
+- Manual Setup membuka konfigurasi.
+- Copy bukan backup.
+- Periksa company aktif.
+- Buktikan hasil dengan skenario.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyamakan company baru dengan environment baru, menganggap copy sebagai backup, atau mengubah company sumber karena lupa berpindah.
+:::
+
+## Latihan terkait
+
+[M9 — Configuration Worksheet](/latihan/intermediate/m9-rapidstart/) · [M1 — Posting group debugging](/latihan/intermediate/m1-posting-groups/).
+
+## Sumber resmi
+
+- [Create/copy company](https://learn.microsoft.com/en-us/dynamics365/business-central/about-new-company).
+- [Setup overview](https://learn.microsoft.com/en-us/dynamics365/business-central/setup).
+- [Configuration packages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/set-up-standard-company-configuration-packages).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

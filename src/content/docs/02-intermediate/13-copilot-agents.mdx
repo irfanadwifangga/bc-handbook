@@ -1,0 +1,58 @@
+---
+title: "2.13 Copilot dan agents bagi pengguna"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 13
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Nilai hasil AI dan peran human review tanpa menganggap availability sama di semua tenant. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Copilot membantu user yang memulai pekerjaan; agents menangani tugas proses tertentu dengan pengawasan. Sales Order Agent berkaitan dengan permintaan/order, Payables Agent dengan invoice pembelian, dan Expense Agent dengan receipt/expense. Status preview, bahasa, region, license serta konsumsi dapat berubah; daftar availability resmi menjadi rujukan, bukan janji fitur aktif pada sandbox.
+
+## Langkah di BC
+
+1. Inventaris fitur yang benar-benar terlihat pada sandbox; baca availability, bahasa dan persyaratan konsumsi sebelum mengaktifkan apa pun.
+2. Pilih skenario demo tanpa data pelanggan nyata. Catat input, hasil yang diharapkan dan siapa reviewer-nya.
+3. Pada Sales Order Agent, tinjau pencocokan customer/item, quantity, harga dan dokumen hasil sebelum menerima tindak lanjut.
+4. Pada Payables/Expense, tinjau vendor, receipt/invoice, pajak, duplikasi dan akun. Jangan menganggap hasil ekstraksi benar karena dokumen berhasil dibuat.
+5. Telusuri task/activity history yang tersedia dan dokumen BC asal/hasil. Bedakan riwayat agent dari Change Log yang dikonfigurasi terpisah.
+6. Catat salah hasil, review effort, biaya/konsumsi dan keputusan accept/reject. Latihan fase ini tidak mengaktifkan agent, billing atau pengiriman email nyata.
+
+## Cheat box
+
+<CheatBox>
+
+- Periksa availability tenant.
+- Copilot membantu; agent menjalankan tugas.
+- Gunakan input demo.
+- Review master, jumlah dan pajak.
+- Telusuri task dan dokumen.
+- Catat konsumsi serta hasil salah.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap dukungan region berarti semua bahasa didukung, memakai dokumen nyata tanpa review, atau menerima hasil AI sebagai bukti transaksi sudah benar.
+:::
+
+## Latihan terkait
+
+[M4 — Approval dua user](/latihan/intermediate/m4-approval/) · [M10 — Job Queue debugging](/latihan/intermediate/m10-job-queue/).
+
+## Sumber resmi
+
+- [Copilot dan agents](https://learn.microsoft.com/en-us/dynamics365/business-central/ai-in-bc).
+- [Region dan language availability](https://learn.microsoft.com/en-us/dynamics365/business-central/copilot-agents-region-language-availability).
+- [Consumption billing](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-manage-consumption-billing).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

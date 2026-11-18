@@ -1,0 +1,56 @@
+---
+title: "2.7 Currency dan exchange rates"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 7
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Bedakan nilai mata uang transaksi, LCY dan penyesuaian selisih kurs. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Currency Code dan kurs bertanggal menentukan hubungan nilai transaksi dengan local currency. Memperbarui daftar kurs berbeda dari menjalankan exchange rate adjustment pada saldo terbuka. Unrealized gain/loss berbeda dari realisasi saat pelunasan. Pembahasan Intercompany tetap opsional dan belum diimplementasikan pada fase ini.
+
+## Langkah di BC
+
+1. Di salinan CRONUS, tinjau Currencies: kode, rounding precision dan akun unrealized/realized gains/losses yang digunakan.
+2. Masukkan kurs demo bertanggal dengan arahan pembimbing. Periksa arah Exchange Rate Amount dan Relational Exch. Rate Amount; jangan menebak operasi kali/bagi.
+3. Buat draft invoice demo dalam currency itu dan bandingkan nilai currency dengan LCY pada preview.
+4. Untuk saldo terbuka yang telah disiapkan pembimbing, tinjau request page Adjust Exchange Rates: periode, tanggal posting dan filter currency/account.
+5. Gunakan Preview Posting untuk memeriksa dampak sebelum menjalankan adjustment. Jangan mengaktifkan layanan kurs eksternal nyata untuk contoh ini.
+6. Catat perbedaan sebelum/sesudah bila adjustment demo diposting; telusuri akun gain/loss dan entry customer/vendor/bank yang relevan.
+
+## Cheat box
+
+<CheatBox>
+
+- Currency transaksi berbeda dari LCY.
+- Kurs berlaku menurut tanggal.
+- Update kurs bukan adjustment saldo.
+- Review arah rasio kurs.
+- Unrealized berbeda dari realized.
+- Preview dan batasi filter adjustment.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menggunakan kurs terbaru untuk membandingkan semua transaksi historis, menukar arah rasio, atau menjalankan adjustment tanpa filter yang dipahami.
+:::
+
+## Latihan terkait
+
+[M2 — VAT demo](/latihan/intermediate/m2-vat/) · [M5 — Bank reconciliation](/latihan/intermediate/m5-bank-reconciliation/).
+
+## Sumber resmi
+
+- [Exchange rates dan adjustment](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-how-update-currencies).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

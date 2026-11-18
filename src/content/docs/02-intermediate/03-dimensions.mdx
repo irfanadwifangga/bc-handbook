@@ -1,0 +1,57 @@
+---
+title: "2.3 Dimensions"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Terapkan klasifikasi transaksi dan aturan dimension yang dapat dibuktikan di ledger. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Dimension menjawab “transaksi milik departemen/proyek mana” tanpa memperbanyak akun. Dua global dimensions dapat dipakai pada filter utama; shortcut dimensions memudahkan input. Default dimension membantu pengisian, tetapi aturan Value Posting menentukan kewajiban/kecocokan. Dimension Combinations membatasi pasangan value, sedangkan Analysis Views mendukung analisis hasil.
+
+## Langkah di BC
+
+1. Di salinan CRONUS, tinjau Dimensions dan Dimension Values. Gunakan Department dan Project demo; jangan mengganti global dimensions company yang sudah aktif hanya untuk latihan.
+2. Pada akun/master data latihan, isi Default Dimensions. Bedakan default value dengan aturan Code Mandatory atau Same Code sesuai kebutuhan skenario.
+3. Tinjau Dimension Combinations untuk dua value demo. Catat kombinasi yang diizinkan dan yang diblokir.
+4. Buat jurnal/draft transaksi tanpa dimension wajib lalu Preview. Catat error, isi value yang benar dan ulangi.
+5. Setelah posting demo yang ditinjau, periksa dimension pada entries serta jumlah menggunakan filter yang sama.
+6. Buka Analysis Views yang relevan, periksa konfigurasi dan kebutuhan update-nya. Bandingkan hasil dengan ledger, bukan hanya label di card.
+
+## Cheat box
+
+<CheatBox>
+
+- Dimension code berbeda dari value.
+- Dua global dimensions; sampai delapan shortcut.
+- Default tidak selalu berarti wajib.
+- Value Posting menentukan aturan akun.
+- Combination membatasi pasangan.
+- Verifikasi hasil pada entry terposting.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengubah master data lalu berharap entry lama otomatis berubah, mencampur filter dimension ketika rekonsiliasi, atau menganggap semua shortcut dimension adalah global dimension.
+:::
+
+## Latihan terkait
+
+[M3 — Dimension wajib](/latihan/intermediate/m3-dimensions/).
+
+## Sumber resmi
+
+- [Dimensions](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-dimensions).
+- [Financial Report definitions](https://learn.microsoft.com/en-us/dynamics365/business-central/application/base-application/table/microsoft.finance.financialreports.financial-report).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

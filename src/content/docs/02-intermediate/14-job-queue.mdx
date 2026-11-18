@@ -1,0 +1,57 @@
+---
+title: "2.14 Job Queue dan proses latar belakang"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 14
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Baca status, jadwal dan log sebelum mengulang proses background. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Job Queue Entries menjadwalkan report/codeunit. Ready berarti siap dijalankan, bukan bukti sukses. In Process menunjukkan pekerjaan berjalan; Error perlu ditelusuri melalui log. Log Entries pada job membuka riwayatnya. On Hold tidak menghentikan pekerjaan yang sudah berjalan. Restart berulang tanpa memahami efek proses dapat membuat duplikasi.
+
+## Langkah di BC
+
+1. Di CRONUS sandbox terisolasi, pilih report demo nonposting yang diizinkan; catat object, parameter, user pelaksana dan output yang diharapkan.
+2. Buat Job Queue Entry dalam status On Hold. Atur earliest start, recurrence hanya bila diperlukan, serta batas percobaan yang terkontrol.
+3. Periksa permission user dan apakah report mendukung background tanpa dialog interaktif. Jangan menebak object ID.
+4. Set Ready, tunggu satu eksekusi dan periksa Log Entries. Catat waktu mulai/akhir serta hasil; status recurring dapat kembali Ready setelah run sukses.
+5. Jika Error, gunakan Show Error dan riwayat log. Temukan input/setup/permission penyebab sebelum memperbaiki atau restart.
+6. Setelah verifikasi, nonaktifkan jadwal latihan. Jangan menandai lulus hanya karena status Ready atau karena tidak ada pesan di layar.
+
+## Cheat box
+
+<CheatBox>
+
+- On Hold: belum dijadwalkan aktif.
+- Ready bukan sukses.
+- In Process: sedang berjalan.
+- Error: periksa log.
+- Catat run dan output.
+- Review efek sebelum restart.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memakai job posting produksi untuk memaksa error, menganggap On Hold membatalkan run aktif, atau mengulang proses tanpa memeriksa hasil parsial.
+:::
+
+## Latihan terkait
+
+[M10 — Job Queue debugging](/latihan/intermediate/m10-job-queue/).
+
+## Sumber resmi
+
+- [Job queues](https://learn.microsoft.com/en-us/dynamics365/business-central/admin-job-queues-schedule-tasks).
+- [Job queue execution](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-job-queue).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

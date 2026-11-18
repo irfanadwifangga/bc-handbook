@@ -1,0 +1,59 @@
+---
+title: "2.5 Bank dan Cash"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Bedakan pencatatan payment, application dan rekonsiliasi bank. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Payment Terms mengatur jatuh tempo/ketentuan pembayaran; Payment Methods menjelaskan cara bayar. Payment Reconciliation Journal dapat membantu mencatat dan menerapkan pembayaran dari statement. Rekonsiliasi bank mencocokkan statement dengan Bank Account Ledger Entries. Matching yang cocok nominal belum tentu cocok transaksi.
+
+## Langkah di BC
+
+1. Pilih bank demo CRONUS dengan posting group, currency dan saldo awal yang sudah ditinjau. Catat ending date serta saldo statement dummy.
+2. Buka Bank Account Reconciliations dan buat rekonsiliasi bank latihan; isi informasi statement yang sesuai.
+3. Impor file dummy menggunakan format yang memang dikonfigurasi. Tinjau Bank Statement Import Format pada bank demo. Data Exchange Definitions menjelaskan struktur kolom/file dan mapping ke field BC; format tertentu juga dapat memakai assisted setup atau app. Jika format belum tersedia, minta pembimbing menyiapkan mapping, bukan sekadar mengganti ekstensi file.
+4. Tinjau match otomatis berdasarkan tanggal, referensi dan jumlah. Periksa pembayaran belum tercatat, biaya bank dan transaksi duplikat secara terpisah.
+5. Bila perlu mencatat payment dari statement, pahami alur Payment Reconciliation Journal dan application-nya agar tidak memposting payment dua kali.
+6. Selesaikan selisih melalui jurnal demo yang ditinjau, periksa saldo dan unmatched entries, lalu Post rekonsiliasi bila seluruh bukti sesuai.
+
+## Cheat box
+
+<CheatBox>
+
+- Terms berbeda dari Methods.
+- Payment berbeda dari Apply.
+- Statement berbeda dari ledger bank.
+- Format impor memerlukan mapping.
+- Tinjau hasil matching otomatis.
+- Jangan posting payment dua kali.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap saldo total sama berarti semua baris cocok, mengimpor statement yang sama berulang, atau menyamakan tanggal transaksi bank dengan tanggal posting tanpa pemeriksaan.
+:::
+
+## Latihan terkait
+
+[M5 — Bank reconciliation](/latihan/intermediate/m5-bank-reconciliation/).
+
+## Sumber resmi
+
+- [Reconciliation dan application](https://learn.microsoft.com/en-us/dynamics365/business-central/receivables-apply-payments-auto-reconcile-bank-accounts).
+- [Posting groups](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-posting-groups).
+- [Banking setup dan format statement](https://learn.microsoft.com/en-us/dynamics365/business-central/bank-setup-banking).
+- [Data Exchange Definitions](https://learn.microsoft.com/en-us/dynamics365/business-central/across-how-to-set-up-data-exchange-definitions).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.

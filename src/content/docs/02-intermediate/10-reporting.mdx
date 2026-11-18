@@ -1,0 +1,58 @@
+---
+title: "2.10 Reporting lanjutan"
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Intermediate
+sidebar:
+  order: 10
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih alat laporan yang tepat dan pertahankan definisi angka saat berganti output. Semua perubahan operasional contoh dilakukan sendiri oleh pembelajar pada CRONUS sandbox.
+
+## Konsep singkat
+
+Financial Reports menggabungkan definisi baris dan kolom dengan filter periode/dimension. Power BI dapat membaca semantic model atau menampilkan laporan di BC. Word, RDLC dan Excel layouts mengatur presentasi; mengganti layout tidak otomatis mengubah dataset menjadi data yang dibutuhkan. Ketersediaan apps/report/license perlu dicek pada environment.
+
+## Langkah di BC
+
+1. Mulai dari satu report demo dan definisikan pertanyaan bisnis, periode, currency serta dimension yang digunakan.
+2. Buka Financial Reports yang tersedia dan salin definisi untuk eksperimen bila diizinkan; tinjau row/column definitions tanpa mengubah format bersama.
+3. Bandingkan satu subtotal dengan Trial Balance pada filter sama. Hindari menjumlahkan akun detail serta total sekaligus.
+4. Tinjau daftar layout report: identifikasi Word/RDLC/Excel yang tersedia dan gunakan salinan layout demo untuk perubahan presentasi.
+5. Jika memakai Power BI, catat sumber data, filter/security, waktu refresh dan license yang diperlukan. Bedakan akses report dari hak membaca data sumber.
+6. Export hasil Excel demo, bandingkan jumlah dengan report BC dan simpan definisi/filter yang membuatnya dapat direproduksi.
+
+## Cheat box
+
+<CheatBox>
+
+- Definisikan pertanyaan bisnis.
+- Row dan column menentukan tampilan angka.
+- Filter harus konsisten.
+- Layout berbeda dari dataset.
+- Catat refresh Power BI.
+- Rekonsiliasi output ke ledger.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap tampilan visual cocok berarti datanya terbaru, membandingkan filter berbeda, atau memakai layout untuk menutupi ketidakcocokan dataset.
+:::
+
+## Latihan terkait
+
+[M3 — Dimension wajib](/latihan/intermediate/m3-dimensions/) · [M5 — Bank reconciliation](/latihan/intermediate/m5-bank-reconciliation/).
+
+## Sumber resmi
+
+- [Reporting overview](https://learn.microsoft.com/en-us/dynamics365/business-central/reports-bi-reporting).
+- [Financial Report definitions](https://learn.microsoft.com/en-us/dynamics365/business-central/application/base-application/table/microsoft.finance.financialreports.financial-report).
+- [Available reports](https://learn.microsoft.com/en-us/dynamics365/business-central/reports-available-reports).
+
+Verifikasi berdasarkan dokumentasi resmi; langkah dan hasil belum dieksekusi penulis pada tenant BC. Cocokkan izin, lokalisasi dan extension pada sandbox sebelum praktik.
