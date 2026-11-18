@@ -1,0 +1,15 @@
+---
+import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
+import VersionBadge from './VersionBadge.astro';
+import LevelBadge from './LevelBadge.astro';
+
+const data = Astro.locals.starlightRoute.entry.data;
+---
+
+<DefaultPageTitle />
+{data.bc_version_verified && data.last_verified && (
+  <div class="bc-page-meta">
+    <VersionBadge version={data.bc_version_verified} lastVerified={data.last_verified} />
+    {data.level && <LevelBadge level={data.level} />}
+  </div>
+)}

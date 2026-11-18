@@ -1,0 +1,16 @@
+---
+import { needsVerification } from '../utils/verification';
+
+interface Props {
+  version: string;
+  lastVerified: string;
+}
+
+const { version, lastVerified } = Astro.props;
+const stale = needsVerification(lastVerified);
+---
+
+<span class:list={['bc-badge', 'bc-version', { 'bc-version-stale': stale }]}>
+  BC {version} · diverifikasi <time datetime={lastVerified}>{lastVerified}</time>
+  {stale && ' · perlu verifikasi ulang'}
+</span>

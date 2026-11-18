@@ -1,0 +1,10 @@
+---
+interface Props {
+  level: 'Basic' | 'Intermediate' | 'Expert';
+}
+const { level } = Astro.props;
+---
+
+<span class:list={['bc-badge', 'bc-level', `bc-level-${level.toLowerCase()}`]}>
+  <span class="bc-level-dot" aria-hidden="true"></span>{level}
+</span>
