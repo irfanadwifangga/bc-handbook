@@ -1,0 +1,36 @@
+---
+title: Setup checklist
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 6
+---
+
+<div class="bc-cheatsheet">
+
+Urutan kerja awal yang disarankan untuk **company demo di sandbox CRONUS**, bukan prosedur migrasi production. Pakai Assisted Setup/Manual Setup yang tersedia; review konfigurasi yang sudah ada sebelum mengubah.
+
+| Urutan | Yang disiapkan / bukti pemeriksaan |
+| --- | --- |
+| 1. Konteks | Sandbox, company demo, user/permission, dan app lokalisasi dikonfirmasi. |
+| 2. Fondasi finance | Company Information, Chart of Accounts, General Ledger Setup, currency lokal, dan kebijakan tanggal posting. |
+| 3. No. Series | Seri dokumen/master data dan rentang nomor yang berlaku tersedia. |
+| 4. Posting groups | General, customer/vendor, inventory, dan bank sesuai skenario; kombinasi akun ditinjau. |
+| 5. VAT | VAT Business/Product Posting Groups dan VAT Posting Setup; validasi bersama pemilik pajak/app partner. |
+| 6. Penjualan/pembelian | Sales & Receivables Setup, Purchases & Payables Setup, payment terms/methods, serta numbering. |
+| 7. Inventory | Inventory Setup, location, UoM, dan metode costing yang disetujui sebelum transaksi. |
+| 8. Dimensions | Dimension/default dimension dan kebijakan nilai wajib; uji satu kombinasi valid dan invalid. |
+| 9. Master data | Customer, vendor, item, dan bank demo; field wajib serta group terisi konsisten. |
+| 10. Uji penerimaan | Preview Posting dan satu siklus sales/purchase demo; cocokkan posted documents dan ledger. |
+
+**Selesai jika:** pemilik setup menyetujui pemetaan dan hasil transaksi uji sesuai harapan. Catat masalah beserta pemiliknya; checklist ini tidak menggantikan analisis requirements, migrasi saldo, atau UAT.
+
+## Sumber resmi
+
+- [Overview setup](https://learn.microsoft.com/en-us/dynamics365/business-central/setup).
+- [Finance setup](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-finance).
+- [VAT setup](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-vat).
+
+</div>
+

@@ -1,0 +1,36 @@
+---
+title: Posting groups matrix
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 4
+---
+
+<div class="bc-cheatsheet">
+
+Posting group menentukan pemetaan transaksi ke akun dan perhitungan terkait. Contoh tanpa nomor akun; semua pengujian dilakukan di sandbox CRONUS.
+
+| Input | Setup / hasil yang diperiksa |
+| --- | --- |
+| Gen. Business PG × Gen. Product PG | General Posting Setup → akun Sales/Purchase dan akun terkait, termasuk COGS sesuai transaksi. |
+| VAT Business PG × VAT Product PG | VAT Posting Setup → calculation type, persentase, serta akun VAT. |
+| Customer Posting Group | Customer Posting Groups → akun receivables dan akun terkait. |
+| Vendor Posting Group | Vendor Posting Groups → akun payables dan akun terkait. |
+| Location × Inventory Posting Group | Inventory Posting Setup → akun inventory; sertakan kombinasi location kosong bila digunakan. |
+| Bank Account Posting Group | Bank Account Posting Groups → akun G/L bank. |
+
+**Urutan diagnosis:** baca error → catat pasangan group yang diminta → cek group pada header/baris dan master data → buka baris setup dengan kombinasi persis → cek akun wajib dan izin pengguna → ulangi Preview Posting.
+
+**Contoh demo:** customer ber-group `DEMO-BUS` dan item ber-group `DEMO-PROD` memerlukan kombinasi yang sesuai di General Posting Setup. Kode ini ilustrasi; jangan menganggap sudah ada pada CRONUS.
+
+Jangan mengisi akun acak atau mengganti group hanya agar posting lewat. Konfirmasi pemetaan dengan penanggung jawab akuntansi. VAT standar juga bukan jaminan aplikasi lokalisasi Indonesia telah lengkap.
+
+## Sumber resmi
+
+- [Posting groups](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-posting-groups).
+- [General Posting Setup](https://learn.microsoft.com/en-us/dynamics365/business-central/application/base-application/table/microsoft.finance.generalledger.setup.general-posting-setup).
+- [VAT setup](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-vat).
+
+</div>
+

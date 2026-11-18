@@ -1,0 +1,39 @@
+---
+title: Alur dokumen
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 2
+---
+
+<div class="bc-cheatsheet">
+
+Contoh: item bertipe Inventory di sandbox CRONUS. Quote dan order belum menjadi invoice terposting; **Release bukan Post**. Quote opsional, dan shipment/receipt dapat diposting bersama invoice atau terpisah.
+
+| Tahap | Dampak utama |
+| --- | --- |
+| Sales Quote → Order | Penawaran dan komitmen; belum membentuk piutang invoice. |
+| Sales Order → Ship | Posted Sales Shipment; kuantitas keluar pada Item Ledger Entry. |
+| Sales → Invoice | Posted Sales Invoice; Customer Ledger, G/L, dan VAT bila berlaku. |
+| Purchase Quote → Order | Permintaan/komitmen pembelian; belum membentuk utang invoice. |
+| Purchase Order → Receive | Posted Purchase Receipt; kuantitas masuk pada Item Ledger Entry. |
+| Purchase → Invoice | Posted Purchase Invoice; Vendor Ledger, G/L, dan VAT bila berlaku. |
+| Pembayaran → Apply | Payment entry dicocokkan ke invoice; bukan tahap pengiriman barang. |
+
+Receipt/shipment yang belum diinvoicing dapat memiliki expected cost pada Value Entry. Posting expected cost ke G/L bergantung setup; jangan menganggap receipt selalu membuat utang atau shipment selalu membuat piutang.
+
+**Retur:** Sales Return Order mengatur penerimaan barang kembali; Sales Credit Memo mengoreksi nilai penjualan. Purchase Return Order/Purchase Credit Memo menangani sisi pembelian. Cocokkan ke dokumen asal; refund pembayaran tetap perlu ditangani.
+
+**Cek sebelum Post:** pilihan Ship/Receive/Invoice dan kuantitas parsial. Invoice barang pada purchase order memerlukan receipt sebelumnya atau Receive and Invoice bersamaan.
+
+## Sumber resmi
+
+- [Posting sales](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-sales).
+- [Posting purchases](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-record-purchases).
+- [Sales returns](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-process-sales-returns-cancellations).
+- [Purchase returns](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-process-purchase-returns-cancellations).
+- [Expected cost](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-expected-cost-posting).
+
+</div>
+

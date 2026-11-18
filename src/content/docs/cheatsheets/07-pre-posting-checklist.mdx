@@ -1,0 +1,36 @@
+---
+title: Pre-posting checklist
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 7
+---
+
+<div class="bc-cheatsheet">
+
+Gunakan sebelum Post pada transaksi demo sandbox CRONUS. Hentikan jika satu pemeriksaan belum jelas; jangan mengubah konfigurasi untuk melewati validasi.
+
+| # | Pemeriksaan | Pertanyaan sebelum Post |
+| --- | --- | --- |
+| 1 | Konteks | Company/environment dan jenis dokumen sudah benar? |
+| 2 | Pihak dan referensi | Customer/vendor, alamat, nomor eksternal, dan referensi sudah cocok? |
+| 3 | Tanggal | Posting Date, Document Date, work date, dan periode yang diizinkan sesuai maksud transaksi? |
+| 4 | Currency | Kode currency dan exchange rate yang berlaku sudah diperiksa? |
+| 5 | Baris | Item/account, UoM, quantity, unit price/cost, dan discount sesuai bukti? |
+| 6 | Pajak | Group, perhitungan VAT/pajak, rounding, dan total sesuai setup yang disetujui? |
+| 7 | Dimensions | Nilai wajib pada header dan baris benar serta konsisten? |
+| 8 | Pemenuhan | Location, availability, serta Qty. to Ship/Receive/Invoice dan sisa parsial benar? |
+| 9 | Syarat dan otorisasi | Payment terms/method, due date, approval, dan status dokumen sudah diperiksa? |
+| 10 | Preview dan hasil | Preview Posting sesuai harapan? Sesudah Post, cocokkan posted document, ledger, dan sisa order. |
+
+**Preview bukan posting:** belum membuat transaksi final, tidak menggantikan otorisasi, dan bukan jaminan tidak ada perubahan kondisi sebelum Post. Setelah timeout atau respons ambigu, telusuri hasil posting terlebih dahulu sebelum mengulang.
+
+## Sumber resmi
+
+- [Preview Posting](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-how-preview-post-results).
+- [Posting purchases](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-record-purchases).
+- [Dimensions](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-dimensions).
+
+</div>
+

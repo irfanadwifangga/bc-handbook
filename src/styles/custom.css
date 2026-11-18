@@ -129,7 +129,66 @@ a, button, select, summary { transition: background-color var(--bc-transition), 
 .sl-markdown-content th { position: sticky; top: 0; background: var(--bc-surface-2); font-weight: var(--bc-weight-label); }
 .sl-markdown-content pre { max-width: 100%; overflow-x: auto; white-space: pre; }
 .sl-markdown-content pre code { font-size: var(--bc-text-sm); }
+.bc-cheatsheet :is(th, td):first-child {
+  overflow-wrap: normal;
+  word-break: normal;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+:root {
+  --bc-print-font: 10.5pt;
+  --bc-print-bg: #ffffff;
+  --bc-print-text: #000000;
+}
+@page bc-cheatsheet {
+  size: A4;
+  margin: 12mm;
+}
+@media print {
+  body:has(.bc-cheatsheet) {
+    page: bc-cheatsheet;
+    --bc-bg: var(--bc-print-bg);
+    --bc-surface: var(--bc-print-bg);
+    --bc-surface-2: var(--bc-print-bg);
+    --bc-text: var(--bc-print-text);
+    --bc-text-muted: var(--bc-print-text);
+    --bc-accent: var(--bc-print-text);
+    --bc-accent-hover: var(--bc-print-text);
+    --bc-border: var(--bc-print-text);
+    --sl-text-body: var(--bc-print-font);
+    --sl-text-h1: var(--bc-h3);
+    --sl-nav-height: 0;
+    --sl-sidebar-width: 0;
+    --sl-content-width: 100%;
+    --sl-content-gap-y: var(--bc-space-2);
+    color: var(--bc-print-text);
+    background: var(--bc-print-bg);
+    font-size: var(--bc-print-font);
+    line-height: var(--bc-line-meta);
+  }
+  body:has(.bc-cheatsheet) :is(header, nav, footer, .right-sidebar-container, .mobile-toc, .bc-footer-note, .pagination-links, .sl-skip-link) { display: none !important; }
+  body:has(.bc-cheatsheet) :is(.main-frame, .main-pane, .content-panel, .sl-container) {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  body:has(.bc-cheatsheet) .content-panel + .content-panel { margin-top: var(--bc-space-3); }
+  body:has(.bc-cheatsheet) .sl-container > * + * { margin-top: var(--bc-space-2); }
+  body:has(.bc-cheatsheet) :is(h1, h2, h3) { break-after: avoid; }
+  body:has(.bc-cheatsheet) h1 { font-size: var(--bc-h3); }
+  body:has(.bc-cheatsheet) h2 { font-size: var(--bc-text-base); margin-top: var(--bc-space-3); }
+  body:has(.bc-cheatsheet) .bc-badge { border: 0; padding: 0; }
+  .bc-cheatsheet :is(table, pre, code) { font-size: inherit; }
+  .bc-cheatsheet table { display: table; width: 100%; overflow: visible; break-inside: avoid; }
+  .bc-cheatsheet :is(th, td) { padding: var(--bc-space-1) var(--bc-space-2); }
+  .bc-cheatsheet th { position: static; }
+  .bc-cheatsheet :is(tr, pre, li) { break-inside: avoid; }
+  .bc-cheatsheet a { color: var(--bc-print-text); }
+  .bc-cheatsheet a[href^='https://learn.microsoft.com/']::after { content: ' (' attr(href) ')'; overflow-wrap: anywhere; }
+  .bc-cheatsheet a[href^='#'] { display: none; }
 }

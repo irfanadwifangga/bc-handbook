@@ -6,24 +6,32 @@ sidebar:
   order: 0
 ---
 
-Cheatsheet belum tersedia. Penulisan dimulai pada Fase 5.3.
+Tujuh cheatsheet utama tersedia untuk pemakaian harian. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
-Belum tersedia.
+[Buka cheatsheet](./01-navigasi-shortcut/).
 
 ## Alur dokumen
 
-Belum tersedia.
+[Buka cheatsheet](./02-alur-dokumen/).
 
 ## Ledger entries map
 
-Belum tersedia.
+[Buka cheatsheet](./03-ledger-entries-map/).
 
 ## Posting groups matrix
 
-Belum tersedia.
+[Buka cheatsheet](./04-posting-groups-matrix/).
 
 ## Troubleshooting error umum
 
-Belum tersedia.
+[Buka cheatsheet](./05-troubleshooting-error/).
+
+## Setup checklist
+
+[Buka cheatsheet](./06-setup-checklist/).
+
+## Pre-posting checklist
+
+[Buka cheatsheet](./07-pre-posting-checklist/).

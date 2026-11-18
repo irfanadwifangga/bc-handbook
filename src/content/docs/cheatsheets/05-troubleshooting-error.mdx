@@ -1,0 +1,36 @@
+---
+title: Troubleshooting error umum
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 5
+---
+
+<div class="bc-cheatsheet">
+
+**Pola pesan berikut adalah ringkasan, bukan kutipan literal.** Teks dan penyebab dapat berbeda menurut bahasa, extension, dan setup. Reproduksi hanya di sandbox CRONUS.
+
+| Pola / gejala | Cek awal dan tempat menindaklanjuti |
+| --- | --- |
+| Posting Date tidak diizinkan | Tanggal dokumen; Allow Posting From/To di General Ledger Setup, pengecualian User Setup, dan batas template jurnal bila berlaku. |
+| Posting group/setup tidak ditemukan | Pasangan group aktual dan akun wajib; General Posting Setup, VAT Posting Setup, atau setup spesifik pada error. |
+| Dimension wajib kosong/tidak cocok | Dimensions pada header/baris, Default Dimensions, Value Posting, dan kombinasi dimension. |
+| Nomor tidak dapat diberikan | No. Series yang ditetapkan, baris seri yang berlaku pada tanggalnya, dan Ending No.; jangan reset Last No. Used sembarangan. |
+| Tidak punya permission | User/permission set dan objek yang ditolak; minta admin menilai akses minimum. |
+| Periode inventory tertutup | Inventory Periods dan pembatasan cost posting; eskalasi ke penanggung jawab closing. |
+| HTTP 401 | Cek token/OAuth, masa berlaku, audience, serta permission atau akses company pada BC. Jangan log token. |
+| HTTP 403 | Evaluasi otorisasi, akses environment, dan permission aplikasi BC; jangan langsung memberi akses penuh. |
+
+**Saat eskalasi:** simpan pesan asli, langkah reproduksi, jenis dokumen, dan correlation ID bila tersedia; bersihkan data pribadi serta kredensial sebelum berbagi. Bedakan financial posting date restriction dari inventory period; jangan membuka kembali periode tanpa persetujuan.
+
+## Sumber resmi
+
+- [Posting periods](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-how-specify-posting-periods).
+- [Dimensions](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-dimensions).
+- [No. Series](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-create-number-series).
+- [Inventory periods](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-how-to-work-with-inventory-periods).
+- [HTTP/web service errors](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/web-service-troubleshooting).
+
+</div>
+

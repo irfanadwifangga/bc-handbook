@@ -1,0 +1,37 @@
+---
+title: Ledger entries map
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+tableOfContents: false
+sidebar:
+  order: 3
+---
+
+<div class="bc-cheatsheet">
+
+Mulai dari pertanyaan bisnis, pilih ledger, lalu telusuri dokumen dan entry terkait. Contoh di sandbox CRONUS; sumber entry bergantung jenis baris dan setup.
+
+| Ledger | Kapan / untuk apa |
+| --- | --- |
+| G/L Entry | Posting ke akun buku besar; analisis debit/kredit dan saldo akun. |
+| Customer Ledger Entry | Invoice, credit memo, atau payment pelanggan; cek piutang, Open, dan Remaining Amount. |
+| Vendor Ledger Entry | Invoice, credit memo, atau payment pemasok; cek utang dan pelunasan. |
+| Detailed Cust./Vendor Ledger Entry | Rincian initial entry, application, diskon, dan penyesuaian; telusuri perubahan saldo subledger. |
+| Item Ledger Entry | Posting pergerakan Inventory item; baca Quantity dan sisa kuantitas. |
+| Value Entry | Nilai biaya terkait item, termasuk expected/actual dan cost adjustment; bukan hitungan stok. |
+| Bank Account Ledger Entry | Transaksi yang diposting memakai Bank Account; dasar penelusuran mutasi/rekonsiliasi. |
+| FA Ledger Entry | Akuisisi, depresiasi, atau disposal aset; hubungan ke G/L bergantung depreciation book dan integrasinya. |
+
+**Jangan samakan:** kuantitas di Item Ledger dengan nilai di Value Entry. Satu pergerakan item dapat terkait beberapa Value Entry. Customer/Vendor Ledger menunjukkan transaksi utama; detailed entries menjelaskan application dan penyesuaiannya.
+
+**Cara menelusuri:** buka card atau posted document → Ledger Entries/Find Entries yang tersedia → cocokkan nomor dokumen, tanggal, dan akun. Gunakan Preview Posting untuk melihat perkiraan tipe entry sebelum Post; jangan mengubah entry demi menyamakan laporan.
+
+## Sumber resmi
+
+- [Posting dan preview](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-documents-journals).
+- [Inventory costing](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-manage-inventory-costs).
+- [Application pelanggan](https://learn.microsoft.com/en-us/dynamics365/business-central/receivables-how-apply-sales-transactions-manually).
+- [Fixed assets dan integrasi G/L](https://learn.microsoft.com/en-us/dynamics365/business-central/fa-setup).
+
+</div>
+

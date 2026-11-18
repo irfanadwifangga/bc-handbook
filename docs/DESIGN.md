@@ -206,3 +206,11 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - [ ] Cheatsheet: print preview rapi (≈ 1 halaman A4).
 - [ ] Lighthouse: Accessibility ≥ 95, Performance ≥ 90 (mobile).
 - [ ] `docs/PROGRESS.md` diperbarui + commit message diberikan.
+
+### Implementasi cetak cheatsheet (Fase 5.3)
+
+- Halaman cheatsheet memakai kontainer semantik sederhana dengan class bc-cheatsheet; layout Starlight tetap dipakai.
+- CSS cetak dibatasi ke halaman yang memuat class tersebut. Gunakan named page A4 dengan margin 12mm; satu kolom agar urutan tabel mudah dibaca.
+- Token cetak: --bc-print-font 10.5pt, --bc-print-bg putih, --bc-print-text hitam. Judul cetak memakai ukuran token --bc-h3; line-height memakai --bc-line-meta.
+- Sembunyikan header, sidebar, navigasi, pagination, dan footer; tampilkan URL sumber Microsoft di akhir setiap tautan sumber. Tabel tidak dipotong di tengah dan header tabel kembali statis ketika dicetak.
+- Verifikasi target satu halaman A4 dilakukan lewat hasil cetak nyata; bila belum diuji, jangan nyatakan lolos.

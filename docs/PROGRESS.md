@@ -9,7 +9,7 @@
 - [x] **5.0** — Inisialisasi Astro Starlight, struktur folder, docs/PROGRESS.md, build lokal
 - [x] **5.1** — Design tokens, landing page, search, dark mode, komponen inti, docs/DESIGN.md
 - [x] **5.2** — Level 0 Orientasi
-- [ ] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
+- [x] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
 - [ ] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
 - [ ] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
 - [ ] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
@@ -24,6 +24,7 @@
 | 2026-11-18 | 5.0 | `chore: init starlight site and content structure` | Astro Starlight diinisialisasi dengan bun; struktur Bagian 2 tersedia; `bun run build` berhasil (4 halaman dan indeks Pagefind). |
 | 2026-11-18 | 5.1 | `fix: finish phase 5.1 checks and cheatsheet link` | Design tokens, landing, sidebar, dan komponen inti selesai; build, tes komponen/metadata, dan audit tautan lulus; Lighthouse mobile landing Performance 100, Accessibility 100. |
 | 2026-11-18 | 5.2 | `docs: add level 0 orientation` | Materi Orientasi dan latihan O0/gate Level 0; build berhasil, 333 tautan internal/anchor valid, template dan komponen hasil render diperiksa. |
+| 2026-11-18 | 5.3 | `docs: add core cheatsheets (nav, flow, ledger, posting, errors)` | Tujuh cheatsheet, CSS cetak A4, 613 tautan valid, mobile/copy dan hasil cetak diperiksa. |
 
 ### Hasil Fase 5.0
 
@@ -58,4 +59,16 @@
 - Verifikasi nyata: `bun run build` berhasil menghasilkan 13 halaman dan indeks Pagefind; audit 333 tautan internal/anchor lulus; pemeriksaan urutan template, metadata, H1, CheatBox, serta latihan/hint pada hasil render lulus; `git diff --check` lulus.
 - Verifikasi dokumentasi dibedakan dari praktik sandbox. Belum ada interaksi dengan tenant atau data nyata; gate harus dijalankan sendiri oleh pembelajar. Pemeriksaan browser/Lighthouse untuk halaman Orientasi belum dilakukan ulang.
 - Warning i18n kosong, fallback 404, dan sitemap tanpa `site` masih ada; build berhasil. Tidak ada dependensi baru, server yang dijalankan, deploy, atau push pada fase ini.
-- Fase 5.3 menunggu persetujuan.
+- Fase 5.3 dilanjutkan atas persetujuan pengguna.
+
+### Hasil Fase 5.3
+
+- Tujuh cheatsheet utama tersedia: navigasi/shortcut, alur dokumen, ledger entries map, posting groups, troubleshooting error, setup checklist, dan pre-posting checklist. Semua memuat metadata serta sumber resmi Microsoft; contoh memakai sandbox CRONUS.
+- Indeks dan tautan landing diperbarui. CSS cetak khusus cheatsheet mengikuti docs/DESIGN.md, termasuk A4, margin 12mm, URL sumber tercetak, dan navigasi/footer disembunyikan.
+- Verifikasi nyata: bun run build berhasil menghasilkan 20 halaman dan indeks Pagefind; audit 613 tautan internal/anchor lulus; tujuh halaman memiliki metadata serta sumber resmi; git diff --check lulus.
+- Browser: ketujuh halaman lulus pemeriksaan overflow body pada viewport 360px. Tema gelap/terang diperiksa; tombol copy menyalin tiga shortcut yang sesuai ke clipboard.
+- Cetak nyata melalui Playwright dan profil Brave terpisah: ketujuh PDF masing-masing 1 halaman A4 (594.96 x 841.92 pt), dirender untuk inspeksi visual. Konten dan URL sumber terlihat utuh. Perbaikan kolom pertama memastikan angka 10 tetap satu baris; pemeriksaan DOM mobile dan mode cetak lulus, serta render terbaru pre-posting checklist diperiksa.
+- Artefak verifikasi lokal berada di .codex-tmp/phase-5.3/verified-print/ dan tidak masuk Git. Percobaan CLI cetak sebelumnya macet; verifikasi akhirnya berhasil melalui Playwright.
+- Tidak ada dependensi proyek baru. Alat tes sementara dan hasil cetak tidak dilacak Git. Browser tes serta server preview dihentikan setelah pemeriksaan.
+- Batas: transaksi sandbox belum dijalankan; Lighthouse tidak diulang untuk ketujuh cheatsheet. Warning i18n kosong, fallback 404, dan sitemap tanpa site masih ada; build berhasil. Tidak ada deploy atau push.
+- Fase 5.4 menunggu persetujuan.
