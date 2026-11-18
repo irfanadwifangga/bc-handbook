@@ -1,0 +1,99 @@
+---
+import '../styles/learning-flow.css';
+interface Step { label: string; analogy: string; document: string; impact: string }
+interface Props { steps: Step[] }
+const { steps } = Astro.props;
+---
+<bc-flow class="bc-flow">
+  <p class="bc-flow-intro">Toko CRONUS menjual dua kursi. Ikuti perpindahan barang, tagihan, dan pembayaran.</p>
+  <ol class="bc-flow-map" aria-label="Tahapan alur Sales">
+    {steps.map((step, index) => <li><button type="button" data-stage={index} data-label={step.label} disabled><span>{index + 1}</span>{step.label}</button></li>)}
+  </ol>
+  <div class="bc-flow-controls" hidden>
+    <button type="button" data-action="previous">Sebelumnya</button>
+    <button type="button" data-action="play">Putar</button>
+    <button type="button" data-action="next">Berikutnya</button>
+    <button type="button" data-action="reset">Ulangi</button>
+  </div>
+  <p data-status role="status" aria-live="polite" aria-atomic="true">Enam tahap; semua penjelasan tersedia di bawah.</p>
+  <div class="bc-flow-time" aria-hidden="true" hidden><span></span></div>
+  <div class="bc-flow-panels">
+    {steps.map((step, index) => <article data-panel={index} aria-label={`Tahap ${index + 1}: ${step.label}`}>
+      <h3>{index + 1}. {step.label}</h3>
+      <dl><dt>Analogi toko</dt><dd>{step.analogy}</dd><dt>Dokumen / halaman BC</dt><dd>{step.document}</dd><dt>Dampak utama</dt><dd>{step.impact}</dd></dl>
+    </article>)}
+  </div>
+  <noscript><p>JavaScript nonaktif: baca keenam tahap secara berurutan di bawah diagram.</p></noscript>
+</bc-flow>
+<script>
+  class LearningFlow extends HTMLElement {
+    private timer?: ReturnType<typeof setInterval>;
+    connectedCallback() {
+      const stages = [...this.querySelectorAll<HTMLButtonElement>('[data-stage]')];
+      const panels = [...this.querySelectorAll<HTMLElement>('[data-panel]')];
+      const controls = this.querySelector<HTMLElement>('.bc-flow-controls')!;
+      const play = this.querySelector<HTMLButtonElement>('[data-action="play"]')!;
+      const previous = this.querySelector<HTMLButtonElement>('[data-action="previous"]')!;
+      const next = this.querySelector<HTMLButtonElement>('[data-action="next"]')!;
+      const status = this.querySelector<HTMLElement>('[data-status]')!;
+      const track = this.querySelector<HTMLElement>('.bc-flow-time')!;
+      const fill = track.querySelector<HTMLElement>('span')!;
+      const duration = 8000;
+      let current = 0, elapsed = 0, running = false, last = 0;
+      const render = () => {
+        stages.forEach((button, i) => {
+          button.disabled = false;
+          if (i === current) button.setAttribute('aria-current', 'step');
+          else button.removeAttribute('aria-current');
+        });
+        panels.forEach((panel, i) => { panel.hidden = i !== current; });
+        previous.disabled = current === 0;
+        next.disabled = current === stages.length - 1;
+        play.textContent = running ? 'Jeda' : 'Putar';
+        play.disabled = current === stages.length - 1 && elapsed >= duration;
+        status.textContent = `Tahap ${current + 1} dari ${stages.length}: ${stages[current].dataset.label}. ${running ? 'Berjalan' : 'Dijeda'}.`;
+        fill.style.transform = `scaleX(${elapsed / duration})`;
+      };
+      const pause = () => {
+        if (running) elapsed = Math.min(duration, elapsed + performance.now() - last);
+        running = false;
+        clearInterval(this.timer);
+        render();
+      };
+      const select = (index: number) => {
+        pause();
+        current = index;
+        elapsed = 0;
+        render();
+      };
+      play.addEventListener('click', () => {
+        if (running) { pause(); return; }
+        running = true;
+        last = performance.now();
+        render();
+        this.timer = setInterval(() => {
+          const now = performance.now();
+          elapsed = Math.min(duration, elapsed + now - last);
+          last = now;
+          fill.style.transform = `scaleX(${elapsed / duration})`;
+          if (elapsed < duration) return;
+          if (current < stages.length - 1) { current++; elapsed = 0; render(); }
+          else { running = false; clearInterval(this.timer); render(); }
+        }, 100);
+      });
+      stages.forEach((button, i) => button.addEventListener('click', () => select(i)));
+      previous.addEventListener('click', () => select(Math.max(0, current - 1)));
+      next.addEventListener('click', () => select(Math.min(stages.length - 1, current + 1)));
+      this.querySelector('[data-action="reset"]')!.addEventListener('click', () => select(0));
+      const visibility = () => { if (document.hidden) pause(); };
+      document.addEventListener('visibilitychange', visibility);
+      this.cleanup = () => document.removeEventListener('visibilitychange', visibility);
+      controls.hidden = false;
+      track.hidden = false;
+      render();
+    }
+    private cleanup?: () => void;
+    disconnectedCallback() { clearInterval(this.timer); this.cleanup?.(); }
+  }
+  if (!customElements.get('bc-flow')) customElements.define('bc-flow', LearningFlow);
+</script>

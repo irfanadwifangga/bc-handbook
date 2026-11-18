@@ -1,0 +1,72 @@
+---
+title: Alur Sales interaktif
+description: Analogi toko CRONUS dari penawaran hingga pembayaran yang dicocokkan ke invoice.
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 1
+---
+
+import FlowPlayer from '../../../components/FlowPlayer.astro';
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Bedakan pergerakan barang, pencatatan piutang, penerimaan pembayaran, dan application. Pilot ini melengkapi [cheatsheet alur dokumen](/cheatsheets/02-alur-dokumen/); modul Basic 1.1–1.8 tetap dikerjakan pada Fase 5.4.
+
+## Konsep singkat
+
+Bayangkan toko CRONUS menjual dua kursi dari item bertipe **Inventory** di sandbox. Quote opsional; shipment dan invoice bisa diposting bersamaan. Di sini keduanya dipisah agar dampaknya terlihat. Untuk contoh payment terpisah dari application, gunakan customer dengan **Application Method = Manual**, tanpa applies-to pada saat posting payment. Tidak ada transaksi nyata dijalankan oleh simulasi ini.
+
+## Langkah di BC
+
+Klik tahap untuk membaca satu per satu atau pilih **Putar** untuk berpindah setiap delapan detik. **Jeda** mempertahankan waktu, **Ulangi** kembali ke awal dalam keadaan dijeda. Memilih tahap atau meninggalkan tab menjeda pemutaran.
+
+<FlowPlayer steps={[
+  { label: 'Quote', analogy: 'Pembeli meminta harga dua kursi. Toko memberi penawaran; barang belum dikirim.', document: 'Sales Quote', impact: 'Belum ada piutang invoice terposting. Quote bukan dokumen posting penjualan.' },
+  { label: 'Order', analogy: 'Pembeli setuju. Toko mencatat pesanan dua kursi.', document: 'Sales Order; konversi quote melalui Make Order.', impact: 'Order mencatat komitmen. Release bukan Post; order saja belum menghasilkan piutang invoice.' },
+  { label: 'Shipment', analogy: 'Gudang menyerahkan dua kursi kepada pembeli.', document: 'Sales Order → Post → Ship; hasilnya Posted Sales Shipment.', impact: 'Item Ledger Entry mencatat kuantitas keluar. Value Entry mencatat expected cost untuk shipment yang belum diinvoicing. Dampak expected cost ke G/L bergantung setup; belum ada piutang invoice dari Ship saja.' },
+  { label: 'Invoice', analogy: 'Bagian administrasi menagih dua kursi yang sudah dikirim.', document: 'Sales Order → Post → Invoice; hasilnya Posted Sales Invoice.', impact: 'Customer Ledger Entry mencatat invoice; G/L dan VAT Entries terbentuk bila berlaku. Value Entry memperbarui nilai biaya; invoicing shipment yang sama bukan pengiriman barang kedua.' },
+  { label: 'Payment', analogy: 'Pembeli mentransfer pembayaran. Toko mencatat penerimaan bank.', document: 'Cash Receipt Journals: Document Type Payment, Account Type Customer, Bal. Account Type Bank Account.', impact: 'Posting menghasilkan customer payment, bank ledger, dan G/L entries. Dalam contoh Manual ini payment belum dicocokkan ke invoice; uang diterima tidak otomatis berarti invoice tersebut tertutup.' },
+  { label: 'Apply', analogy: 'Toko mencocokkan transfer dengan nomor tagihan yang benar.', document: 'Customer Ledger Entries → Apply Entries; pilih invoice dan payment yang sesuai lalu Post Application.', impact: 'Application menghubungkan payment dan invoice. Jika jumlah tepat dan lunas, Remaining Amount menjadi nol dan entry tertutup. Selisih kurs, diskon, atau pembulatan bisa menambah dampak posting sesuai kondisi.' }
+]} />
+
+### Video referensi
+
+<ReferenceVideo />
+
+## Cheat box
+
+<CheatBox>
+
+- Quote menawarkan; Order mencatat komitmen.
+- Ship memindahkan kuantitas persediaan.
+- Invoice membentuk tagihan terposting.
+- Payment mencatat penerimaan uang.
+- Apply mencocokkan payment dengan invoice.
+- Preview Posting membantu meninjau dampak sebelum Post.
+
+</CheatBox>
+
+## Kesalahan umum
+
+- Menganggap Release sudah membuat invoice atau ledger posting.
+- Menganggap semua perusahaan wajib memakai enam langkah terpisah.
+- Memasukkan item lagi sebagai penjualan baru untuk menagih shipment lama.
+- Menganggap pembayaran yang belum diaplikasikan sudah menutup invoice tertentu.
+
+## Latihan terkait
+
+Tanpa posting transaksi, pilih tiap tahap lalu jelaskan: kapan barang keluar, kapan piutang invoice terbentuk, dan kapan invoice dianggap lunas? Cocokkan jawaban dengan [ledger entries map](/cheatsheets/03-ledger-entries-map/). Untuk latihan navigasi, mulai dari [Orientasi](/00-orientasi/).
+
+## Sumber resmi
+
+- [Posting sales](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-sales).
+- [Invoice from a sales order](https://learn.microsoft.com/en-us/training/modules/invoicing-customers-dynamics-365-business-central/1-sales-order).
+- [Expected cost posting](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-expected-cost-posting).
+- [Payment dan application](https://learn.microsoft.com/en-us/dynamics365/business-central/receivables-how-apply-sales-transactions-manually).
+- [Sales Quick Start dan video setup customer](https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services).
+
+Verifikasi berdasarkan dokumentasi, bukan eksekusi transaksi sandbox. Tampilan video dapat berasal dari versi lebih lama.

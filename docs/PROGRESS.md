@@ -19,6 +19,16 @@
 
 ## Log
 
+### Pilot alur Sales interaktif — 2026-11-18
+
+- Halaman `/01-basic/alur-sales/` tersedia lewat sidebar Basic: analogi toko CRONUS, enam tahap Quote → Order → Shipment → Invoice → Payment → Apply, dokumen dan dampak utama per tahap. Ini pilot tambahan yang diminta pengguna; Fase 5.4 belum ditandai selesai.
+- FlowPlayer mendukung Putar/Jeda (delapan detik per tahap), navigasi manual, Ulangi, berhenti di akhir, serta jeda saat tab tersembunyi. Penanda bernomor dan status teks melengkapi warna. Reduced motion menyembunyikan gerak progress; semua penjelasan tersedia tanpa JavaScript dan saat cetak.
+- ReferenceVideo memuat video setup customer resmi Microsoft Learn hanya setelah klik, tanpa autoplay; tautan sumber selalu tersedia. Video adalah materi prasyarat, bukan demo seluruh alur atau bukti tampilan BC 29.x. Pengujian wrapper memakai respons tiruan; playback layanan eksternal belum diverifikasi. Alat browsing sebelumnya tidak dapat membuka redirect player Microsoft.
+- DESIGN.md mencatat pengecualian animasi pembelajaran dan embed, kontrol, token serta fallback. Implementasi Astro/custom element dan stylesheet terpisah; tidak ada dependensi baru.
+- Verifikasi nyata: build dua kali berhasil (21 halaman dan indeks Pagefind); `bun test` 3 lulus; suite Playwright lengkap 148 lulus. Setelah perapian panah dan jarak tombol, build dan 20 tes pilot diulang, seluruhnya lulus pada desktop/mobile 360px dan light/dark. Axe tidak menemukan pelanggaran pada halaman pilot; keyboard Enter, pause/resume, reset, akhir, reduced motion, tab tersembunyi, tanpa JS dan lazy video wrapper diuji. Screenshot desktop/mobile terbaru diinspeksi; tidak ada overflow body. `git diff --check` lulus.
+- Preview otomatis dihentikan; pemeriksaan port 4323 tidak menemukan listener. Tidak ada akses tenant/transaksi sandbox, push atau deploy. Firefox/WebKit, screen reader dan playback video sungguhan belum diuji. Warning lama i18n kosong, fallback 404 dan sitemap tanpa site masih ada; build berhasil.
+- Commit message: `feat: add interactive sales flow and reference video`.
+
 | Tanggal | Fase | Commit message | Catatan |
 |---|---|---|---|
 | 2026-11-18 | 5.0 | `chore: init starlight site and content structure` | Astro Starlight diinisialisasi dengan bun; struktur Bagian 2 tersedia; `bun run build` berhasil (4 halaman dan indeks Pagefind). |

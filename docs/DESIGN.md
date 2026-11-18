@@ -25,7 +25,7 @@ Gradient, glassmorphism/blur, bayangan tebal, ilustrasi hero/stock photo, ikon d
 ## 2. Dasar teknis
 
 - Basis: **Astro Starlight** dengan tema bawaan. Kustomisasi **minimal** lewat satu file `src/styles/custom.css` (didaftarkan di `customCss` pada `astro.config.mjs`). **Jangan menulis ulang layout Starlight** kecuali tertulis di dokumen ini.
-- Komponen kustom: Astro components di `src/components/`. Interaktivitas (progress tracker) memakai satu *island* kecil; selain itu **zero JS**, dengan pengecualian enhancement aksesibilitas Search pada Bagian 4.10.
+- Komponen kustom: Astro components di `src/components/`. Selain progress tracker dan enhancement Search, JS kecil diizinkan untuk FlowPlayer dan ReferenceVideo pada Bagian 4.11; tanpa library UI tambahan.
 - Bahasa halaman: `lang="id"`.
 - Tidak ada CDN/font/ikon eksternal. Ikon: SVG inline sederhana (stroke 1.5–2px) atau bawaan Starlight.
 - CSS variable Starlight diverifikasi pada versi 0.43.1 melalui `dist/style/props.css`; pemetaan warna, font, heading, dan lebar konten memakai variabel yang tersedia.
@@ -160,6 +160,15 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 
 ---
 
+### 4.11 FlowPlayer dan ReferenceVideo (pilot Sales)
+
+- Komponen Astro dengan enhancement custom element; tanpa dependensi tambahan. Stylesheet `src/styles/learning-flow.css` memakai palet, font, spasi, radius, dan fokus yang sudah ditetapkan.
+- FlowPlayer menampilkan enam node bernomor dengan panah, penanda tahap aktif, serta panel Analogi toko → Dokumen / halaman BC → Dampak utama. Desktop tiga kolom dengan alur berkelok (1→2→3, turun ke 4 lalu 5←4 dan 6←5); urutan DOM/keyboard tetap 1–6. Di bawah 50rem, satu kolom vertikal. Token tambahan: `--bc-flow-touch: 44px` untuk target sentuh, `--bc-flow-columns: 3`, `--bc-video-ratio: 16 / 9`.
+- Pemutaran mulai dijeda; Putar/Jeda, Sebelumnya, Berikutnya, Ulangi, dan pilihan tahap berupa tombol native. Delapan detik per tahap; progress waktu hanya visual. Jeda mempertahankan waktu; navigasi manual dan tab tersembunyi menjeda; Ulangi mereset tahap/waktu; akhir berhenti tanpa loop.
+- `aria-current="step"` menandai tahap aktif; status polite hanya berubah saat tahap atau status pemutaran berubah. Tidak mengambil alih shortcut keyboard. Reduced motion menyembunyikan gerak progress; teks dan pilihan tahap tetap berfungsi. Tanpa JS dan saat cetak, semua panel terbaca.
+- ReferenceVideo memuat iframe resmi setelah klik, tanpa autoplay, dengan judul dan tautan sumber permanen. Video dilabeli menurut topik sebenarnya; jangan mengklaim video lama mendemonstrasikan BC 29.x. Embed eksternal adalah pengecualian larangan CDN untuk media pembelajaran yang diminta pengguna; tidak memuat font/library eksternal.
+- Verifikasi: desktop/mobile, light/dark, keyboard, reduced motion, tanpa JS, pause/resume/reset/akhir, axe dan build. Playback video eksternal harus dilaporkan terpisah dari pengujian wrapper lokal.
+
 ## 5. Template layout halaman
 
 | Jenis | Struktur (urut dari atas) |
@@ -198,7 +207,7 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Menambah font, warna, library UI (Tailwind/MUI/dll.), atau CDN.
 - Menulis nilai warna/ukuran langsung di komponen.
 - Mengubah copywriting/konten materi saat mengerjakan tugas UI (dan sebaliknya).
-- Menambahkan animasi, gradient, ilustrasi, atau gambar stok.
+- Menambahkan animasi dekoratif, gradient, ilustrasi, atau gambar stok. Animasi pembelajaran pada Bagian 4.11 diizinkan dengan kontrol pengguna.
 - Memakai logo/gambar bermerek Microsoft atau Dynamics 365, atau screenshot yang berisi data nyata.
 - "Mempercantik" halaman yang tidak diminta dalam langkah tersebut.
 

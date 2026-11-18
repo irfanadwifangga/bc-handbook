@@ -1,0 +1,28 @@
+---
+import '../styles/learning-flow.css';
+---
+<bc-reference-video class="bc-reference-video">
+  <p><strong>Video pendukung: membuat customer</strong> — Microsoft Learn, Sales Quick Start. Prasyarat alur Sales; bukan demonstrasi keenam tahap atau bukti tampilan BC 29.x.</p>
+  <button type="button" hidden>Muat video Microsoft Learn</button>
+  <div class="bc-video-slot"></div>
+  <p>Player eksternal baru dimuat setelah kamu klik. Tidak diputar otomatis. Jika gagal, <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-customers">buka sumber Microsoft Learn</a> dan lihat bagian Set up customers.</p>
+</bc-reference-video>
+<script>
+  class ReferenceVideo extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('button')!;
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        const frame = document.createElement('iframe');
+        frame.src = 'https://learn-video.azurefd.net/vod/player?id=37d3ec2a-71c2-4f0d-9a94-62c83805fbfa';
+        frame.title = 'Microsoft Learn: Set up customers in Business Central';
+        frame.allowFullscreen = true;
+        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+        this.querySelector('.bc-video-slot')!.append(frame);
+        button.hidden = true;
+        frame.focus();
+      }, { once: true });
+    }
+  }
+  if (!customElements.get('bc-reference-video')) customElements.define('bc-reference-video', ReferenceVideo);
+</script>
