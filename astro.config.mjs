@@ -19,7 +19,15 @@ export default defineConfig({
         { label: 'Intermediate', items: [{ autogenerate: { directory: '02-intermediate' } }] },
         { label: 'Expert', items: [{ autogenerate: { directory: '03-expert' } }] },
         { label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheets' } }] },
-        { label: 'Latihan', items: [{ autogenerate: { directory: 'latihan' } }] },
+        {
+          label: 'Latihan',
+          items: [
+            { label: 'Latihan', slug: 'latihan' },
+            { label: 'Basic', items: [{ autogenerate: { directory: 'latihan/basic' } }] },
+            { label: 'Intermediate', items: [{ autogenerate: { directory: 'latihan/intermediate' } }] },
+            { label: 'Expert', items: [{ autogenerate: { directory: 'latihan/expert' } }] },
+          ],
+        },
         {
           label: 'Referensi',
           items: [
