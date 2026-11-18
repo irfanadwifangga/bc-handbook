@@ -1,0 +1,61 @@
+---
+title: 1.3 Chart of Accounts dan General Ledger
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 13
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Telusuri transaksi dari jurnal ke G/L Entry dan Trial Balance tanpa menganggap saldo seimbang berarti semua pencatatan sudah benar.
+
+## Konsep singkat
+
+Chart of Accounts adalah daftar akun. Akun bertipe **Posting** menerima entry; baris heading/total membantu penyajian. General Journal masih berupa input yang bisa ditinjau. Setelah Post, dampak keuangan tersimpan sebagai entries, bukan sekadar baris jurnal.
+
+Accounting Periods membagi tahun pelaporan. **Allow Posting From/To** di General Ledger Setup dan User Setup mengatur rentang posting; menutup accounting year tidak otomatis melarang semua posting pada tanggal lama.
+
+## Langkah di BC
+
+1. Di CRONUS sandbox, buka **Chart of Accounts** dan bandingkan akun Posting dengan akun total. Catat dua akun demo yang boleh digunakan untuk jurnal latihan tanpa pajak.
+2. Cari **General Journals**, pilih batch khusus latihan yang kosong. Hindari batch milik user lain.
+3. Isi Posting Date yang diizinkan, Document No. unik dan Description. Gunakan dua baris G/L: debit akun kas latihan 1.000 LCY dan kredit akun modal latihan 1.000 LCY, dengan nomor dokumen/tanggal yang sama; jangan isi balancing account lagi pada contoh dua baris ini.
+4. Tinjau akun, dimension dan tanda debit/kredit. Gunakan **Preview Posting** sebelum Post; apabila akun mensyaratkan setup lain, minta pembimbing menentukan akun yang tepat.
+5. Post hanya setelah hasil preview sesuai. Cari **General Ledger Entries**, filter dokumen tadi, lalu cocokkan akun, tanggal dan jumlah.
+6. Jalankan **Trial Balance** dengan periode yang mencakup posting. Bandingkan perubahan akun terhadap saldo sebelum latihan, bukan hanya total akhir company.
+
+## Cheat box
+
+<CheatBox>
+
+- Posting account menerima transaksi.
+- Jurnal belum sama dengan ledger entry.
+- Dua sisi dokumen harus seimbang.
+- Jangan menggandakan balancing account.
+- Accounting Periods bukan pembatas tanggal posting.
+- Trial Balance seimbang belum membuktikan akun benar.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Posting langsung ke control account piutang/utang saat sebenarnya perlu subledger Customer/Vendor, memakai tanggal di luar izin, atau mengubah setup company agar jurnal yang belum dipahami bisa lolos.
+:::
+
+## Latihan terkait
+
+[B3 — General Journal](/latihan/basic/b3-general-journal/) dan [B8 — Laporan](/latihan/basic/b8-laporan/).
+
+## Sumber resmi
+
+- [Chart of Accounts](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-chart-accounts).
+- [General journals](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-work-general-journals).
+- [Accounting periods](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-accounting-periods-and-fiscal-years).
+- [Trial Balance](https://learn.microsoft.com/en-us/dynamics365/business-central/reports/report-6).
+
+Contoh angka adalah skenario belajar, bukan rekomendasi pembukuan perusahaan. Verifikasi dokumen belum mencakup praktik sandbox.

@@ -1,0 +1,62 @@
+---
+title: 1.6 Inventory dasar
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 16
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Bedakan kuantitas, nilai dan availability, lalu telusuri perubahan stok melalui entry yang terposting.
+
+## Konsep singkat
+
+Item card menyimpan definisi barang; stok Inventory berasal dari transaksi terposting. **Item Ledger Entries** menjelaskan kuantitas, sedangkan **Value Entries** menjelaskan nilai terkait pergerakan itu. Satu pergerakan dapat berkaitan dengan beberapa value entries.
+
+UoM menentukan satuan dan konversi. Costing Method adalah kebijakan penilaian, bukan harga jual. FIFO dan Average menggunakan pendekatan berbeda terhadap biaya; untuk tahap ini, kenali metode pada item demo dan jangan menggantinya untuk memaksa hasil. Availability dapat mempertimbangkan pasokan, permintaan, tanggal, dan location sehingga berbeda dari stok saat ini.
+
+## Langkah di BC
+
+1. Buka **Items**, pilih item Inventory demo, catat Base Unit of Measure, Costing Method dan Inventory. Jangan memakai Service untuk latihan stok.
+2. Baca availability item berdasarkan tanggal/location. Jelaskan mengapa pesanan yang belum diterima tidak sama dengan barang fisik di tangan.
+3. Cari **Item Journals** dan pilih batch latihan kosong. Gunakan location sederhana tanpa directed put-away/pick; prosedur advanced warehouse berbeda.
+4. Isi tanggal diizinkan, Document No., item, location dan UoM. Buat **Positive Adjmt.** sebanyak 5 unit dengan biaya demo yang disepakati, lalu preview/tinjau dan Post.
+5. Catat Item Ledger Entry dan Value Entries terkait. Untuk **Negative Adjmt.**, masukkan kuantitas 2 dan gunakan entry type untuk menyatakan arah pengurangan; periksa hasil sebelum posting.
+6. Cocokkan perubahan bersih: +5 −2 = +3 unit pada location/UoM dasar yang sama. Jangan mengharapkan nilai negatif selalu sama dengan harga jual; penilaian mengikuti biaya dan setup.
+7. Bedakan jurnal adjustment dengan Physical Inventory Journal: penghitungan fisik membandingkan jumlah terhitung dengan jumlah buku, bukan mengubah field stok sesuka hati.
+
+## Cheat box
+
+<CheatBox>
+
+- Inventory: barang yang dilacak stoknya.
+- UoM mengatur satuan dan konversi.
+- Item Ledger: kuantitas.
+- Value Entry: nilai biaya.
+- Costing Method berbeda dari harga jual.
+- Availability berbeda dari stok fisik saat ini.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memilih entry type dan tanda kuantitas yang membalik arah dua kali, mencampur location/UoM saat membandingkan stok, atau meniru prosedur jurnal sederhana pada advanced warehouse.
+:::
+
+## Latihan terkait
+
+[B6 — Inventory](/latihan/basic/b6-inventory/) dan [B5 — Pembelian](/latihan/basic/b5-purchasing/).
+
+## Sumber resmi
+
+- [Item cards](https://learn.microsoft.com/en-us/dynamics365/business-central/inventory-how-register-new-items).
+- [Count, adjust, reclassify](https://learn.microsoft.com/en-us/dynamics365/business-central/inventory-how-count-adjust-reclassify).
+- [Expected cost dan Value Entries](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-expected-cost-posting).
+- [Costing methods](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-costing-methods).
+
+Verifikasi dokumen belum membuktikan hasil biaya suatu company. Setup costing dan availability perlu dicocokkan dengan sandbox yang digunakan.

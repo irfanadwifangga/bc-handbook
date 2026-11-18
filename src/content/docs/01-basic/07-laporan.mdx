@@ -1,0 +1,63 @@
+---
+title: 1.7 Laporan dasar
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 17
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Jalankan laporan dasar, simpan hasil ke Excel bila tersedia, dan jelaskan filter yang membuat angka bisa dibandingkan dengan ledger.
+
+## Konsep singkat
+
+Trial Balance merangkum akun G/L pada periode/tanggal tertentu. Aged Receivables dan Aged Payables mengelompokkan piutang/utang menurut usia. Basis aging, tanggal akhir, currency dan dimension harus konsisten saat rekonsiliasi; daftar entry yang masih open sekarang belum tentu mewakili saldo historis pada tanggal laporan.
+
+**Financial Reports** mengatur presentasi keuangan melalui definisi baris dan kolom. Istilah **Account Schedules** muncul pada materi lama; tahap Basic cukup mengenali fungsinya, tanpa membuat format laporan baru.
+
+## Langkah di BC
+
+1. Di CRONUS sandbox, tentukan company, tanggal akhir, periode, currency dan dimension. Catat filter ini sebelum membuka report.
+2. Cari **Trial Balance**, isi Date Filter yang mencakup jurnal latihan B3, lalu Preview. Cocokkan perubahan akun dengan G/L Entries yang sudah difilter sama.
+3. Cari laporan **Aged Accounts Receivable** dan **Aged Accounts Payable** yang tersedia pada company. Catat ending date, basis aging dan panjang periode; nama/varian cetak atau Excel bisa berbeda.
+4. Telusuri customer/vendor demo beserta invoice dan application-nya. Saat membandingkan historis, pertimbangkan pembayaran setelah tanggal akhir, bukan hanya Remaining Amount hari ini.
+5. Gunakan opsi output Excel pada report bila tersedia. Jika varian tertentu tidak menyediakannya, pilih report Excel yang setara dari pencarian dan catat perbedaannya. Ekspor list via **Open in Excel** hanya data list, bukan pengganti otomatis report yang sama.
+6. Buka **Financial Reports** yang sudah disiapkan untuk mengenali baris akun/kelompok dan kolom periode. Bandingkan satu angka dengan Trial Balance menggunakan filter sama.
+7. Simpan bukti demo beserta nama report dan filter. Jangan mengubah report/setup hanya agar hasil tampak cocok.
+
+## Cheat box
+
+<CheatBox>
+
+- Trial Balance: ringkasan G/L.
+- Aged Receivables: umur piutang.
+- Aged Payables: umur utang.
+- Company, tanggal, currency dan dimension harus sama.
+- Open sekarang belum tentu open pada tanggal historis.
+- Ekspor list berbeda dari output report.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Membandingkan laporan dengan tanggal berbeda, menjumlahkan akun total bersama akun detail dua kali, atau menyimpulkan saldo subledger cocok tanpa memeriksa filter dan application historis.
+:::
+
+## Latihan terkait
+
+[B8 — Laporan](/latihan/basic/b8-laporan/). Nomor B8 mengikuti kurikulum; latihan koreksi adalah B7.
+
+## Sumber resmi
+
+- [Trial Balance](https://learn.microsoft.com/en-us/dynamics365/business-central/reports/report-6).
+- [Reporting overview](https://learn.microsoft.com/en-us/dynamics365/business-central/reports-bi-reporting).
+- [Report overview](https://learn.microsoft.com/en-us/dynamics365/business-central/reports-available-reports).
+- [Definisi Financial Report dan row/column](https://learn.microsoft.com/en-us/dynamics365/business-central/application/base-application/table/microsoft.finance.financialreports.financial-report).
+- [Open/Edit in Excel](https://learn.microsoft.com/en-us/dynamics365/business-central/across-work-with-excel).
+
+Dasar verifikasi: dokumentasi resmi; rekonsiliasi angka dan ekspor report di sandbox belum dieksekusi penulis.

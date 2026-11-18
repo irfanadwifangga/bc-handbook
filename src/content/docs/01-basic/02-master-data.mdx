@@ -1,0 +1,67 @@
+---
+title: 1.2 Master data
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 12
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Kenali master data yang menjadi dasar transaksi dan buat record demo dengan template yang sesuai di sandbox CRONUS.
+
+## Konsep singkat
+
+| Record | Peran |
+| --- | --- |
+| Customer / Vendor | Pihak yang ditagih / dibayar. |
+| Item | Barang atau jasa yang dijual/dibeli. Inventory melacak persediaan; Service untuk jasa. |
+| G/L Account | Akun buku besar; bukan pengganti Customer/Vendor. |
+| Bank Account | Rekening untuk pencatatan bank, dengan posting setup terkait. |
+| Dimension | Label analisis seperti Department; bukan akun G/L tambahan. |
+
+Template memberi nilai awal yang konsisten, bukan jaminan bahwa setup dan data sudah benar. Posting group menghubungkan transaksi dengan akun buku besar; [ringkasannya ada di cheatsheet](/cheatsheets/04-posting-groups-matrix/).
+
+## Langkah di BC
+
+1. Cari **Customers**, pilih **New**, lalu template demo yang disetujui. Periksa nama, alamat demo, payment terms dan posting groups sebelum menutup card.
+2. Ulangi melalui **Vendors**. Gunakan identitas fiktif; jangan menyalin data pemasok nyata.
+3. Di **Items**, buat item **Inventory** dan **Service** memakai template sesuai tipe. Periksa **Base Unit of Measure**, posting groups dan informasi harga/biaya yang relevan.
+4. Buka **Chart of Accounts** dan satu **Bank Account** demo untuk memahami perbedaannya. Gunakan akun yang sudah disiapkan pada latihan; jangan menebak nomor akun atau mengganti control account.
+5. Baca **Dimensions** pada record contoh. Bedakan kode dimension dengan value-nya, misalnya Department dan Sales.
+6. Buka ulang record baru dan periksa nilai hasil template. Catat ID demo untuk dipakai pada latihan berikutnya; jangan menerapkan template massal ke record lama.
+
+## Cheat box
+
+<CheatBox>
+
+- Customer: piutang; Vendor: utang.
+- Inventory dan Service memiliki tujuan berbeda.
+- Base Unit of Measure harus konsisten.
+- Template mempercepat pengisian awal.
+- Posting group harus cocok dengan setup company.
+- Dimension mengelompokkan analisis transaksi.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memakai template Inventory untuk jasa, mengabaikan posting group, atau membuat akun G/L baru hanya untuk membedakan departemen. Mengubah card tidak otomatis memperbaiki transaksi yang sudah terposting.
+:::
+
+## Latihan terkait
+
+[B2 — Master data](/latihan/basic/b2-master-data/).
+
+## Sumber resmi
+
+- [Customers](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-register-new-customers) dan [vendors](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-register-new-vendors).
+- [Items dan templates](https://learn.microsoft.com/en-us/dynamics365/business-central/inventory-how-register-new-items).
+- [Chart of Accounts](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-chart-accounts).
+- [Dimensions](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-dimensions).
+
+Dasar verifikasi: dokumentasi resmi; kebutuhan field dapat bertambah karena lokalisasi atau extension.

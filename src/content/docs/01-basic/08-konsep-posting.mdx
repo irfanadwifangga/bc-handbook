@@ -1,0 +1,66 @@
+---
+title: 1.8 Konsep posting dan koreksi
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 18
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih jalur koreksi berdasarkan asal entry, status invoice dan pergerakan barang, sambil mempertahankan jejak audit.
+
+## Konsep singkat
+
+Release mengubah kesiapan dokumen; Post mencatat dampak transaksi. Posted documents dan ledger menyimpan jejaknya. Kesalahan nilai terposting diperbaiki lewat transaksi koreksi, bukan menghapus sejarah.
+
+| Kondisi | Jalur yang perlu ditinjau |
+| --- | --- |
+| Dokumen belum Post | Buka/reopen sesuai status dan izin, perbaiki, lalu preview. |
+| Shipment/receipt belum diinvoicing | Undo pada posted document bila memenuhi batas fitur. |
+| Invoice memenuhi syarat Correct/Cancel | Buat koreksi otomatis dari posted invoice; tinjau dokumen hasilnya. |
+| Invoice sudah dibayar, retur parsial, atau kondisi tidak didukung | Credit Memo/Return Order sesuai kasus; application/refund ditangani terpisah. |
+| Entry berasal dari General Journal | Reverse Transaction bila memenuhi syarat; bukan untuk semua invoice. |
+
+## Langkah di BC
+
+1. Di sandbox, pilih transaksi demo dan catat dokumen asal, tanggal, jumlah, status payment/application serta shipment/receipt. Jangan mencoba koreksi tanpa mengetahui asalnya.
+2. Untuk jurnal, telusuri **General Ledger Entries → Reverse Transaction**. Fitur reversal berlaku untuk entry asal journal dan hanya sekali; penggunaan additional reporting currency memiliki batas tambahan.
+3. Untuk invoice sales yang masih memenuhi syarat, lihat **Correct** dan **Cancel**. Cancel membuat corrective credit memo terposting. Correct juga menyiapkan dokumen pengganti sesuai skenario; invoice dari sales order perlu meninjau alur order asal.
+4. Jika syarat tidak terpenuhi, gunakan credit memo atau return process yang sesuai. Jangan memakai Reverse Transaction sebagai jalan pintas untuk invoice dokumen.
+5. Setelah koreksi, telusuri invoice asli dan dokumen pembalik. Cocokkan customer/vendor ledger, G/L dan inventory bila terkait; payment yang sudah diterima/dibayar tetap memerlukan penanganan application atau refund.
+
+## Cheat box
+
+<CheatBox>
+
+- Release berbeda dari Post.
+- Preview dahulu, koreksi kemudian bila perlu.
+- Undo: shipment/receipt yang memenuhi syarat.
+- Correct/Cancel bukan untuk semua invoice.
+- Reverse Transaction bergantung asal jurnal.
+- Credit memo tidak otomatis menyelesaikan refund uang.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mencari tombol Undo pada invoice yang sudah dibayar, memakai jurnal G/L saja untuk membalik transaksi bersubledger/inventory, atau menganggap munculnya credit memo sudah membuktikan seluruh proses bisnis selesai.
+:::
+
+## Latihan terkait
+
+[B7 — Koreksi](/latihan/basic/b7-koreksi/) dan [pre-posting checklist](/cheatsheets/07-pre-posting-checklist/).
+
+## Sumber resmi
+
+- [Posting sales](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-sales).
+- [Reverse journal dan undo shipment/receipt](https://learn.microsoft.com/en-us/dynamics365/business-central/finance-how-reverse-journal-posting).
+- [Correct/Cancel sales invoice](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-correct-cancel-sales-invoice).
+- [Sales returns dan credit memo](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-process-sales-returns-cancellations).
+
+Batas fitur harus diperiksa pada dokumen yang dipilih. Verifikasi dokumentasi ini bukan bukti praktik koreksi sandbox.

@@ -1,0 +1,59 @@
+---
+title: 1.4 Sales — Order-to-Cash
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 14
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Jalankan satu siklus penjualan demo dari penawaran hingga invoice lunas dan jelaskan perbedaan barang keluar, tagihan, serta pembayaran.
+
+## Konsep singkat
+
+Analogi toko dan dampak per tahap tersedia pada [alur Sales interaktif](/01-basic/alur-sales/). Quote opsional; contoh ini memakai order untuk menjelaskan shipment. **Ship** mengeluarkan barang; **Invoice** membentuk piutang terposting. Keduanya bisa digabung. Payment mencatat penerimaan uang, sedangkan application mencocokkannya dengan invoice.
+
+## Langkah di BC
+
+1. Di sandbox CRONUS, pilih customer dan item Inventory demo dengan stok cukup. Pastikan tanggal, location, UoM, harga, posting groups dan pajak sesuai setup latihan.
+2. Buat **Sales Quote** untuk dua unit, lalu **Make Order**. Catat nomor quote dan order; Release belum berarti posting.
+3. Periksa **Qty. to Ship** dan **Qty. to Invoice**. Untuk demonstrasi terpisah, Post dengan pilihan **Ship**, kemudian tinjau **Posted Sales Shipment** dan Item Ledger Entries.
+4. Dari order yang sama, pastikan kuantitas invoicing sesuai shipment yang belum ditagih. Preview lalu Post **Invoice**. Catat **Posted Sales Invoice** dan invoice entry pada **Customer Ledger Entries**.
+5. Pada **Cash Receipt Journals**, pilih batch latihan, Document Type **Payment**, Account Type **Customer**, serta balancing account **Bank Account** demo. Cocokkan nilai penerimaan dengan total invoice termasuk pajak; gunakan tanda pembayaran sesuai jurnal dan periksa preview.
+6. Tentukan invoice melalui **Applies-to Doc. No.** atau **Apply Entries**, lalu Post. Application dapat dilakukan saat payment diposting atau dari entry terposting kemudian; metode customer dapat memengaruhi application otomatis.
+7. Periksa **Remaining Amount** dan **Open** pada invoice/payment. Lunas penuh berarti sisa nol; pembayaran parsial belum menutup seluruh invoice.
+
+## Cheat box
+
+<CheatBox>
+
+- Quote → Order belum menghasilkan invoice terposting.
+- Ship: keluarkan kuantitas.
+- Invoice: catat piutang.
+- Payment: catat penerimaan bank.
+- Apply: cocokkan payment dengan invoice.
+- Periksa sisa dan status Open, bukan nomor dokumen saja.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menagih shipment dengan memasukkan item lagi sebagai penjualan baru, menganggap uang diterima pasti menutup invoice tertentu, atau menyamakan saldo LCY dengan nilai currency invoice tanpa memeriksa kurs.
+:::
+
+## Latihan terkait
+
+[B4 — Sales end-to-end](/latihan/basic/b4-sales/) dan [ledger map](/cheatsheets/03-ledger-entries-map/).
+
+## Sumber resmi
+
+- [Posting sales](https://learn.microsoft.com/en-us/dynamics365/business-central/ui-post-sales).
+- [Invoice from a sales order](https://learn.microsoft.com/en-us/training/modules/invoicing-customers-dynamics-365-business-central/1-sales-order).
+- [Customer payments dan application](https://learn.microsoft.com/en-us/dynamics365/business-central/receivables-how-apply-sales-transactions-manually).
+
+Verifikasi berdasarkan dokumentasi; transaksi sandbox belum dieksekusi oleh penulis.

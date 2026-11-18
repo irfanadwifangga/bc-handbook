@@ -1,0 +1,60 @@
+---
+title: 1.5 Purchasing — Purchase-to-Pay
+bc_version_verified: "29.x"
+last_verified: "2026-11-18"
+level: Basic
+sidebar:
+  order: 15
+---
+
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pisahkan pemesanan, penerimaan, tagihan vendor dan pembayaran pada pembelian barang demo.
+
+## Konsep singkat
+
+Toko memesan kursi melalui Purchase Order; Purchase Quote dapat mendahuluinya bila diperlukan. Receipt mencatat barang diterima. Invoice terposting mencatat utang. Payment dan application menyelesaikan sisi pembayaran. Receipt yang belum diinvoicing dapat memiliki expected cost; dampak ke G/L bergantung setup, sehingga receipt saja tidak boleh dianggap sudah membentuk invoice vendor.
+
+## Langkah di BC
+
+1. Di CRONUS sandbox, pilih vendor, item Inventory dan location sederhana untuk latihan. Catat stok awal serta UoM yang dipakai.
+2. Bila perlu penawaran, gunakan **Purchase Quote** lalu konversi ke order. Untuk latihan inti, buat **Purchase Order** langsung, isi vendor, item, kuantitas, biaya dan tanggal.
+3. Cocokkan **Qty. to Receive** dengan barang demo yang diterima. Preview lalu Post **Receive**; telusuri **Posted Purchase Receipt** dan Item Ledger Entries.
+4. Masukkan referensi invoice vendor demo pada **Vendor Invoice No.** sesuai kebutuhan setup. Periksa **Qty. to Invoice**; invoice Inventory pada order harus didahului receipt atau diposting dengan **Receive and Invoice** bersamaan.
+5. Post Invoice dari order tersebut. Catat **Posted Purchase Invoice** dan invoice entry pada **Vendor Ledger Entries**. Jangan membuat transaksi pembelian kedua untuk receipt yang sama.
+6. Di **Payment Journals**, gunakan batch latihan, Document Type **Payment**, Account Type **Vendor**, dan balancing Bank Account demo. Pilih invoice melalui **Apply Entries** atau **Applies-to Doc. No.**, periksa jumlah/tanda dan preview sebelum Post.
+7. Periksa Remaining Amount nol untuk pelunasan penuh dan status entry tertutup. Pencatatan jurnal latihan ini tidak mengirim transfer uang nyata; jangan memakai fitur ekspor bank produksi.
+
+## Cheat box
+
+<CheatBox>
+
+- Quote opsional; order mencatat komitmen.
+- Receive: kuantitas masuk.
+- Invoice: utang vendor terposting.
+- Jangan invoice barang order yang belum diterima.
+- Payment Journal: catat pembayaran vendor.
+- Apply menghubungkan pembayaran dan invoice.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memilih Receive and Invoice padahal hanya penerimaan parsial, mengabaikan referensi invoice vendor, atau menilai utang hanya dari saldo G/L tanpa memeriksa Vendor Ledger Entries.
+:::
+
+## Latihan terkait
+
+[B5 — Purchase end-to-end](/latihan/basic/b5-purchasing/) dan [alur dokumen](/cheatsheets/02-alur-dokumen/).
+
+## Sumber resmi
+
+- [Record purchases](https://learn.microsoft.com/en-us/dynamics365/business-central/purchasing-how-record-purchases).
+- [Procurement Quick Start](https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-procurement).
+- [Vendor application](https://learn.microsoft.com/en-us/dynamics365/business-central/payables-how-apply-purchase-transactions-manually).
+- [Expected cost](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-expected-cost-posting).
+
+Dasar verifikasi: dokumentasi resmi, bukan hasil transaksi sandbox.

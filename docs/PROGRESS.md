@@ -10,7 +10,7 @@
 - [x] **5.1** — Design tokens, landing page, search, dark mode, komponen inti, docs/DESIGN.md
 - [x] **5.2** — Level 0 Orientasi
 - [x] **5.3** — Cheatsheet #1–#7 (navigasi, alur dokumen, ledger, posting group, error, setup, pre-posting)
-- [ ] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
+- [x] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
 - [ ] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
 - [ ] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
 - [ ] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
@@ -18,6 +18,17 @@
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.4 — 2026-11-18
+
+- Delapan modul 1.1–1.8 dan latihan B1–B8 tersedia dalam bahasa Indonesia dengan metadata dan sumber Microsoft. Modul memuat tujuh bagian wajib serta CheatBox enam baris; latihan memuat tujuan, prasyarat, langkah, empat kriteria lulus, estimasi dan hint tertutup. Modul Sales menautkan pilot interaktif yang sudah ada.
+- Verifikasi sebelum penerapan diff indeks: build berhasil menghasilkan 37 halaman dan indeks Pagefind; 3 tes Bun lulus; struktur/metadata 16 halaman lulus. Audit menemukan 2.100 tautan internal/anchor valid serta /favicon.svg hilang yang direferensikan 37 halaman. Favicon tidak diperbaiki sesuai arahan pengguna; audit tautan keseluruhan tidak dinyatakan bersih.
+- Pengujian pertama menemukan axe label pada checkbox Markdown. Setelah persetujuan, 32 kriteria lulus B1–B8 diubah menjadi daftar biasa. Build, tes Bun dan audit struktur diulang. Percobaan suite gabungan berikutnya dihentikan karena selector hint tes sementara ikut memilih sidebar; selector dibatasi ke konten setelah persetujuan. Hasil suite gabungan itu tidak dinyatakan seluruhnya lulus.
+- Pengujian terfokus terakhir: 64 audit halaman baru lulus pada desktop 1280px/mobile 360px, light/dark; mencakup axe, overflow body, error JavaScript, CheatBox serta hint lewat keyboard. Pemeriksaan regression route/404, navigasi, search dan pilot telah dijalankan pada percobaan gabungan sebelumnya; tidak diulang setelah perubahan selector tes sementara yang tidak memengaruhi source situs.
+- Screenshot modul master data dan latihan B4 disimpan lokal di .codex-tmp/phase-5.4/. Preview otomatis dihentikan. Tidak ada komponen/CSS/dependensi baru atau eksekusi transaksi sandbox. Tracker tersimpan tetap Fase 5.8.
+- Warning lama i18n kosong, fallback 404 dan sitemap tanpa site masih ada; build berhasil. Firefox/WebKit, screen reader, playback video eksternal dan praktik BC belum diuji. Tidak ada push atau deploy.
+- Commit message: docs: add level 1 basic and exercises. Fase 5.5 belum dimulai.
+
 
 ### Pilot alur Sales interaktif — 2026-11-18
 
