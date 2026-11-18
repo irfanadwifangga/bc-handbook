@@ -19,6 +19,15 @@
 
 ## Log
 
+### Hasil U1 — 2026-11-18
+
+- DESIGN.md v2.0 yang disediakan pengguna dipertahankan apa adanya, tanpa mengedit isi. SHA-256: 5ebb98922ff23c284109d59e4d8f2e60883e14e4d919cf57f3132bec4ddb248b. Perbandingan memakai DESIGN.md 1.x dari HEAD sebelum commit U1.
+- Bagian 4.10 Search adapter dan 4.11 FlowPlayer/ReferenceVideo identik setelah normalisasi format Markdown. Implementasi cetak satu kolom A4, margin 12mm, token cetak, URL sumber serta aturan pemutusan dipertahankan. Kalimat mode cetak umum lama “2 kolom bila perlu” dihapus pada v2.0; ini dilaporkan sebagai selisih tanpa mengubah sumber v2.0. Checklist lama tetap tercakup; v2.0 memperluas pemeriksaan font/fallback, kontras sintaks dan build/Bun/Playwright.
+- Verifikasi dokumen dan baseline nyata: build 79 halaman berhasil; empat tes capture lulus dan menghasilkan 20 screenshot sebelum perubahan (lima jenis halaman × desktop/mobile × light/dark). Grep src/components untuk hex/px/font-family langsung menemukan 0 hasil. Artefak di .codex-tmp/phase-U2/. Verifikasi penuh perubahan visual dijalankan pada U2.
+- U1 hanya dokumen; tidak mengubah CSS, font, markup, komponen atau materi. Ada pekerjaan Fase 5.6/favicon yang belum di-commit sebelum U1 dan tidak dimasukkan ke commit U1. Tidak ada push/deploy. Firefox/WebKit, screen reader dan macOS belum diuji.
+- Commit message: docs: update design system to v2.0 (neutral, nextjs-docs-inspired).
+
+
 ### Hasil Fase 5.5 — 2026-11-18
 
 - Modul Intermediate 2.1–2.16, latihan M1–M10 dan cheatsheet #14 Configuration Worksheet / RapidStart tersedia. Seluruh halaman memuat metadata serta sumber Microsoft; modul memakai tujuh bagian dan CheatBox enam baris, latihan memakai kriteria daftar biasa dan hint tertutup. Modul 2.17 dan Intercompany tetap opsional/ditunda.
