@@ -203,3 +203,11 @@
 - Verifikasi nyata: bun run build berhasil menghasilkan 79 halaman dan indeks Pagefind; bun test 3 lulus; bunx playwright test e2e/exercise-order.ui.ts --max-failures 1 menghasilkan 12 lulus pada desktop 1280px/mobile 360px dan light/dark. Tes regresi mencakup urutan sidebar serta klik pagination maju/mundur antarlevel. git diff --check lulus; preview tes dihentikan.
 - Batas: suite Playwright lengkap, Axe, cetak, Lighthouse, Firefox/WebKit, screen reader dan macOS tidak diulang untuk perubahan urutan ini. Warning build lama i18n, fallback 404 dan sitemap tanpa site tetap ada. Tidak ada dependensi baru, push/deploy, atau pekerjaan U3.
 - Commit message usulan: `fix: order exercises by learning level`.
+
+### Perbaikan pembagian kolom cheatsheet — 2026-11-19
+
+- Aturan desktop yang memaksa sel terakhir width 100% dihapus. Tabel cheatsheet memakai display table/table-layout auto, lebar 100%, serta pemenggalan kata normal; kolom mendapat ruang menurut isi. DESIGN.md 4.8 diselaraskan. Mobile dan cetak memakai aturan sebelumnya.
+- Diagnosis pada 1920px: Gap-Fit sebelumnya memberi Effort 800px dari 1056px; prototipe memberi Kebutuhan 35 → 199px dan Catatan/solusi 34 → 247px. Pre-posting Pemeriksaan 36 → 187px; Posting Groups Input 84 → 303px. Penyebab berasal dari aturan CSS yang terlalu umum pada kolom terakhir.
+- Verifikasi nyata setelah penerapan: build 94 halaman/Pagefind dan bun test 3 lulus. Audit terarah 12 cheatsheet × 1920/1280/360px × light/dark = 72 tes lulus; tidak ada overflow body atau pelanggaran Axe WCAG 2A/AA + 2.1A/AA. Semua kata alfabetis pada sel desktop diperiksa agar tidak terpecah antarbaris. Dua belas PDF masing-masing satu halaman A4; jumlah/ukuran halaman diuji, inspeksi visual seluruh PDF belum diulang. Screenshot pre-posting 1920px diperiksa dan pembagian kolom terbaca.
+- Artefak lokal .codex-tmp/table-review/ mencakup tests.log, screenshot dan print/. git diff --check lulus; preview port 4323 berhenti. Suite Playwright penuh, Firefox/WebKit, screen reader, macOS dan Lighthouse tidak diulang. Tidak ada materi, dependency, U3, push/deploy atau perubahan favicon.
+- Commit message: `fix: balance cheatsheet table columns`.

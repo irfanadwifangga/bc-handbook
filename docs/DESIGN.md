@@ -199,6 +199,7 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Placeholder rahasia selalu `<TENANT_ID>`, `<ENV>`, `<COMPANY_ID>`, `<CLIENT_SECRET>`.
 
 ### 4.8 Tabel
+- Cheatsheet desktop mulai 72rem: tabel memakai display table dan table-layout auto; lebar kolom dibagi menurut isi. Tidak memaksa sel terakhir width 100%. Sel memakai overflow-wrap normal dan word-break normal agar kata tidak dipecah per huruf. Aturan ini hanya untuk layar desktop; perilaku mobile dan cetak tetap mengikuti aturan masing-masing.
 - Header sticky di dalam kontainer scroll, latar `--bc-surface-2`, teks 600.
 - Tanpa zebra; garis tipis antar baris. Padding sel 8px 12px. Ukuran `--bc-text-sm`.
 - Di mobile: kontainer `overflow-x: auto`, kolom pertama boleh `position: sticky; left: 0`.

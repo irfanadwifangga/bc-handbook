@@ -285,7 +285,11 @@ starlight-theme-select select { width: auto; }
   .bc-cheatsheet :is(table, .expressive-code) {
     width: 100%;
   }
-  .bc-cheatsheet :is(th, td):last-child { width: 100%; }
+  .bc-cheatsheet table { display: table; table-layout: auto; }
+  .bc-cheatsheet :is(th, td) {
+    overflow-wrap: normal;
+    word-break: normal;
+  }
   .right-sidebar-panel starlight-toc > nav > ul {
     border-inline-start: var(--bc-border-width) solid var(--bc-border);
   }
