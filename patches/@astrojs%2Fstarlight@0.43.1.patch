@@ -1,0 +1,16 @@
+diff --git a/dist/components/Search.astro b/dist/components/Search.astro
+index 3da3012fa2359160143fa670a136e8429b367bd9..0d9db53d93c2b2eca968f0433c2d957868e8eae8 100644
+--- a/dist/components/Search.astro	
++++ b/dist/components/Search.astro
+@@ -125,7 +125,10 @@ if (project.trailingSlash === 'never') dataAttributes['data-strip-trailing-slash
+ 			const formatURL = shouldStrip ? stripTrailingSlash : (path: string) => path;
+ 
+ 			if (import.meta.env.DEV) return;
+-			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
++			const onIdle = (cb: () => void) =>
++				window.requestIdleCallback
++					? window.requestIdleCallback(cb, { timeout: 1_000 })
++					: window.setTimeout(cb, 1);
+ 			onIdle(async () => {
+ 				// @ts-expect-error — Missing types for @pagefind/default-ui package.
+ 				const { PagefindUI } = await import('@pagefind/default-ui');

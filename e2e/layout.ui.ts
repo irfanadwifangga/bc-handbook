@@ -90,8 +90,18 @@ test('shortcut dan dialog search tetap berfungsi', async ({ page }) => {
   await page.keyboard.press('Control+k');
   const dialog = page.getByRole('dialog', { name: 'Pencarian', exact: true });
   await expect(dialog).toBeVisible();
+  const shortcuts = dialog.getByRole('navigation', { name: 'Tautan cepat' });
+  await expect(shortcuts.getByRole('link')).toHaveCount(3);
+  await expect(shortcuts).toBeVisible();
   await dialog.getByRole('textbox').fill('sandbox');
+  await expect(shortcuts).toBeHidden();
   await expect(dialog.getByRole('link').first()).toBeVisible();
+  await dialog.getByRole('textbox').fill('');
+  await expect(shortcuts).toBeVisible();
+  await dialog.getByRole('button', { name: 'Tutup', exact: true }).click();
+  await expect(dialog).toBeHidden();
+  await page.keyboard.press('Control+k');
+  await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
 });

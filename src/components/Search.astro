@@ -4,7 +4,27 @@ import DefaultSearch from '@astrojs/starlight/components/Search.astro';
 
 <DefaultSearch {...Astro.props} />
 
+<template id="bc-search-suggestions">
+  <nav class="bc-search-suggestions" aria-label="Tautan cepat">
+    <p>Tautan cepat</p>
+    <a href="/01-basic/alur-sales/">Alur Sales</a>
+    <a href="/02-intermediate/02-posting-groups/">Posting Groups dan VAT</a>
+    <a href="/cheatsheets/">Cheatsheets</a>
+  </nav>
+</template>
+
 <script>
+  const dialog = document.querySelector('site-search dialog');
+  const close = dialog?.querySelector('button[data-close-modal]');
+  const search = dialog?.querySelector('#starlight__search');
+  const suggestions = document.querySelector<HTMLTemplateElement>('#bc-search-suggestions');
+
+  if (close && search && suggestions) {
+    close.textContent = 'Tutup';
+    close.classList.remove('md:sl-hidden');
+    search.after(suggestions.content.cloneNode(true));
+  }
+
   const button = document.querySelector<HTMLButtonElement>('site-search button[data-open-modal]');
   const caption = button?.querySelector('span');
   const shortcut = button?.querySelector('kbd');
@@ -16,3 +36,33 @@ import DefaultSearch from '@astrojs/starlight/components/Search.astro';
     if (label) button.setAttribute('aria-label', label);
   }
 </script>
+
+<style is:global>
+  site-search #starlight__search {
+    --sl-search-cancel-space: 5rem;
+  }
+  .bc-search-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--bc-space-2);
+    margin-block-start: var(--bc-space-4);
+    font-size: var(--bc-text-sm);
+  }
+  .bc-search-suggestions p {
+    flex-basis: 100%;
+    color: var(--bc-text-muted);
+  }
+  .bc-search-suggestions a {
+    padding: var(--bc-space-2) var(--bc-space-3);
+    border: var(--bc-border-width) solid var(--bc-border);
+    border-radius: var(--bc-radius-sm);
+    color: var(--bc-text);
+  }
+  .bc-search-suggestions a:hover {
+    color: var(--bc-accent);
+  }
+  #starlight__search:has(.pagefind-ui__search-input:not(:placeholder-shown)) + .bc-search-suggestions {
+    display: none;
+  }
+</style>
