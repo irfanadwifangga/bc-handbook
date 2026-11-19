@@ -158,8 +158,6 @@ starlight-theme-select select { width: auto; }
 .sl-markdown-content table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: var(--bc-text-sm); line-height: var(--bc-line-small); -webkit-overflow-scrolling: touch; }
 .sl-markdown-content :is(th, td) { padding: var(--bc-space-2) var(--bc-space-3); border-bottom: var(--bc-border-width) solid var(--bc-border); overflow-wrap: normal; word-break: normal; }
 .sl-markdown-content th { background: var(--bc-surface-2); font-weight: var(--bc-weight-label); white-space: nowrap; }
-.sl-markdown-content td:nth-child(1),
-.sl-markdown-content td:nth-child(2) { white-space: nowrap; }
 .sl-markdown-content pre { max-width: 100%; overflow-x: auto; white-space: pre; }
 .sl-markdown-content pre code { font-size: var(--bc-text-sm); }
 

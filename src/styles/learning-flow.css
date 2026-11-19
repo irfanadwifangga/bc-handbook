@@ -13,7 +13,7 @@
 }
 .bc-flow-map li {
   margin: 0;
-  flex: 1 1 120px;
+  flex: 0 0 auto;
 }
 .sl-markdown-content .bc-flow :is(button, li, dd, p) { margin: 0; }
 
@@ -29,15 +29,16 @@
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 .bc-flow-map button {
-  width: 100%;
+  width: auto;
   text-align: start;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--bc-space-2);
-  border-radius: var(--bc-radius-md);
+  border-radius: 9999px;
   font-weight: 500;
   font-size: var(--bc-text-sm);
   color: var(--bc-text-muted);
+  padding: var(--bc-space-2) var(--bc-space-3);
 }
 .bc-flow-map button:hover {
   border-color: var(--bc-accent);
