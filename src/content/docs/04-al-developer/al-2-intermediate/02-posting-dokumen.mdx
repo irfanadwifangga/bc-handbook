@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -101,16 +102,36 @@ codeunit 50208 "MYP Copy Fields On Post"
 
 > ⚠️ Verifikasi: Nama event `OnBeforeSalesInvHeaderInsert` dan parameter signature-nya perlu dicocokkan dengan symbols Codeunit 80 pada BC 29.x.
 
+## Contoh praktik
+
+- **Kondisi awal** — Draft demo harus divalidasi sebelum dapat diposting.
+- **Langkah** — Siapkan uji data lengkap dan data wajib kosong. Temukan titik validasi melalui symbols dan review trace sandbox.
+- **Hasil yang diharapkan** — Kasus kosong ditolak tanpa entry baru. Kasus lengkap baru dianggap lulus setelah bukti tersedia.
+
 ## Cheat box
 
 <CheatBox>
 
-- Codeunit 80 = Sales-Post, Codeunit 90 = Purch.-Post (⚠️ verifikasi).
-- Tambah field: TableExt sumber + TableExt posted + subscriber copy.
-- ErrorInfo memberi pesan + action navigasi ke pengguna.
-- Periksa IsHandled sebelum validasi di subscriber.
+<CheatGroup label="Objek posting">
+
+- **Codeunit 80** = Sales-Post, Codeunit 90 = Purch.-Post (⚠️ verifikasi).
+- Tambah field: **TableExt** sumber + TableExt posted + subscriber copy.
+
+</CheatGroup>
+
+<CheatGroup label="Error dan validasi">
+
+- **ErrorInfo** memberi pesan + action navigasi ke pengguna.
+- Periksa **IsHandled** sebelum validasi di subscriber.
+
+</CheatGroup>
+
+<CheatGroup label="Event dan pengujian">
+
 - Event OnBefore*/OnAfter* ada di setiap tahap posting.
-- Selalu uji posting positif dan negatif di Sandbox.
+- Selalu uji posting positif dan negatif di **Sandbox**.
+
+</CheatGroup>
 
 </CheatBox>
 

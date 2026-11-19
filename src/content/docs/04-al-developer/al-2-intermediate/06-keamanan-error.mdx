@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -84,16 +85,36 @@ codeunit 50215 "MYP Collectible Error Demo"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Pengguna demo tidak mengisi satu field wajib.
+- **Langkah** — Siapkan pesan yang menyebut tindakan koreksi. Uji kasus valid serta kasus tanpa permission.
+- **Hasil yang diharapkan** — User dapat membedakan validasi dari izin. Bukti tersanitasi dan tidak mengandung secret.
+
 ## Cheat box
 
 <CheatBox>
 
-- InherentPermissions beri akses tabel lokal tanpa izin global user.
-- IsolatedStorage simpan token per Company atau User.
-- SecretText cegah kebocoran token di telemetri dan call stack.
-- DataClassification wajib pada setiap field tabel baru.
-- ErrorBehavior::Collect kumpulkan banyak error sebelum dieksekusi.
-- TryFunction dilarang menjalankan write database sebelum gagal.
+<CheatGroup label="Akses dan penyimpanan">
+
+- **InherentPermissions** beri akses tabel lokal tanpa izin global user.
+- **IsolatedStorage** simpan token per Company atau User.
+
+</CheatGroup>
+
+<CheatGroup label="Kerahasiaan dan klasifikasi">
+
+- **SecretText** cegah kebocoran token di telemetri dan call stack.
+- **DataClassification** wajib pada setiap field tabel baru.
+
+</CheatGroup>
+
+<CheatGroup label="Penanganan error">
+
+- **ErrorBehavior::Collect** kumpulkan banyak error sebelum dieksekusi.
+- **TryFunction** dilarang menjalankan write database sebelum gagal.
+
+</CheatGroup>
 
 </CheatBox>
 

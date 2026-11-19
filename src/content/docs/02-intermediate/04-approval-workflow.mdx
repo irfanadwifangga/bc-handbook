@@ -7,7 +7,9 @@ sidebar:
   order: 4
 ---
 
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +28,59 @@ Workflow menghubungkan event, kondisi dan response. Template adalah titik awal, 
 5. Buat PO di atas threshold sebagai requester, kirim approval dan periksa approval entries/status. Uji apakah Release/Post dibatasi saat pending.
 6. Masuk sebagai approver, setujui, lalu periksa requester dapat melanjutkan sesuai izin. Ulangi kasus reject dan PO di bawah threshold untuk memastikan kondisi benar.
 
+## Contoh praktik
+
+- **Kondisi awal** — Buyer demo membuat PO 1.500 dengan ambang approval yang sudah disetujui pembimbing.
+- **Langkah** — Ajukan PO, uji kondisi pending, lalu gunakan akun approver demo untuk memproses keputusan.
+- **Hasil yang diharapkan** — Kamu punya bukti status sebelum dan sesudah keputusan, dengan dua role yang berbeda.
+
+### Simulasi alur
+
+<FlowPlayer intro="Contoh PO demo yang melampaui ambang approval." steps={[
+  {
+    "label": "Ajukan",
+    "analogy": "Buyer meminta persetujuan sebelum proses dilanjutkan.",
+    "document": "Purchase Order dan Send Approval Request.",
+    "impact": "Periksa status dan batas Release sesuai workflow demo."
+  },
+  {
+    "label": "Review",
+    "analogy": "Approver membandingkan PO dengan aturan yang disepakati.",
+    "document": "Requests to Approve.",
+    "impact": "Keputusan bisa disetujui atau ditolak."
+  },
+  {
+    "label": "Tindak lanjut",
+    "analogy": "Buyer melihat keputusan dan menindaklanjuti dokumen.",
+    "document": "Status PO dan Approval Entries.",
+    "impact": "Jika ditolak, revisi lalu ajukan lagi. Jika disetujui, lanjut sesuai izin dan setup."
+  }
+]} />
+
 ## Cheat box
 
 <CheatBox>
 
-- Template perlu ditinjau.
-- Pisahkan requester dan approver.
-- Limit approval harus konsisten.
-- Notifikasi bukan persetujuan.
+<CheatGroup label="Template dan peran">
+
+- **Template** perlu ditinjau.
+- Pisahkan **requester** dan approver.
+
+</CheatGroup>
+
+<CheatGroup label="Limit dan notifikasi">
+
+- **Limit approval** harus konsisten.
+- **Notifikasi** bukan persetujuan.
+
+</CheatGroup>
+
+<CheatGroup label="Uji approval">
+
 - Uji sebelum dan sesudah approve.
-- Catat approval entries.
+- Catat **approval entries**.
+
+</CheatGroup>
 
 </CheatBox>
 

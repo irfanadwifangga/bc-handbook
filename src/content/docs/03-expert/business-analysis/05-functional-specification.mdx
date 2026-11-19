@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Spesifikasi menghubungkan kebutuhan dengan perilaku yang diinginkan: actor, trig
 5. Tulis acceptance positif dan negatif dengan Given/When/Then; sertakan kebutuhan migrasi data lama dan batas yang tidak ditangani.
 6. Review solusi standar/config/app/custom dengan tim teknis. Jangan menjanjikan implementasi atau menulis ID object/signature event berdasarkan dugaan.
 
+## Contoh praktik
+
+- **Kondisi awal** — Request approval perlu ditolak jika kode alasan demo kosong.
+- **Langkah** — Tulis actor, trigger, input, hasil positif dan pesan untuk kasus kosong. Hubungkan ke requirement R10.
+- **Hasil yang diharapkan** — Developer dan tester dapat menyepakati dua skenario tanpa menebak nama field atau signature event.
+
 ## Cheat box
 
 <CheatBox>
 
-- Tautkan requirement ID.
-- Definisikan trigger dan actor.
-- Tulis hasil serta exception.
-- Sertakan permission dan audit.
+<CheatGroup label="Acuan dan trigger">
+
+- Tautkan **requirement ID**.
+- Definisikan **trigger** dan actor.
+
+</CheatGroup>
+
+<CheatGroup label="Hasil dan kontrol">
+
+- Tulis hasil serta **exception**.
+- Sertakan **permission** dan audit.
+
+</CheatGroup>
+
+<CheatGroup label="Acceptance dan review">
+
 - Acceptance positif dan negatif.
 - Pisahkan usulan dari persetujuan.
+
+</CheatGroup>
 
 </CheatBox>
 

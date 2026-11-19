@@ -7,7 +7,9 @@ sidebar:
   order: 14
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -27,16 +29,45 @@ Analogi toko dan dampak per tahap tersedia pada [alur Sales interaktif](/01-basi
 6. Tentukan invoice melalui **Applies-to Doc. No.** atau **Apply Entries**, lalu Post. Application dapat dilakukan saat payment diposting atau dari entry terposting kemudian; metode customer dapat memengaruhi application otomatis.
 7. Periksa **Remaining Amount** dan **Open** pada invoice/payment. Lunas penuh berarti sisa nol; pembayaran parsial belum menutup seluruh invoice.
 
+## Contoh praktik
+
+- **Kondisi awal** — Ada dua kursi demo siap dikirim ke pelanggan.
+- **Langkah** — Siapkan Sales Order dua kursi dan bandingkan dampak Ship dengan Invoice lewat simulasi Sales dan Preview Posting yang tersedia.
+- **Hasil yang diharapkan** — Kamu bisa membedakan bukti pengiriman, kuantitas keluar, dan piutang dari invoice.
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="37d3ec2a-71c2-4f0d-9a94-62c83805fbfa"
+  title="Membuat customer"
+  description="Demo prasyarat sebelum membuat dokumen penjualan."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-customers"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Quote → Order belum menghasilkan invoice terposting.
-- Ship: keluarkan kuantitas.
-- Invoice: catat piutang.
-- Payment: catat penerimaan bank.
-- Apply: cocokkan payment dengan invoice.
+<CheatGroup label="Pesanan dan kirim">
+
+- **Quote → Order** belum menghasilkan invoice terposting.
+- **Ship**: keluarkan kuantitas.
+
+</CheatGroup>
+
+<CheatGroup label="Tagihan dan terima uang">
+
+- **Invoice**: catat piutang.
+- **Payment**: catat penerimaan bank.
+
+</CheatGroup>
+
+<CheatGroup label="Pelunasan">
+
+- **Apply**: cocokkan payment dengan invoice.
 - Periksa sisa dan status Open, bukan nomor dokumen saja.
+
+</CheatGroup>
 
 </CheatBox>
 

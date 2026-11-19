@@ -7,9 +7,11 @@ sidebar:
   order: 1
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import FlowPlayer from '../../../components/FlowPlayer.astro';
 import BCEcosystemDiagram from '../../../components/BCEcosystemDiagram.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -47,18 +49,8 @@ Di dalam BC, seluruh transaksi operasional terintegrasi langsung ke satu buku be
 
 ## Peta perputaran alur kerja di BC
 
-Berikut adalah diagram perputaran bisnis terpadu dari pengadaan awal, pengelolaan stok, penjualan, penerimaan kas, hingga pembukuan buku besar dan integrasi sistem eksternal:
-
-<BCEcosystemDiagram />
-
----
-
-## Langkah di BC
-
-Gunakan simulasi interaktif di bawah untuk melihat bagaimana data dan nilai uang berpindah dari satu modul ke modul berikutnya di lingkungan CRONUS:
-
 <FlowPlayer
-  intro="Ikuti 7 tahapan perputaran bisnis di Business Central: pelajari bagaimana data berpindah dari master data, transaksi pengadaan, persediaan fisik, penjualan, mutasi kas, hingga pembukuan buku besar dan integrasi sistem eksternal."
+  intro="Pilih tahap atau tekan Putar untuk mengikuti alur dari master data hingga integrasi. Setiap tahap menampilkan analogi, dokumen BC, dan dampaknya ke ledger."
   steps={[
   {
     label: 'Master Data',
@@ -102,7 +94,13 @@ Gunakan simulasi interaktif di bawah untuk melihat bagaimana data dan nilai uang
     document: 'Standard APIs v2.0, Custom API Pages/Queries, Webhook Subscriptions, Power Automate Flows.',
     impact: 'Data operasional mengalir keluar-masuk secara real-time tanpa duplikasi input manual, dengan tetap mematuhi aturan validasi bisnis BC.'
   }
-]} />
+]} >
+  <BCEcosystemDiagram slot="diagram" />
+</FlowPlayer>
+
+## Langkah di BC
+
+Gunakan tahap pembelian, penjualan, dan kas untuk menelusuri dokumen di sandbox CRONUS. Cocokkan hasil posting dengan matriks di bawah.
 
 ---
 
@@ -123,16 +121,49 @@ Sebagai Business Analyst, tabel berikut adalah acuan utama untuk memahami dampak
 
 ---
 
+## Contoh praktik
+
+- **Kondisi awal** — Toko demo membeli lima kursi dan menjual dua.
+- **Langkah** — Telusuri tahap Purchasing, Inventory, Sales, dan Cash & Bank pada peta. Cocokkan tiap tahap dengan matriks ledger.
+- **Hasil yang diharapkan** — Kamu bisa menjelaskan mengapa kuantitas bersih bertambah tiga, sementara tagihan dan pembayaran ditelusuri terpisah.
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="2887ddfe-3d46-47b3-8308-9715457ef939"
+  title="Tur Business Central"
+  description="Gambaran kemampuan inti untuk memahami peta modul."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/welcome#core-business-functionality"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Semua perputaran bisnis di BC bermuara pada **General Ledger (G/L Entries)** melalui jalur audit bernomor unik (*G/L Register*).
-- **Posting Groups** adalah otak integrasi yang menghubungkan aksi fisik operasional dengan jurnal finansial akuntansi.
-- Transaksi stok selalu tercatat ganda: kuantitas di **Item Ledger Entry** dan nilai rupiah di **Value Entry**.
-- Subledger (Customer, Vendor, Bank, Item) menjamin rincian buku pembantu selalu cocok (*reconciled*) dengan akun induk di neraca.
-- Dokumen yang sudah diposting bersifat **immutable** (tidak dapat dihapus); pembatalan wajib melalui dokumen lawan atau *credit memo*.
-- Integrasi eksternal (API/AL) berinteraksi dengan tabel dokumen atau jurnal staging sebelum memicu logika posting resmi BC.
+<CheatGroup label="Siapkan">
+
+<ul>
+      <li><strong>Posting Groups</strong> — Cek akun tujuan posting.</li>
+      <li><strong>Integrasi</strong> — Cek jalur masuk data dari API atau staging.</li>
+    </ul>
+
+</CheatGroup>
+  <CheatGroup label="Telusuri">
+
+<ul>
+      <li><strong>Persediaan</strong> — Cek kuantitas di Item Ledger Entry dan biaya di Value Entry.</li>
+      <li><strong>General Ledger</strong> — Telusuri jurnal di G/L Entries dan G/L Register.</li>
+    </ul>
+
+</CheatGroup>
+  <CheatGroup label="Tindak lanjuti">
+
+<ul>
+      <li><strong>Subledger</strong> — Cocokkan saldo buku pembantu dengan akun G/L.</li>
+      <li><strong>Koreksi transaksi</strong> — Pilih tindakan koreksi yang sesuai, seperti credit memo.</li>
+    </ul>
+
+</CheatGroup>
 
 </CheatBox>
 

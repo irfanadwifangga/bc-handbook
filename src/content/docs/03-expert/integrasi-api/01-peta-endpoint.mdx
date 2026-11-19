@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -33,16 +34,36 @@ Custom:   .../api/myp/demo/v1.0/companies(<COMPANY_ID>)/demoRequests
 Automation: .../api/microsoft/automation/v2.0/companies
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Tim demo hanya perlu membaca daftar customer.
+- **Langkah** — Bandingkan standard API dengan custom API dan UI web service. Tulis entity, tujuan, operasi, dan company dalam kontrak.
+- **Hasil yang diharapkan** — Kamu punya pilihan endpoint dengan alasan dan contoh scope baca yang jelas.
+
 ## Cheat box
 
 <CheatBox>
 
-- Kontrak dimulai dari kebutuhan.
-- Bedakan UI dan API.
-- Pilih company secara eksplisit.
-- Periksa publisher endpoint lama.
+<CheatGroup label="Kontrak dan antarmuka">
+
+- Kontrak dimulai dari **kebutuhan**.
+- Bedakan UI dan **API**.
+
+</CheatGroup>
+
+<CheatGroup label="Company dan endpoint">
+
+- Pilih **company** secara eksplisit.
+- Periksa **publisher** endpoint lama.
+
+</CheatGroup>
+
+<CheatGroup label="Versi dan sandbox">
+
 - Catat versi dan owner.
-- Gunakan sandbox demo.
+- Gunakan **sandbox** demo.
+
+</CheatGroup>
 
 </CheatBox>
 

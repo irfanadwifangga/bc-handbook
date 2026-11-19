@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -93,16 +94,36 @@ end;
 
 Contoh adalah fondasi AL3, bukan extension lengkap siap publish; tabel Request, Card/List dan permission set harus disusun pembelajar. Gap nomor dapat terjadi karena konfigurasi/transaksi; gate meminta nomor unik sesuai seri, bukan janji nomor selalu tanpa celah.
 
+## Contoh praktik
+
+- **Kondisi awal** — Dokumen demo membutuhkan No. Series dari record setup.
+- **Langkah** — Tulis kasus setup valid, setup kosong, dan user tanpa izin. Jalankan setelah symbols serta permission diuji.
+- **Hasil yang diharapkan** — Nomor valid mengikuti seri dan kasus yang ditolak punya alasan yang bisa ditelusuri.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Setup dan izin data">
+
 - Setup memakai key konsisten.
-- Table berbeda dari tabledata.
+- **Table** berbeda dari tabledata.
+
+</CheatGroup>
+
+<CheatGroup label="Uji izin dan seri">
+
 - Permission diuji user terpisah.
-- Seri nomor bukan hitung Max+1.
-- Cocokkan API dengan symbols.
+- Seri nomor bukan hitung **Max+1**.
+
+</CheatGroup>
+
+<CheatGroup label="API dan error setup">
+
+- Cocokkan **API** dengan symbols.
 - Missing setup harus jelas.
+
+</CheatGroup>
 
 </CheatBox>
 

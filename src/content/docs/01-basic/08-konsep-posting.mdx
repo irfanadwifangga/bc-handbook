@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -33,16 +34,36 @@ Release mengubah kesiapan dokumen; Post mencatat dampak transaksi. Posted docume
 4. Jika syarat tidak terpenuhi, gunakan credit memo atau return process yang sesuai. Jangan memakai Reverse Transaction sebagai jalan pintas untuk invoice dokumen.
 5. Setelah koreksi, telusuri invoice asli dan dokumen pembalik. Cocokkan customer/vendor ledger, G/L dan inventory bila terkait; payment yang sudah diterima/dibayar tetap memerlukan penanganan application atau refund.
 
+## Contoh praktik
+
+- **Kondisi awal** — Jumlah pada draft invoice demo baru diketahui keliru.
+- **Langkah** — Bandingkan tindakan yang tersedia sebelum posting dengan opsi untuk dokumen demo yang sudah terposting. Tinjau prasyarat sebelum memilih koreksi.
+- **Hasil yang diharapkan** — Kamu memilih jalur koreksi berdasarkan status dokumen dan bisa menunjukkan hubungan bukti awal dengan koreksinya.
+
 ## Cheat box
 
 <CheatBox>
 
-- Release berbeda dari Post.
-- Preview dahulu, koreksi kemudian bila perlu.
-- Undo: shipment/receipt yang memenuhi syarat.
-- Correct/Cancel bukan untuk semua invoice.
-- Reverse Transaction bergantung asal jurnal.
-- Credit memo tidak otomatis menyelesaikan refund uang.
+<CheatGroup label="Sebelum posting">
+
+- **Release** berbeda dari Post.
+- **Preview** dahulu, koreksi kemudian bila perlu.
+
+</CheatGroup>
+
+<CheatGroup label="Koreksi dokumen">
+
+- **Undo**: shipment/receipt yang memenuhi syarat.
+- **Correct/Cancel** bukan untuk semua invoice.
+
+</CheatGroup>
+
+<CheatGroup label="Pembalikan dan refund">
+
+- **Reverse Transaction** bergantung asal jurnal.
+- **Credit memo** tidak otomatis menyelesaikan refund uang.
+
+</CheatGroup>
 
 </CheatBox>
 

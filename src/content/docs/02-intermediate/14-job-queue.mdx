@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Job Queue Entries menjadwalkan report/codeunit. Ready berarti siap dijalankan, b
 5. Jika Error, gunakan Show Error dan riwayat log. Temukan input/setup/permission penyebab sebelum memperbaiki atau restart.
 6. Setelah verifikasi, nonaktifkan jadwal latihan. Jangan menandai lulus hanya karena status Ready atau karena tidak ada pesan di layar.
 
+## Contoh praktik
+
+- **Kondisi awal** — Job sandbox menghasilkan error dan belum boleh diulang otomatis.
+- **Langkah** — Baca Job Queue Log Entries, catat penyebab, cek kemungkinan data sudah ditulis, dan review sebelum restart.
+- **Hasil yang diharapkan** — Kamu dapat membedakan kegagalan yang aman diulang dari pekerjaan yang harus direkonsiliasi dulu.
+
 ## Cheat box
 
 <CheatBox>
 
-- On Hold: belum dijadwalkan aktif.
-- Ready bukan sukses.
-- In Process: sedang berjalan.
-- Error: periksa log.
+<CheatGroup label="Status awal">
+
+- **On Hold**: belum dijadwalkan aktif.
+- **Ready** bukan sukses.
+
+</CheatGroup>
+
+<CheatGroup label="Eksekusi dan error">
+
+- **In Process**: sedang berjalan.
+- **Error**: periksa log.
+
+</CheatGroup>
+
+<CheatGroup label="Cek sebelum restart">
+
 - Catat run dan output.
 - Review efek sebelum restart.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -5,18 +5,26 @@
 /* Stepper Map Linear (Berurutan Kiri ke Kanan) */
 .bc-flow .bc-flow-map {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: var(--bc-space-2);
   list-style: none;
   padding: var(--bc-space-1) 0 var(--bc-space-2) 0;
   margin: var(--bc-space-3) 0 var(--bc-space-4) 0;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
 }
 .bc-flow-map li {
   margin: 0;
-  flex: 0 0 auto;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--bc-space-2);
+}
+.bc-flow-map li:not(:last-child)::after {
+  content: '';
+  inline-size: var(--bc-space-2);
+  block-size: var(--bc-space-2);
+  border-block-start: var(--bc-border-width) solid var(--bc-text-muted);
+  border-inline-end: var(--bc-border-width) solid var(--bc-text-muted);
+  transform: rotate(45deg);
 }
 .sl-markdown-content .bc-flow :is(button, li, dd, p) { margin: 0; }
 
@@ -74,7 +82,7 @@
 .bc-step-text {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .bc-flow button:disabled { cursor: default; color: var(--bc-text-muted); opacity: 0.6; }
@@ -169,4 +177,29 @@
 @media print {
   .bc-video-slot, .bc-reference-video button { display: none !important; }
   .bc-flow [data-panel][hidden] { display: block !important; }
+}
+
+
+.bc-flow:not([data-ready]) .bc-flow-map { display: none; }
+.bc-flow .bc-flow-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bc-space-2);
+  margin-block: var(--bc-space-3);
+}
+.bc-flow button { min-height: 44px; }
+.bc-flow [data-status] { color: var(--bc-text-muted); font-size: var(--bc-text-sm); }
+.bc-flow-time { height: var(--bc-border-width); background: var(--bc-border); margin-block: var(--bc-space-2); }
+.bc-flow-time span { display: block; height: 100%; background: var(--bc-accent); transform-origin: left; }
+.bc-flow:fullscreen { background: var(--bc-bg); overflow: auto; }
+.bc-flow :is(.bc-panel-header, .bc-panel-card) { margin-block-start: 0; }
+@media (min-width: 50rem) {
+  .bc-flow[data-diagram] .bc-flow-map { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bc-flow-time { visibility: hidden; }
+  .bc-flow button { transition: none; }
+}
+@media print {
+  .bc-flow :is(.bc-flow-map, .bc-flow-controls, .bc-flow-time, [data-status], .bc-diagram-actions) { display: none; }
 }

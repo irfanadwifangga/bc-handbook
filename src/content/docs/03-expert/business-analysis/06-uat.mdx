@@ -7,7 +7,9 @@ sidebar:
   order: 6
 ---
 
+import FlowPlayer from '../../../../components/FlowPlayer.astro';
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +28,59 @@ UAT memvalidasi proses dari sudut pandang bisnis, bukan menggantikan unit/functi
 5. Laporkan defect berisi langkah reproduksi, expected/actual, severity, owner dan bukti. Bedakan defect terhadap spesifikasi dari kebutuhan baru yang harus masuk change request.
 6. Setelah perbaikan, lakukan retest/regression yang relevan. Sign-off memerlukan coverage, defect terbuka, risiko dan keputusan process owner; persentase lulus saja belum cukup.
 
+## Contoh praktik
+
+- **Kondisi awal** — Uji penerimaan parsial dua dari lima belum dijalankan.
+- **Langkah** — Isi langkah dan expected result. Catat actual dan bukti hanya saat kamu menjalankannya di sandbox.
+- **Hasil yang diharapkan** — Script dapat direproduksi dan status awal tetap Belum dijalankan sampai ada bukti.
+
+### Simulasi alur
+
+<FlowPlayer intro="Ikuti satu kasus UAT dari expected result sampai catatan bukti." steps={[
+  {
+    "label": "Rancang",
+    "analogy": "Buyer dan gudang ingin membuktikan receipt parsial.",
+    "document": "Requirement dan test script untuk dua dari lima unit.",
+    "impact": "Tulis expected result dan prasyarat."
+  },
+  {
+    "label": "Jalankan",
+    "analogy": "Tester mengulangi langkah pada data demo.",
+    "document": "PO, receipt, dan bukti sandbox.",
+    "impact": "Catat actual result dengan referensi bukti."
+  },
+  {
+    "label": "Putuskan",
+    "analogy": "Owner meninjau hasil dan kebutuhannya.",
+    "document": "Pass, Fail, atau Blocked serta defect bila diperlukan.",
+    "impact": "Status mengikuti bukti. Retest diperlukan setelah perbaikan."
+  }
+]} />
+
 ## Cheat box
 
 <CheatBox>
 
-- Trace ke kebutuhan dan proses.
+<CheatGroup label="Rencana uji">
+
+- Trace ke **kebutuhan** dan proses.
 - Tentukan prasyarat dan data.
-- Expected berbeda dari actual.
-- Pass memerlukan bukti.
-- Blocked bukan Pass.
+
+</CheatGroup>
+
+<CheatGroup label="Hasil dan bukti">
+
+- **Expected** berbeda dari actual.
+- **Pass** memerlukan bukti.
+
+</CheatGroup>
+
+<CheatGroup label="Status dan sign-off">
+
+- **Blocked** bukan Pass.
 - Owner menyetujui risiko dan sign-off.
+
+</CheatGroup>
 
 </CheatBox>
 

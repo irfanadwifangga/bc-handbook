@@ -7,7 +7,10 @@ sidebar:
   order: 15
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -27,16 +30,74 @@ Toko memesan kursi melalui Purchase Order; Purchase Quote dapat mendahuluinya bi
 6. Di **Payment Journals**, gunakan batch latihan, Document Type **Payment**, Account Type **Vendor**, dan balancing Bank Account demo. Pilih invoice melalui **Apply Entries** atau **Applies-to Doc. No.**, periksa jumlah/tanda dan preview sebelum Post.
 7. Periksa Remaining Amount nol untuk pelunasan penuh dan status entry tertutup. Pencatatan jurnal latihan ini tidak mengirim transfer uang nyata; jangan memakai fitur ekspor bank produksi.
 
+## Contoh praktik
+
+- **Kondisi awal** — Pesanan vendor berisi lima kursi. Dua datang hari ini.
+- **Langkah** — Di order demo, terima dua kursi. Tinjau quantity yang diterima dan tersisa sebelum menagih quantity yang benar.
+- **Hasil yang diharapkan** — Dua kursi tercatat diterima dan tiga tersisa. Bukti receipt dan invoice bisa ditelusuri terpisah.
+
+### Simulasi alur
+
+<FlowPlayer intro="Ikuti pembelian lima kursi dalam CRONUS. Dua unit tiba hari ini." steps={[
+  {
+    "label": "Purchase Order",
+    "analogy": "Toko memesan lima kursi ke vendor.",
+    "document": "Purchase Order dengan quantity 5.",
+    "impact": "Order mencatat pesanan. Belum ada penerimaan dari draft."
+  },
+  {
+    "label": "Receipt parsial",
+    "analogy": "Truk mengantar dua kursi. Tiga belum datang.",
+    "document": "Posted Purchase Receipt untuk quantity 2.",
+    "impact": "Kuantitas yang diterima bertambah dua. Periksa entry persediaan untuk penerimaan."
+  },
+  {
+    "label": "Invoice",
+    "analogy": "Vendor menagih dua kursi yang sudah diterima.",
+    "document": "Posted Purchase Invoice yang ditelusuri ke order atau receipt.",
+    "impact": "Periksa Vendor Ledger dan Value Entry. Cocokkan quantity dan nilai sesuai setup."
+  },
+  {
+    "label": "Bayar & Apply",
+    "analogy": "Toko membayar tagihan dan mencocokkannya.",
+    "document": "Payment Journal dan Vendor Ledger Entries.",
+    "impact": "Periksa mutasi pembayaran dan saldo tagihan setelah application."
+  }
+]} />
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="f04b1ed3-5cb0-4fa8-8cd0-24069ee893d2"
+  title="Membuat purchase order"
+  description="Perhatikan pemilihan vendor dan pengisian baris order. Untuk receipt parsial, lanjutkan simulasi di atas."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-procurement#create-new-purchase-orders"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Quote opsional; order mencatat komitmen.
-- Receive: kuantitas masuk.
-- Invoice: utang vendor terposting.
+<CheatGroup label="Pesanan dan terima">
+
+- **Quote** opsional; order mencatat komitmen.
+- **Receive**: kuantitas masuk.
+
+</CheatGroup>
+
+<CheatGroup label="Tagihan vendor">
+
+- **Invoice**: utang vendor terposting.
 - Jangan invoice barang order yang belum diterima.
-- Payment Journal: catat pembayaran vendor.
-- Apply menghubungkan pembayaran dan invoice.
+
+</CheatGroup>
+
+<CheatGroup label="Pelunasan">
+
+- **Payment Journal**: catat pembayaran vendor.
+- **Apply** menghubungkan pembayaran dan invoice.
+
+</CheatGroup>
 
 </CheatBox>
 

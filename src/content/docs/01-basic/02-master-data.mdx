@@ -7,7 +7,9 @@ sidebar:
   order: 12
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -34,16 +36,59 @@ Template memberi nilai awal yang konsisten, bukan jaminan bahwa setup dan data s
 5. Baca **Dimensions** pada record contoh. Bedakan kode dimension dengan value-nya, misalnya Department dan Sales.
 6. Buka ulang record baru dan periksa nilai hasil template. Catat ID demo untuk dipakai pada latihan berikutnya; jangan menerapkan template massal ke record lama.
 
+## Contoh praktik
+
+- **Kondisi awal** — Satu item kursi, satu vendor, dan satu customer dibutuhkan untuk latihan jual beli.
+- **Langkah** — Buka kartu demo ketiganya. Catat unit item dan posting group yang relevan sebelum membuat draft.
+- **Hasil yang diharapkan** — Kamu punya tiga referensi untuk draft dan bisa menunjukkan field acuan yang perlu diperiksa.
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="a5e825b2-e309-4753-bdff-a6947dc314e6"
+  title="Menyiapkan item"
+  description="Lihat pembuatan Item Card sebelum latihan stok atau penjualan."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-items-to-sell"
+/>
+
+<ReferenceVideo
+  videoId="37d3ec2a-71c2-4f0d-9a94-62c83805fbfa"
+  title="Membuat customer"
+  description="Demo prasyarat sebelum membuat dokumen penjualan."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-customers"
+/>
+
+<ReferenceVideo
+  videoId="7188b662-bc49-45ef-8152-82898076b235"
+  title="Membuat vendor"
+  description="Demo prasyarat sebelum membuat dokumen pembelian."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-procurement#set-up-vendors"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Customer: piutang; Vendor: utang.
-- Inventory dan Service memiliki tujuan berbeda.
-- Base Unit of Measure harus konsisten.
-- Template mempercepat pengisian awal.
-- Posting group harus cocok dengan setup company.
-- Dimension mengelompokkan analisis transaksi.
+<CheatGroup label="Jenis master data">
+
+- **Customer**: piutang; Vendor: utang.
+- **Inventory** dan Service memiliki tujuan berbeda.
+
+</CheatGroup>
+
+<CheatGroup label="Satuan dan template">
+
+- **Base Unit of Measure** harus konsisten.
+- **Template** mempercepat pengisian awal.
+
+</CheatGroup>
+
+<CheatGroup label="Kontrol posting">
+
+- **Posting group** harus cocok dengan setup company.
+- **Dimension** mengelompokkan analisis transaksi.
+
+</CheatGroup>
 
 </CheatBox>
 

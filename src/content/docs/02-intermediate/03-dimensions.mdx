@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Dimension menjawab “transaksi milik departemen/proyek mana” tanpa memperbany
 5. Setelah posting demo yang ditinjau, periksa dimension pada entries serta jumlah menggunakan filter yang sama.
 6. Buka Analysis Views yang relevan, periksa konfigurasi dan kebutuhan update-nya. Bandingkan hasil dengan ledger, bukan hanya label di card.
 
+## Contoh praktik
+
+- **Kondisi awal** — Akun biaya demo mewajibkan Department.
+- **Langkah** — Preview jurnal tanpa Department, lalu isi nilai Department yang valid dan ulangi.
+- **Hasil yang diharapkan** — Kasus pertama ditolak sesuai setup. Pada kasus kedua, dimensi yang benar terlihat pada hasil preview.
+
 ## Cheat box
 
 <CheatBox>
 
-- Dimension code berbeda dari value.
-- Dua global dimensions; sampai delapan shortcut.
+<CheatGroup label="Kode dan nilai">
+
+- **Dimension code** berbeda dari value.
+- Dua **global dimensions**; sampai delapan shortcut.
+
+</CheatGroup>
+
+<CheatGroup label="Aturan posting">
+
 - Default tidak selalu berarti wajib.
-- Value Posting menentukan aturan akun.
-- Combination membatasi pasangan.
+- **Value Posting** menentukan aturan akun.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi entry">
+
+- **Combination** membatasi pasangan.
 - Verifikasi hasil pada entry terposting.
+
+</CheatGroup>
 
 </CheatBox>
 

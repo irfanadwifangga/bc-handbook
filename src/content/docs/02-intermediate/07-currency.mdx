@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Currency Code dan kurs bertanggal menentukan hubungan nilai transaksi dengan loc
 5. Gunakan Preview Posting untuk memeriksa dampak sebelum menjalankan adjustment. Jangan mengaktifkan layanan kurs eksternal nyata untuk contoh ini.
 6. Catat perbedaan sebelum/sesudah bila adjustment demo diposting; telusuri akun gain/loss dan entry customer/vendor/bank yang relevan.
 
+## Contoh praktik
+
+- **Kondisi awal** — Dua transaksi demo memakai mata uang sama pada tanggal kurs berbeda.
+- **Langkah** — Periksa kurs untuk tanggal masing-masing, lalu bandingkan nilai mata uang transaksi dengan nilai lokal pada preview.
+- **Hasil yang diharapkan** — Perbedaan nilai lokal bisa dijelaskan tanpa mengubah nilai transaksi asli.
+
 ## Cheat box
 
 <CheatBox>
 
-- Currency transaksi berbeda dari LCY.
-- Kurs berlaku menurut tanggal.
+<CheatGroup label="Currency dan tanggal">
+
+- Currency transaksi berbeda dari **LCY**.
+- **Kurs** berlaku menurut tanggal.
+
+</CheatGroup>
+
+<CheatGroup label="Penyesuaian kurs">
+
 - Update kurs bukan adjustment saldo.
 - Review arah rasio kurs.
-- Unrealized berbeda dari realized.
-- Preview dan batasi filter adjustment.
+
+</CheatGroup>
+
+<CheatGroup label="Selisih kurs">
+
+- **Unrealized** berbeda dari realized.
+- **Preview** dan batasi filter adjustment.
+
+</CheatGroup>
 
 </CheatBox>
 

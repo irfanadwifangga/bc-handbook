@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -42,16 +43,36 @@ Authorization: Bearer <TOKEN>
 
 `<BASE>` adalah prefix API v2.0 pada modul 3B.1. Posting hanya bagian praktik sandbox E5; tidak dijalankan otomatis oleh contoh client.
 
+## Contoh praktik
+
+- **Kondisi awal** — Mock menerima PATCH dengan ETag lama dan mengembalikan 412.
+- **Langkah** — Jalankan uji konflik, baca ulang record simulasi, lalu catat perbedaan yang perlu diputuskan.
+- **Hasil yang diharapkan** — Perubahan dari sesi lain tidak ditimpa otomatis dan percobaan ulang tercatat sebagai kasus terpisah.
+
 ## Cheat box
 
 <CheatBox>
 
-- ETag harus spesifik.
-- 412 meminta review konflik.
-- 429 perlu cooldown.
-- GET retry dibatasi.
+<CheatGroup label="Konflik perubahan">
+
+- **ETag** harus spesifik.
+- **412** meminta review konflik.
+
+</CheatGroup>
+
+<CheatGroup label="Batas retry">
+
+- **429** perlu cooldown.
+- **GET** retry dibatasi.
+
+</CheatGroup>
+
+<CheatGroup label="Verifikasi respons">
+
 - Write timeout perlu rekonsiliasi.
-- 204 tidak punya body JSON.
+- **204** tidak punya body JSON.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -7,7 +7,10 @@ sidebar:
   order: 5
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +29,68 @@ Payment Terms mengatur jatuh tempo/ketentuan pembayaran; Payment Methods menjela
 5. Bila perlu mencatat payment dari statement, pahami alur Payment Reconciliation Journal dan application-nya agar tidak memposting payment dua kali.
 6. Selesaikan selisih melalui jurnal demo yang ditinjau, periksa saldo dan unmatched entries, lalu Post rekonsiliasi bila seluruh bukti sesuai.
 
+## Contoh praktik
+
+- **Kondisi awal** — Statement demo memuat penerimaan 500 dan satu biaya bank 10.
+- **Langkah** — Cocokkan penerimaan dengan entry bank. Pisahkan biaya yang belum tercatat dan minta review sebelum penyesuaian.
+- **Hasil yang diharapkan** — Setiap baris statement punya kecocokan atau alasan selisih yang dicatat.
+
+### Simulasi alur
+
+<FlowPlayer intro="Cocokkan penerimaan 500 dan biaya bank 10 dari statement demo." steps={[
+  {
+    "label": "Statement",
+    "analogy": "Tim mendapat dua baris mutasi demo.",
+    "document": "Bank Account Reconciliation dan statement dummy.",
+    "impact": "Scope tanggal dan bank harus cocok."
+  },
+  {
+    "label": "Cocokkan 500",
+    "analogy": "Penerimaan 500 sudah terlihat di buku bank.",
+    "document": "Baris statement dan Bank Account Ledger Entry.",
+    "impact": "Pastikan kecocokan jumlah dan referensi."
+  },
+  {
+    "label": "Review biaya 10",
+    "analogy": "Biaya bank belum ditemukan di buku.",
+    "document": "Daftar selisih untuk review penyesuaian.",
+    "impact": "Jelaskan selisih sebelum menerapkan koreksi di sandbox."
+  }
+]} />
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="047a5a25-1f7d-423d-b96d-c4ea45042779"
+  title="Menyiapkan rekening bank"
+  description="Lihat setup Bank Account Card sebagai persiapan latihan rekonsiliasi."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-financial-information#set-up-bank-accounts"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Terms berbeda dari Methods.
-- Payment berbeda dari Apply.
-- Statement berbeda dari ledger bank.
-- Format impor memerlukan mapping.
-- Tinjau hasil matching otomatis.
+<CheatGroup label="Pembayaran">
+
+- **Terms** berbeda dari Methods.
+- **Payment** berbeda dari Apply.
+
+</CheatGroup>
+
+<CheatGroup label="Rekonsiliasi bank">
+
+- **Statement** berbeda dari ledger bank.
+- Format impor memerlukan **mapping**.
+
+</CheatGroup>
+
+<CheatGroup label="Verifikasi hasil">
+
+- Tinjau hasil **matching otomatis**.
 - Jangan posting payment dua kali.
+
+</CheatGroup>
 
 </CheatBox>
 

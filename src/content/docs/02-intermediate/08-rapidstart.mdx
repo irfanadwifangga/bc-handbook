@@ -7,7 +7,9 @@ sidebar:
   order: 8
 ---
 
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +28,59 @@ Worksheet mengelompokkan tabel dan pekerjaan; Package membawa field/data; Templa
 5. Siapkan satu template default Customer dan questionnaire berisi tiga pertanyaan. Review format jawaban secara manual sebelum Apply Answers.
 6. Cocokkan hasil pada setup pages. Untuk migrasi master lewat Edit in Excel, lihat M7; untuk statement bank/Data Exchange Definition, lihat modul Bank. Keduanya bukan tahap yang otomatis dijalankan package.
 
+## Contoh praktik
+
+- **Kondisi awal** — Tiga payment terms demo akan dipindah ke company latihan yang masih kosong.
+- **Langkah** — Buat paket dengan field yang dibutuhkan, export, import, lalu Validate. Tinjau Package Errors sebelum Apply.
+- **Hasil yang diharapkan** — Tiga record target muncul setelah Apply, dengan kode dan nilai sesuai file yang sudah diverifikasi.
+
+### Simulasi alur
+
+<FlowPlayer intro="Pindahkan tiga payment terms demo dengan validasi sebelum Apply." steps={[
+  {
+    "label": "Siapkan paket",
+    "analogy": "Tentukan record dan field yang boleh dipindah.",
+    "document": "Configuration Worksheet atau Configuration Package.",
+    "impact": "Tinjau tabel, field, dan dependency yang diperlukan."
+  },
+  {
+    "label": "Import & Validate",
+    "analogy": "Masukkan tiga record ke staging untuk diperiksa.",
+    "document": "Import Excel, Validate Package, dan Package Errors.",
+    "impact": "Perbaiki error sebelum Apply."
+  },
+  {
+    "label": "Apply & cek",
+    "analogy": "Gunakan paket yang telah bersih di company latihan.",
+    "document": "Apply Package lalu buka daftar Payment Terms.",
+    "impact": "Cocokkan jumlah, kode, dan nilai ketiga record."
+  }
+]} />
+
 ## Cheat box
 
 <CheatBox>
 
-- Worksheet: rencana.
-- Package: field dan data.
-- Template: default record.
-- Questionnaire: jawaban setup.
-- Import → Validate → review → Apply.
+<CheatGroup label="Worksheet dan package">
+
+- **Worksheet**: rencana.
+- **Package**: field dan data.
+
+</CheatGroup>
+
+<CheatGroup label="Template dan questionnaire">
+
+- **Template**: default record.
+- **Questionnaire**: jawaban setup.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi impor">
+
+- **Import → Validate → review → Apply**.
 - Company baru, versi/schema sesuai.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Role Center adalah titik awal pekerjaan sesuai role. **List** menampilkan banyak
 5. Bookmark halaman dari ikon bookmark di halaman atau hasil Tell Me; temukan tautannya di Role Center.
 6. Bandingkan **Open in Excel** (salinan untuk analisis, tanpa publish balik) dengan **Edit in Excel** (bisa publish melalui add-in). Ketersediaan Edit in Excel bergantung halaman, setup dan izin; jangan publish data latihan ke company lain.
 
+## Contoh praktik
+
+- **Kondisi awal** — Kamu perlu melihat item di satu lokasi demo tanpa mengubah daftar untuk rekan kerja.
+- **Langkah** — Buka daftar Items dari Tell Me, telusuri satu Item Card, lalu terapkan filter daftar yang tersedia.
+- **Hasil yang diharapkan** — Kamu bisa kembali ke daftar, menyebut filter aktif, dan membedakan daftar dari detail satu record.
+
 ## Cheat box
 
 <CheatBox>
 
-- Alt+Q: cari halaman atau report.
-- F3: cari data pada list.
-- Shift+F3: buka/tutup panel filter.
-- Card: detail satu record.
-- View: simpan filter; bookmark: pintasan halaman.
-- Open in Excel berbeda dari Edit in Excel.
+<CheatGroup label="Pintasan">
+
+- <kbd>Alt+Q</kbd>: cari halaman atau report.
+- <kbd>F3</kbd>: cari data pada list.
+
+</CheatGroup>
+
+<CheatGroup label="Filter dan tampilan">
+
+- <kbd>Shift+F3</kbd>: buka/tutup panel filter.
+- **Card**: detail satu record.
+
+</CheatGroup>
+
+<CheatGroup label="View dan ekspor">
+
+- **View**: simpan filter; **bookmark**: pintasan halaman.
+- **Open in Excel** berbeda dari **Edit in Excel**.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -16,15 +16,17 @@ interface Props {
 const { steps, intro } = Astro.props;
 const cleanLabel = (text: string) => text.replace(/^\d+[\.\s\-]+/, '');
 ---
-<bc-flow class="bc-flow">
+<bc-flow class="bc-flow" data-diagram={Astro.slots.has('diagram') ? '' : undefined}>
   <p class="bc-flow-intro">{intro || 'Toko CRONUS menjual dua kursi. Ikuti perpindahan barang, tagihan, dan pembayaran.'}</p>
+
+  <slot name="diagram" />
 
   <ol class="bc-flow-map" aria-label="Tahapan Alur Kerja">
     {steps.map((step, index) => {
       const name = cleanLabel(step.label);
       return (
         <li>
-          <button type="button" data-stage={index} data-label={name} aria-current={index === 0 ? 'step' : undefined}>
+          <button type="button" data-stage={index} data-label={name} disabled>
             <span class="bc-step-number">{index + 1}</span>
             <span class="bc-step-text">{name}</span>
           </button>
@@ -33,11 +35,21 @@ const cleanLabel = (text: string) => text.replace(/^\d+[\.\s\-]+/, '');
     })}
   </ol>
 
+  <div class="bc-flow-controls" hidden>
+    <button type="button" data-action="previous">Sebelumnya</button>
+    <button type="button" data-action="play">Putar</button>
+    <button type="button" data-action="next">Berikutnya</button>
+    <button type="button" data-action="reset">Ulangi</button>
+  </div>
+
+  <p data-status role="status" aria-live="polite" aria-atomic="true">{steps.length} tahap; semua penjelasan tersedia di bawah.</p>
+  <div class="bc-flow-time" aria-hidden="true" hidden><span></span></div>
+
   <div class="bc-flow-panels">
     {steps.map((step, index) => {
       const name = cleanLabel(step.label);
       return (
-        <article data-panel={index} class="bc-flow-panel" aria-label={`Tahap ${index + 1}: ${name}`} hidden={index !== 0}>
+        <article data-panel={index} class="bc-flow-panel" aria-label={`Tahap ${index + 1}: ${name}`}>
           <header class="bc-panel-header">
             <span class="bc-panel-badge">Tahap {index + 1} dari {steps.length}</span>
             <h3>{name}</h3>
@@ -67,28 +79,93 @@ const cleanLabel = (text: string) => text.replace(/^\d+[\.\s\-]+/, '');
 
 <script>
   class LearningFlow extends HTMLElement {
+    private timer?: ReturnType<typeof setInterval>;
     connectedCallback() {
       const stages = [...this.querySelectorAll<HTMLButtonElement>('[data-stage]')];
+      if (this.cleanup) return;
+      const nodes = [...this.querySelectorAll<SVGGElement>('[data-diagram-stage]')];
       const panels = [...this.querySelectorAll<HTMLElement>('[data-panel]')];
-      if (stages.length === 0 || panels.length === 0) return;
-
-      const select = (index: number) => {
+      if (!stages.length || panels.length !== stages.length) return;
+      const events = new AbortController();
+      const controls = this.querySelector<HTMLElement>('.bc-flow-controls')!;
+      const play = this.querySelector<HTMLButtonElement>('[data-action="play"]')!;
+      const previous = this.querySelector<HTMLButtonElement>('[data-action="previous"]')!;
+      const next = this.querySelector<HTMLButtonElement>('[data-action="next"]')!;
+      const status = this.querySelector<HTMLElement>('[data-status]')!;
+      const track = this.querySelector<HTMLElement>('.bc-flow-time')!;
+      const fill = track.querySelector<HTMLElement>('span')!;
+      const duration = 8000;
+      let current = 0, elapsed = 0, running = false, last = 0;
+      const render = () => {
         stages.forEach((button, i) => {
-          if (i === index) {
-            button.setAttribute('aria-current', 'step');
-          } else {
-            button.removeAttribute('aria-current');
-          }
+          button.disabled = false;
+          if (i === current) button.setAttribute('aria-current', 'step');
+          else button.removeAttribute('aria-current');
         });
-        panels.forEach((panel, i) => {
-          panel.hidden = i !== index;
+        nodes.forEach((node, index) => {
+          node.setAttribute('aria-pressed', String(index === current));
         });
+        panels.forEach((panel, i) => { panel.hidden = i !== current; });
+        previous.disabled = current === 0;
+        next.disabled = current === stages.length - 1;
+        play.textContent = running ? 'Jeda' : 'Putar';
+        play.disabled = current === stages.length - 1 && elapsed >= duration;
+        const message = `Tahap ${current + 1} dari ${stages.length}: ${stages[current].dataset.label}. ${running ? 'Berjalan' : 'Dijeda'}.`;
+        if (status.textContent !== message) status.textContent = message;
+        fill.style.transform = `scaleX(${elapsed / duration})`;
       };
-
-      stages.forEach((button, i) => {
-        button.addEventListener('click', () => select(i));
+      const pause = (update = true) => {
+        if (running) elapsed = Math.min(duration, elapsed + performance.now() - last);
+        running = false;
+        clearInterval(this.timer);
+        if (update) render();
+      };
+      const select = (index: number) => {
+        pause(false);
+        current = index;
+        elapsed = 0;
+        render();
+      };
+      const options = { signal: events.signal };
+      play.addEventListener('click', () => {
+        if (running) { pause(); return; }
+        running = true;
+        last = performance.now();
+        render();
+        this.timer = setInterval(() => {
+          const now = performance.now();
+          elapsed = Math.min(duration, elapsed + now - last);
+          last = now;
+          fill.style.transform = `scaleX(${elapsed / duration})`;
+          if (elapsed < duration) return;
+          if (current < stages.length - 1) { current++; elapsed = 0; render(); }
+          else { running = false; clearInterval(this.timer); render(); }
+        }, 100);
+      }, options);
+      stages.forEach((button, i) => button.addEventListener('click', () => select(i), options));
+      nodes.forEach((node, i) => {
+        node.setAttribute('role', 'button');
+        node.setAttribute('tabindex', '0');
+        node.addEventListener('click', () => select(i), options);
+        node.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          select(i);
+        }, options);
       });
+      previous.addEventListener('click', () => select(Math.max(0, current - 1)), options);
+      next.addEventListener('click', () => select(Math.min(stages.length - 1, current + 1)), options);
+      this.querySelector('[data-action="reset"]')!.addEventListener('click', () => select(0), options);
+      const visibility = () => { if (document.hidden) pause(); };
+      document.addEventListener('visibilitychange', visibility, options);
+      this.cleanup = () => events.abort();
+      this.dataset.ready = '';
+      controls.hidden = false;
+      track.hidden = false;
+      render();
     }
+    private cleanup?: () => void;
+    disconnectedCallback() { clearInterval(this.timer); this.cleanup?.(); this.cleanup = undefined; }
   }
   if (!customElements.get('bc-flow')) customElements.define('bc-flow', LearningFlow);
 </script>

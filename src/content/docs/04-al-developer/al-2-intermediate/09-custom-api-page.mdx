@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -95,16 +96,36 @@ page 50220 "MYP Custom Staging API"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Konsumen demo menyimpan ID record dari respons awal.
+- **Langkah** — Periksa versi API dan mapping key, lalu uji baca satu record dan update dengan ETag pada sandbox yang disetujui.
+- **Hasil yang diharapkan** — ID API tetap dapat ditelusuri dan konflik versi diuji sebelum dianggap lulus.
+
 ## Cheat box
 
 <CheatBox>
 
-- PageType = API menghasilkan REST OData v4 endpoint resmi.
-- APIPublisher, APIGroup, dan APIVersion membentuk path URL.
-- EntitySetName menjadi nama koleksi resource URL.
-- ODataKeyFields = SystemId menjamin ID stabil berbasis GUID.
-- DelayedInsert = true wajib untuk penanganan payload relasional.
-- Hindari logic UI (Confirm, Message, Dialog) di API Page.
+<CheatGroup label="Jenis page dan versi">
+
+- **PageType** = API menghasilkan REST OData v4 endpoint resmi.
+- **APIPublisher**, APIGroup, dan APIVersion membentuk path URL.
+
+</CheatGroup>
+
+<CheatGroup label="Koleksi dan key">
+
+- **EntitySetName** menjadi nama koleksi resource URL.
+- **ODataKeyFields** = SystemId menjamin ID stabil berbasis GUID.
+
+</CheatGroup>
+
+<CheatGroup label="Insert dan batas UI">
+
+- **DelayedInsert** = true wajib untuk penanganan payload relasional.
+- Hindari logic UI (Confirm, Message, Dialog) di **API** Page.
+
+</CheatGroup>
 
 </CheatBox>
 

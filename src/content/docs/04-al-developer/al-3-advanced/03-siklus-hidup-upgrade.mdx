@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -72,16 +73,36 @@ codeunit 50202 "MYP App Upgrade Handler"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Versi demo lama menyimpan satu nilai pada field yang akan diganti.
+- **Langkah** — Jalankan upgrade di sandbox salinan, cocokkan nilai sebelum dan sesudah, lalu uji pemanggilan ulang rutinitas.
+- **Hasil yang diharapkan** — Nilai tetap ada dan proses kedua tidak membuat duplikasi atau migrasi ulang yang tidak perlu.
+
 ## Cheat box
 
 <CheatBox>
 
-- Pisahkan tugas Install (inisialisasi) dan Upgrade (migrasi).
-- Selalu lindungi logika upgrade dengan Upgrade Tag unik.
+<CheatGroup label="Install dan upgrade">
+
+- Pisahkan tugas **Install** (inisialisasi) dan Upgrade (migrasi).
+- Selalu lindungi logika upgrade dengan **Upgrade Tag** unik.
+
+</CheatGroup>
+
+<CheatGroup label="Siklus hidup field">
+
 - Jangan pernah menghapus field aktif yang menyimpan data.
-- Tetapkan ObsoleteState = Pending sebelum menghapus field.
-- Isi ObsoleteReason dan ObsoleteTag secara deskriptif.
+- Tetapkan **ObsoleteState** = Pending sebelum menghapus field.
+
+</CheatGroup>
+
+<CheatGroup label="Metadata dan kompatibilitas">
+
+- Isi **ObsoleteReason** dan ObsoleteTag secara deskriptif.
 - Validasi kompabilitas breaking change sebelum menaikkan wave.
+
+</CheatGroup>
 
 </CheatBox>
 

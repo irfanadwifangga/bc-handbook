@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ License memberi batas entitlement; permission sets menentukan akses dalam batas 
 5. Uji user auditor: baca ledger yang disetujui harus berhasil; mengubah master data atau posting harus ditolak. Gunakan sesi user auditor sendiri, bukan impersonasi kesimpulan dari SUPER.
 6. Dokumentasikan izin minimum dan exception yang ditemukan. Hindari pemberian SUPER agar tes cepat lulus.
 
+## Contoh praktik
+
+- **Kondisi awal** — Auditor demo perlu membaca ledger dan tidak diberi tugas posting.
+- **Langkah** — Bandingkan akses baca dan percobaan posting dengan user uji yang memiliki assignment terbatas.
+- **Hasil yang diharapkan** — Kamu punya bukti akses baca dan penolakan posting dalam cakupan company uji.
+
 ## Cheat box
 
 <CheatBox>
 
-- License membatasi entitlement.
-- Profile bukan security boundary.
-- Tinjau effective permissions.
-- Periksa seluruh assignment.
-- User Groups adalah legacy.
+<CheatGroup label="Akses dasar">
+
+- **License** membatasi entitlement.
+- **Profile** bukan security boundary.
+
+</CheatGroup>
+
+<CheatGroup label="Akses efektif">
+
+- Tinjau **effective permissions**.
+- Periksa seluruh **assignment**.
+
+</CheatGroup>
+
+<CheatGroup label="Uji izin">
+
+- **User Groups** adalah legacy.
 - Uji baca dan penolakan tulis.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,40 @@ Copilot membantu user yang memulai pekerjaan; agents menangani tugas proses tert
 5. Telusuri task/activity history yang tersedia dan dokumen BC asal/hasil. Bedakan riwayat agent dari Change Log yang dikonfigurasi terpisah.
 6. Catat salah hasil, review effort, biaya/konsumsi dan keputusan accept/reject. Latihan fase ini tidak mengaktifkan agent, billing atau pengiriman email nyata.
 
+## Contoh praktik
+
+- **Kondisi awal** — Agent menyarankan satu baris pesanan demo dengan quantity yang berbeda dari permintaan.
+- **Langkah** — Bandingkan saran dengan data sumber sintetis dan tandai bagian yang perlu direvisi oleh reviewer.
+- **Hasil yang diharapkan** — Keputusan review mencatat selisih, koreksi, dan siapa yang perlu memeriksa sebelum proses dilanjutkan.
+
+### Tonton demo
+
+[Tonton demo Sales Order Agent dan Payables Agent di Microsoft Learn](https://learn.microsoft.com/en-us/dynamics365/business-central/ai-in-bc). Pilih agen yang sedang kamu pelajari.
+
 ## Cheat box
 
 <CheatBox>
 
-- Periksa availability tenant.
-- Copilot membantu; agent menjalankan tugas.
+<CheatGroup label="Cakupan Copilot">
+
+- Periksa **availability tenant**.
+- **Copilot** membantu; agent menjalankan tugas.
+
+</CheatGroup>
+
+<CheatGroup label="Input dan review">
+
 - Gunakan input demo.
 - Review master, jumlah dan pajak.
+
+</CheatGroup>
+
+<CheatGroup label="Pantau hasil">
+
 - Telusuri task dan dokumen.
 - Catat konsumsi serta hasil salah.
+
+</CheatGroup>
 
 </CheatBox>
 

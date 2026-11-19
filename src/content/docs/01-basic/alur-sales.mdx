@@ -11,6 +11,7 @@ sidebar:
 import FlowPlayer from '../../../components/FlowPlayer.astro';
 import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -33,20 +34,40 @@ Klik setiap tahap di bawah untuk mempelajari analogi bisnis, dokumen BC yang ter
   { label: 'Apply', analogy: 'Toko mencocokkan transfer dengan nomor tagihan yang benar.', document: 'Customer Ledger Entries → Apply Entries; pilih invoice dan payment yang sesuai lalu Post Application.', impact: 'Application menghubungkan payment dan invoice. Jika jumlah tepat dan lunas, Remaining Amount menjadi nol dan entry tertutup. Selisih kurs, diskon, atau pembulatan bisa menambah dampak posting sesuai kondisi.' }
 ]} />
 
-### Video referensi
+### Tonton demo
 
 <ReferenceVideo />
+
+## Contoh praktik
+
+- **Kondisi awal** — Pelanggan menyetujui pembelian dua kursi dan membayar setelah penagihan.
+- **Langkah** — Jalankan simulasi dari Quote sampai Apply. Berhenti di Shipment dan Payment untuk mencatat apa yang sudah tercatat pada masing-masing tahap.
+- **Hasil yang diharapkan** — Kamu bisa menunjukkan kapan barang keluar, kapan piutang muncul, dan kapan payment dicocokkan dengan invoice.
 
 ## Cheat box
 
 <CheatBox>
 
-- Quote menawarkan; Order mencatat komitmen.
-- Ship memindahkan kuantitas persediaan.
-- Invoice membentuk tagihan terposting.
-- Payment mencatat penerimaan uang.
-- Apply mencocokkan payment dengan invoice.
-- Preview Posting membantu meninjau dampak sebelum Post.
+<CheatGroup label="Sebelum posting">
+
+- **Quote** menawarkan; Order mencatat komitmen.
+- **Preview Posting** membantu meninjau dampak sebelum Post.
+
+</CheatGroup>
+
+<CheatGroup label="Pengiriman dan tagihan">
+
+- **Ship** memindahkan kuantitas persediaan.
+- **Invoice** membentuk tagihan terposting.
+
+</CheatGroup>
+
+<CheatGroup label="Pelunasan">
+
+- **Payment** mencatat penerimaan uang.
+- **Apply** mencocokkan payment dengan invoice.
+
+</CheatGroup>
 
 </CheatBox>
 

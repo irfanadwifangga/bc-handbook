@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -86,16 +87,36 @@ codeunit 50200 "MYP Customer Discount Test"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Logika demo harus menolak dokumen tanpa kode alasan.
+- **Langkah** — Tulis tes positif dan negatif dengan data terisolasi. Jalankan ulang dan bandingkan hasil setelah compile.
+- **Hasil yang diharapkan** — Kedua skenario memberi hasil yang konsisten tanpa bergantung data dari tes lain.
+
 ## Cheat box
 
 <CheatBox>
 
-- Tetapkan Subtype = Test pada codeunit pengujian.
-- Gunakan pola Given-When-Then yang konsisten.
-- Gunakan TestPage untuk simulasi alur halaman antarmuka.
-- Delegasikan interaksi modal lewat HandlerFunctions.
-- Aktifkan TestIsolation agar data uji di-rollback.
-- Catat dependensi Microsoft Test Libraries pada app.json.
+<CheatGroup label="Struktur tes">
+
+- Tetapkan **Subtype** = Test pada codeunit pengujian.
+- Gunakan pola **Given-When-Then** yang konsisten.
+
+</CheatGroup>
+
+<CheatGroup label="Interaksi UI">
+
+- Gunakan **TestPage** untuk simulasi alur halaman antarmuka.
+- Delegasikan interaksi modal lewat **HandlerFunctions**.
+
+</CheatGroup>
+
+<CheatGroup label="Isolasi dan dependensi">
+
+- Aktifkan **TestIsolation** agar data uji di-rollback.
+- Catat dependensi **Microsoft Test Libraries** pada app.json.
+
+</CheatGroup>
 
 </CheatBox>
 

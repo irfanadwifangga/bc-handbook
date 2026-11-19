@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -94,16 +95,36 @@ reportextension 50212 "MYP Vendor Ledger Ext" extends "Vendor - Detail Trial Bal
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Pembimbing perlu laporan vendor demo untuk satu tanggal akhir.
+- **Langkah** — Tentukan filter di request page dan bandingkan baris dataset dengan sumber sebelum melihat layout.
+- **Hasil yang diharapkan** — Jumlah dan saldo cocok dengan filter, dan hasil layout dapat ditelusuri ke kolom dataset.
+
 ## Cheat box
 
 <CheatBox>
 
-- Dataset = dataitem (tabel) + column (field).
-- Layout: Word (.docx) paling mudah, RDLC paling fleksibel.
-- Request page = filter + opsi sebelum jalankan report.
-- DataItemTableView untuk filter statis (where Open = const(true)).
-- RequestFilterFields untuk filter yang bisa diubah pengguna.
-- ReportExtension menambah column tanpa mengganti report.
+<CheatGroup label="Dataset dan layout">
+
+- **Dataset** = dataitem (tabel) + column (field).
+- **Layout**: Word (.docx) paling mudah, RDLC paling fleksibel.
+
+</CheatGroup>
+
+<CheatGroup label="Filter dan opsi">
+
+- **Request page** = filter + opsi sebelum jalankan report.
+- **DataItemTableView** untuk filter statis (where Open = const(true)).
+
+</CheatGroup>
+
+<CheatGroup label="Filter dinamis dan extension">
+
+- **RequestFilterFields** untuk filter yang bisa diubah pengguna.
+- **ReportExtension** menambah column tanpa mengganti report.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -90,16 +91,36 @@ page 50204 "MYP Vendor Invoice Draft AI"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Asisten mengusulkan fungsi AL yang memakai nama event belum diperiksa.
+- **Langkah** — Cocokkan signature dengan symbols, review permission, lalu siapkan kasus positif dan negatif dengan data demo.
+- **Hasil yang diharapkan** — Usulan hanya dianggap siap setelah bukti kompilasi dan pengujian berasal dari project sandbox.
+
 ## Cheat box
 
 <CheatBox>
 
-- Gunakan PageType = PromptDialog untuk pengalaman interaktif Copilot.
-- Daftarkan fitur melalui modul sistem Copilot Capability.
-- Terapkan prinsip human-in-the-loop: tinjau sebelum commit.
-- Lindungi data kredensial dan kunci Azure OpenAI di backend.
-- Periksa status fitur antara Preview dan General Availability.
+<CheatGroup label="Prompt dan review">
+
+- Gunakan **PageType** = PromptDialog untuk pengalaman interaktif Copilot.
+- Daftarkan fitur melalui modul sistem **Copilot Capability**.
+
+</CheatGroup>
+
+<CheatGroup label="Akses dan integritas">
+
+- Terapkan prinsip **human-in-the-loop**: tinjau sebelum commit.
+- Lindungi data kredensial dan kunci **Azure OpenAI** di backend.
+
+</CheatGroup>
+
+<CheatGroup label="Kualitas dan ketersediaan">
+
+- Periksa status fitur antara **Preview** dan General Availability.
 - Pantau kuota token dan latensi inferensi jaringan.
+
+</CheatGroup>
 
 </CheatBox>
 

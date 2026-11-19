@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ App dari Marketplace/AppSource dan per-tenant extension menambah atau mengubah p
 5. Uji transaksi/report terdampak pada sandbox. Kemampuan menonaktifkan kembali harus dicek per fitur dan tahap migrasinya.
 6. Catat keputusan dan bukti UAT; perubahan produksi di luar cakupan fase ini. Jalur upload PTE dan UI dapat berbeda menurut versi/platform.
 
+## Contoh praktik
+
+- **Kondisi awal** — Sebuah extension demo perlu diuji sebelum tersedia bagi tim.
+- **Langkah** — Catat versi, dependency dan fitur yang terpengaruh. Buat baseline transaksi demo dan ulangi setelah perubahan yang diizinkan di sandbox.
+- **Hasil yang diharapkan** — Kamu bisa membandingkan perubahan perilaku dan menyebut bukti yang diperlukan sebelum aktivasi.
+
 ## Cheat box
 
 <CheatBox>
 
-- Catat publisher dan dependensi.
+<CheatGroup label="App dan prasyarat">
+
+- Catat **publisher** dan dependensi.
 - App perlu izin dan setup.
-- Install berbeda dari update.
-- Uninstall berbeda dari delete data.
-- Fitur mandatory perlu diperhatikan.
-- Uji perubahan di sandbox dahulu.
+
+</CheatGroup>
+
+<CheatGroup label="Siklus instalasi">
+
+- **Install** berbeda dari update.
+- **Uninstall** berbeda dari delete data.
+
+</CheatGroup>
+
+<CheatGroup label="Uji fitur">
+
+- Fitur **mandatory** perlu diperhatikan.
+- Uji perubahan di **sandbox** dahulu.
+
+</CheatGroup>
 
 </CheatBox>
 

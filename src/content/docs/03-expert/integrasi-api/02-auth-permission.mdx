@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -33,16 +34,36 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=client_credentials&client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>&scope=https%3A%2F%2Fapi.businesscentral.dynamics.com%2F.default
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Read customer berhasil pada identitas demo, request lain ditolak dengan 403 pada mock.
+- **Langkah** — Pisahkan pemeriksaan token dari permission BC dan company. Tulis dua hipotesis otorisasi untuk kasus kedua.
+- **Hasil yang diharapkan** — Catatan diagnosis membedakan akses Entra, identitas app, dan izin objek tanpa menampilkan token.
+
 ## Cheat box
 
 <CheatBox>
 
-- S2S memakai identitas app.
-- Consent bukan permission objek.
-- Pilih least privilege.
-- Jangan log token atau secret.
+<CheatGroup label="Identitas dan consent">
+
+- **S2S** memakai identitas app.
+- **Consent** bukan permission objek.
+
+</CheatGroup>
+
+<CheatGroup label="Izin dan kerahasiaan">
+
+- Pilih **least privilege**.
+- Jangan log token atau **secret**.
+
+</CheatGroup>
+
+<CheatGroup label="Uji akses dan rotasi">
+
 - Uji penolakan akses.
-- Catat expiry dan rotasi.
+- Catat **expiry** dan rotasi.
+
+</CheatGroup>
 
 </CheatBox>
 

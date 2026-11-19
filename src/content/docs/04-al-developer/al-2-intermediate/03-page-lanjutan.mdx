@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -118,16 +119,36 @@ codeunit 50210 "MYP Background Calc"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Action proses demo hanya berguna saat record siap.
+- **Langkah** — Susun contoh record siap dan belum siap. Review kondisi action dan validasi pada kode server.
+- **Hasil yang diharapkan** — Perbedaan tampilan terlihat, dan kondisi tak valid tetap ditolak bila action dipanggil lewat jalur lain.
+
 ## Cheat box
 
 <CheatBox>
 
-- Action area: Processing, Navigation, Reporting.
-- FactBox = panel samping (CardPart/ListPart/SystemPart).
-- Document page: header Card + embedded ListPart lines.
-- Visible = variabel, hitung di OnAfterGetCurrRecord.
-- EnqueueBackgroundTask agar UI tidak freeze.
-- Hasil background task via OnPageBackgroundTaskCompleted.
+<CheatGroup label="Navigasi dan FactBox">
+
+- **Action area**: Processing, Navigation, Reporting.
+- **FactBox** = panel samping (CardPart/ListPart/SystemPart).
+
+</CheatGroup>
+
+<CheatGroup label="Document page dan visibility">
+
+- **Document page**: header Card + embedded ListPart lines.
+- **Visible** = variabel, hitung di OnAfterGetCurrRecord.
+
+</CheatGroup>
+
+<CheatGroup label="Background task">
+
+- **EnqueueBackgroundTask** agar UI tidak freeze.
+- Hasil background task via **OnPageBackgroundTaskCompleted**.
+
+</CheatGroup>
 
 </CheatBox>
 

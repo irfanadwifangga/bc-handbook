@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -34,16 +35,36 @@ Polling membaca perubahan menurut interval; webhook memberi pemberitahuan peruba
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Mock mengirim notifikasi perubahan customer yang sama dua kali.
+- **Langkah** — Berikan kedua pesan pada simulasi queue dan lakukan pembacaan state terbaru untuk ID tersebut.
+- **Hasil yang diharapkan** — Duplikasi tidak menghasilkan dua tindakan bisnis dan kasus notifikasi hilang punya langkah rekonsiliasi.
+
 ## Cheat box
 
 <CheatBox>
 
-- Notification bukan hasil posting.
-- Validasi handshake dan clientState.
-- Catat expiration dan renew.
-- Antisipasi duplikasi.
+<CheatGroup label="Notifikasi dan validasi">
+
+- **Notification** bukan hasil posting.
+- Validasi **handshake** dan clientState.
+
+</CheatGroup>
+
+<CheatGroup label="Langganan dan duplikasi">
+
+- Catat **expiration** dan renew.
+- Antisipasi **duplikasi**.
+
+</CheatGroup>
+
+<CheatGroup label="Rekonsiliasi dan scope">
+
 - Rekonsiliasi berkala.
-- Automation mempunyai scope berbeda.
+- **Automation** mempunyai scope berbeda.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Mulai dari proses standar sebelum merancang perubahan. Pada template lokal ini, 
 5. Jika memakai workaround, tulis kontrol kompensasi, pekerjaan manual dan batas yang belum terpenuhi. Jangan memberi status Fit hanya karena ada alternatif parsial.
 6. Review dengan process owner, simpan keputusan, lalu kirim gap yang disepakati ke functional specification dan UAT.
 
+## Contoh praktik
+
+- **Kondisi awal** — Dua kebutuhan demo adalah PO parsial dan kode alasan sebelum approval.
+- **Langkah** — Nilai masing-masing terhadap standar, konfigurasi, dan opsi tambahan. Tandai mana yang belum terbukti.
+- **Hasil yang diharapkan** — Tiap kebutuhan punya status sementara, bukti yang dicari, dan keputusan yang masih terbuka.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Standar dan acceptance">
+
 - Mulai dari standar.
-- Uji acceptance, bukan nama fitur.
+- Uji **acceptance**, bukan nama fitur.
+
+</CheatGroup>
+
+<CheatGroup label="Hipotesis dan bukti">
+
 - Status awal adalah hipotesis.
 - Catat bukti dan owner.
-- Workaround punya batas.
-- Gap yang disetujui masuk spesifikasi.
+
+</CheatGroup>
+
+<CheatGroup label="Workaround dan gap">
+
+- **Workaround** punya batas.
+- **Gap** yang disetujui masuk spesifikasi.
+
+</CheatGroup>
 
 </CheatBox>
 

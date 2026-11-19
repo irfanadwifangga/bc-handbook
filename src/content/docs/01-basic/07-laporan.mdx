@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -29,16 +30,36 @@ Trial Balance merangkum akun G/L pada periode/tanggal tertentu. Aged Receivables
 6. Buka **Financial Reports** yang sudah disiapkan untuk mengenali baris akun/kelompok dan kolom periode. Bandingkan satu angka dengan Trial Balance menggunakan filter sama.
 7. Simpan bukti demo beserta nama report dan filter. Jangan mengubah report/setup hanya agar hasil tampak cocok.
 
+## Contoh praktik
+
+- **Kondisi awal** — Tim ingin menjelaskan saldo piutang pada akhir bulan demo.
+- **Langkah** — Ambil laporan Aged Receivables, catat tanggal akhir, dan telusuri satu saldo ke Customer Ledger Entries.
+- **Hasil yang diharapkan** — Kamu dapat menjelaskan selisih karena scope, tanggal, atau application dengan menunjukkan filter yang dipakai.
+
 ## Cheat box
 
 <CheatBox>
 
-- Trial Balance: ringkasan G/L.
-- Aged Receivables: umur piutang.
-- Aged Payables: umur utang.
-- Company, tanggal, currency dan dimension harus sama.
+<CheatGroup label="Laporan utama">
+
+- **Trial Balance**: ringkasan G/L.
+- **Aged Receivables**: umur piutang.
+
+</CheatGroup>
+
+<CheatGroup label="Pembanding laporan">
+
+- **Aged Payables**: umur utang.
+- Company, tanggal, **currency** dan dimension harus sama.
+
+</CheatGroup>
+
+<CheatGroup label="Saldo dan ekspor">
+
 - Open sekarang belum tentu open pada tanggal historis.
 - Ekspor list berbeda dari output report.
+
+</CheatGroup>
 
 </CheatBox>
 

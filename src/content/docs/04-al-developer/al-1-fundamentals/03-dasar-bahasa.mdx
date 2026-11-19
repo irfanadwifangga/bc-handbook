@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -46,16 +47,36 @@ codeunit 50202 "MYP Training Logic"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Perhitungan diskon demo memakai nominal 100 dan input persen 10 atau 101.
+- **Langkah** — Bandingkan expected result kedua input dan uji procedure setelah diperiksa terhadap symbols.
+- **Hasil yang diharapkan** — Kasus 10 menghasilkan 90. Kasus 101 ditolak dengan pesan validasi setelah dijalankan.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Tipe dan scope">
+
 - Pilih tipe sesuai makna.
-- Scope procedure disengaja.
-- var mengubah nilai caller.
-- Label untuk teks aplikasi.
+- **Scope procedure** disengaja.
+
+</CheatGroup>
+
+<CheatGroup label="Parameter dan label">
+
+- **var** mengubah nilai caller.
+- **Label** untuk teks aplikasi.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi dan uji">
+
 - Validasi batas di awal.
 - Uji positif dan negatif.
+
+</CheatGroup>
 
 </CheatBox>
 

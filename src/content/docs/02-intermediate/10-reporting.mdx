@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Financial Reports menggabungkan definisi baris dan kolom dengan filter periode/d
 5. Jika memakai Power BI, catat sumber data, filter/security, waktu refresh dan license yang diperlukan. Bedakan akses report dari hak membaca data sumber.
 6. Export hasil Excel demo, bandingkan jumlah dengan report BC dan simpan definisi/filter yang membuatnya dapat direproduksi.
 
+## Contoh praktik
+
+- **Kondisi awal** — Tim ingin membandingkan biaya dua Department pada periode yang sama.
+- **Langkah** — Buat dua tampilan laporan dengan tanggal dan akun yang identik, lalu ubah hanya filter Department.
+- **Hasil yang diharapkan** — Selisih antar tampilan bisa ditelusuri ke filter Department dan baris sumber.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Pertanyaan dan angka">
+
 - Definisikan pertanyaan bisnis.
-- Row dan column menentukan tampilan angka.
+- Row dan **column** menentukan tampilan angka.
+
+</CheatGroup>
+
+<CheatGroup label="Filter dan layout">
+
 - Filter harus konsisten.
-- Layout berbeda dari dataset.
-- Catat refresh Power BI.
+- **Layout** berbeda dari dataset.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi output">
+
+- Catat refresh **Power BI**.
 - Rekonsiliasi output ke ledger.
+
+</CheatGroup>
 
 </CheatBox>
 

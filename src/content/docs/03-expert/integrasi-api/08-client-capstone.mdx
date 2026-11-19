@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -32,16 +33,36 @@ uv run --no-project --with httpx==0.28.1 python -m unittest discover -s examples
 
 `httpx` dipakai terisolasi oleh uv; tidak ditambahkan ke dependensi situs. Client tidak menyimpan token cache, tidak memperbarui token otomatis, tidak memiliki retry write otomatis, dan tidak memposting invoice. Renewal token serta journal produksi memerlukan rancangan terpisah.
 
+## Contoh praktik
+
+- **Kondisi awal** — CSV demo memuat dua baris dengan external key yang sama.
+- **Langkah** — Siapkan dry-run untuk memisahkan baris valid dan duplikat. Tinjau payload sebelum mencoba import sandbox.
+- **Hasil yang diharapkan** — Daftar penolakan menunjukkan duplikat dan dry-run tidak melakukan write.
+
 ## Cheat box
 
 <CheatBox>
 
-- Mock bukan bukti BC.
-- Timeout harus eksplisit.
-- Tidak log secret/body penuh.
-- Dry-run sebelum import.
-- Checkpoint setelah sukses.
-- Bukti UAT menentukan gate.
+<CheatGroup label="Batas pengujian">
+
+- **Mock** bukan bukti BC.
+- **Timeout** harus eksplisit.
+
+</CheatGroup>
+
+<CheatGroup label="Data dan dry-run">
+
+- Tidak log **secret**/body penuh.
+- **Dry-run** sebelum import.
+
+</CheatGroup>
+
+<CheatGroup label="Checkpoint dan UAT">
+
+- **Checkpoint** setelah sukses.
+- Bukti **UAT** menentukan gate.
+
+</CheatGroup>
 
 </CheatBox>
 

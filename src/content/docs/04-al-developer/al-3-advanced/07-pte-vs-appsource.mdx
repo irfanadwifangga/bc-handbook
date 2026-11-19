@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -48,16 +49,36 @@ Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks
 // Validasi Breaking Change| Internal Tim              | Baseline Otomatis MS
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Fitur demo awalnya dibuat untuk satu tenant, lalu diminta tenant lain.
+- **Langkah** — Bandingkan kebutuhan distribusi, upgrade, validasi dan dukungan untuk PTE serta AppSource.
+- **Hasil yang diharapkan** — Keputusan mencatat model distribusi dan bukti yang masih harus dilengkapi sebelum rilis.
+
 ## Cheat box
 
 <CheatBox>
 
-- Pilih PTE untuk kustomisasi khusus kebutuhan satu tenant.
-- Gunakan AppSource untuk produk komersial multi-pelanggan.
-- AppSource mewajibkan registrasi prefix/suffix di Partner Center.
-- Gunakan AppSourceCop untuk memblokir breaking changes pada API/skema.
-- Rentang 50000-99999 diperuntukkan bagi lingkungan PTE.
-- Siapkan dokumentasi dan materi kepatuhan lisensi untuk AppSource.
+<CheatGroup label="Model distribusi">
+
+- Pilih **PTE** untuk kustomisasi khusus kebutuhan satu tenant.
+- Gunakan **AppSource** untuk produk komersial multi-pelanggan.
+
+</CheatGroup>
+
+<CheatGroup label="Aturan AppSource">
+
+- **AppSource** mewajibkan registrasi prefix/suffix di Partner Center.
+- Gunakan **AppSourceCop** untuk memblokir breaking changes pada API/skema.
+
+</CheatGroup>
+
+<CheatGroup label="Kompatibilitas dan dependensi">
+
+- Rentang 50000-99999 diperuntukkan bagi lingkungan **PTE**.
+- Siapkan dokumentasi dan materi kepatuhan lisensi untuk **AppSource**.
+
+</CheatGroup>
 
 </CheatBox>
 

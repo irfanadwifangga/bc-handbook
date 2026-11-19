@@ -1,24 +1,42 @@
 ---
 import '../styles/learning-flow.css';
+
+interface Props {
+  videoId?: string;
+  title?: string;
+  description?: string;
+  source?: string;
+}
+
+const {
+  videoId = '37d3ec2a-71c2-4f0d-9a94-62c83805fbfa',
+  title = 'Membuat customer',
+  description = 'Prasyarat sebelum membuat dokumen penjualan.',
+  source = 'https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-customers',
+} = Astro.props;
+const player = new URL('https://learn-video.azurefd.net/vod/player');
+player.searchParams.set('id', videoId);
 ---
-<bc-reference-video class="bc-reference-video">
-  <p><strong>Video pendukung: membuat customer</strong> — Microsoft Learn, Sales Quick Start. Prasyarat alur Sales; bukan demonstrasi keenam tahap atau bukti tampilan BC 29.x.</p>
+<bc-reference-video class="bc-reference-video" data-player={player.href} data-title={`Microsoft Learn: ${title}`}>
+  <p><strong>{title}</strong> — {description}</p>
   <button type="button" hidden>Muat video Microsoft Learn</button>
   <div class="bc-video-slot"></div>
-  <p>Player eksternal baru dimuat setelah kamu klik. Tidak diputar otomatis. Jika gagal, <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-customers">buka sumber Microsoft Learn</a> dan lihat bagian Set up customers.</p>
+  <p><a href={source}>buka sumber Microsoft Learn</a></p>
 </bc-reference-video>
 <script>
   class ReferenceVideo extends HTMLElement {
     connectedCallback() {
-      const button = this.querySelector<HTMLButtonElement>('button')!;
+      const button = this.querySelector<HTMLButtonElement>('button');
+      const slot = this.querySelector('.bc-video-slot');
+      if (!button || !slot || !this.dataset.player || slot.firstElementChild || !button.hidden) return;
       button.hidden = false;
       button.addEventListener('click', () => {
         const frame = document.createElement('iframe');
-        frame.src = 'https://learn-video.azurefd.net/vod/player?id=37d3ec2a-71c2-4f0d-9a94-62c83805fbfa';
-        frame.title = 'Microsoft Learn: Set up customers in Business Central';
+        frame.src = this.dataset.player!;
+        frame.title = this.dataset.title!;
         frame.allowFullscreen = true;
         frame.referrerPolicy = 'strict-origin-when-cross-origin';
-        this.querySelector('.bc-video-slot')!.append(frame);
+        slot.append(frame);
         button.hidden = true;
         frame.focus();
       }, { once: true });

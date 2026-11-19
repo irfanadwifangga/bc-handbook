@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Fixed Asset card mendefinisikan aset; depreciation book menentukan aturan perhit
 5. Bandingkan acquisition, accumulated depreciation dan book value. Cocokkan ke G/L hanya untuk book/type transaksi yang diintegrasikan.
 6. Tinjau satu recurring journal/aturan allocation demo tanpa menjalankan close year. Bedakan pembentukan baris periodik, posting jurnal dan penutupan income statement.
 
+## Contoh praktik
+
+- **Kondisi awal** — Aset demo sudah dihubungkan ke depreciation book latihan.
+- **Langkah** — Jalankan Calculate Depreciation untuk periode uji. Tinjau baris yang dihasilkan dan gunakan Preview Posting bila tersedia.
+- **Hasil yang diharapkan** — Periode dan nilai depresiasi bisa dijelaskan dari setup, dan hasil dapat ditelusuri ke ledger setelah posting sandbox.
+
 ## Cheat box
 
 <CheatBox>
 
-- FA card berbeda dari depreciation book.
-- Integration menentukan hubungan G/L.
-- Calculate belum sama dengan Post.
-- Preview tanggal dan hasil jurnal.
-- Rekonsiliasi FA Ledger dengan G/L.
-- Year-end bukan satu tombol universal.
+<CheatGroup label="Aset dan buku">
+
+- **FA card** berbeda dari depreciation book.
+- **Integration** menentukan hubungan G/L.
+
+</CheatGroup>
+
+<CheatGroup label="Hitung dan posting">
+
+- **Calculate** belum sama dengan Post.
+- **Preview** tanggal dan hasil jurnal.
+
+</CheatGroup>
+
+<CheatGroup label="Rekonsiliasi">
+
+- Rekonsiliasi **FA Ledger** dengan G/L.
+- **Year-end** bukan satu tombol universal.
+
+</CheatGroup>
 
 </CheatBox>
 

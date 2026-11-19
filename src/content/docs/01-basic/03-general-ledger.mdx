@@ -7,7 +7,10 @@ sidebar:
   order: 13
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -28,16 +31,68 @@ Accounting Periods membagi tahun pelaporan. **Allow Posting From/To** di General
 5. Post hanya setelah hasil preview sesuai. Cari **General Ledger Entries**, filter dokumen tadi, lalu cocokkan akun, tanggal dan jumlah.
 6. Jalankan **Trial Balance** dengan periode yang mencakup posting. Bandingkan perubahan akun terhadap saldo sebelum latihan, bukan hanya total akhir company.
 
+## Contoh praktik
+
+- **Kondisi awal** — Toko demo mencatat setoran 500 satuan mata uang lokal.
+- **Langkah** — Siapkan General Journal dengan akun bank dan akun lawan yang disetujui. Jalankan Preview Posting.
+- **Hasil yang diharapkan** — Total debit dan kredit masing-masing 500, dengan akun tujuan sesuai skenario.
+
+### Simulasi alur
+
+<FlowPlayer intro="Ikuti setoran demo 500 dari jurnal hingga buku besar." steps={[
+  {
+    "label": "Draft",
+    "analogy": "Toko mencatat setoran yang baru diterima.",
+    "document": "General Journal: bank dan akun lawan sesuai skenario.",
+    "impact": "Belum ada G/L Entry dari draft."
+  },
+  {
+    "label": "Preview",
+    "analogy": "Pembimbing meninjau ke mana setoran akan dicatat.",
+    "document": "Preview Posting pada batch latihan.",
+    "impact": "Periksa debit dan kredit masing-masing 500."
+  },
+  {
+    "label": "Bukti G/L",
+    "analogy": "Setelah posting sandbox terverifikasi, tim mencari bukti aktual.",
+    "document": "G/L Entries dan G/L Register.",
+    "impact": "Cocokkan akun, tanggal, nilai, dan nomor dokumen."
+  }
+]} />
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="944c65b0-9b0f-4d35-b330-de2fad57143a"
+  title="Menyiapkan Chart of Accounts"
+  description="Kenali struktur akun yang akan dirujuk saat memeriksa Preview Posting."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-financial-information#set-up-the-chart-of-accounts"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Posting account menerima transaksi.
-- Jurnal belum sama dengan ledger entry.
+<CheatGroup label="Akun dan jurnal">
+
+- **Posting account** menerima transaksi.
+- **Jurnal** belum sama dengan ledger entry.
+
+</CheatGroup>
+
+<CheatGroup label="Keseimbangan jurnal">
+
 - Dua sisi dokumen harus seimbang.
-- Jangan menggandakan balancing account.
-- Accounting Periods bukan pembatas tanggal posting.
-- Trial Balance seimbang belum membuktikan akun benar.
+- Jangan menggandakan **balancing account**.
+
+</CheatGroup>
+
+<CheatGroup label="Periode dan laporan">
+
+- **Accounting Periods** bukan pembatas tanggal posting.
+- **Trial Balance** seimbang belum membuktikan akun benar.
+
+</CheatGroup>
 
 </CheatBox>
 

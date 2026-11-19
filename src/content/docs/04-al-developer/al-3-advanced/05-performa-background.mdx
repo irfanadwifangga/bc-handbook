@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -64,16 +65,36 @@ codeunit 50203 "MYP Staging Background Worker"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Pekerjaan batch demo terputus setelah sebagian baris berhasil.
+- **Langkah** — Buat data kecil dengan checkpoint dan kasus gagal. Uji pemulihan pada baris yang tersisa.
+- **Hasil yang diharapkan** — Baris yang sudah sukses dapat direkonsiliasi dan barang kerja yang belum selesai dapat dilanjutkan tanpa duplikasi.
+
 ## Cheat box
 
 <CheatBox>
 
-- Utamakan ModifyAll/DeleteAll untuk manipulasi data masif.
-- Parameter RunTrigger=false memastikan operasi set-based SQL.
+<CheatGroup label="Operasi massal">
+
+- Utamakan **ModifyAll/DeleteAll** untuk manipulasi data masif.
+- Parameter **RunTrigger=false** memastikan operasi set-based SQL.
+
+</CheatGroup>
+
+<CheatGroup label="Lock dan tugas asinkron">
+
 - Minimalkan rentang waktu antara LockTable dan akhir transaksi.
-- Gunakan TaskScheduler untuk proses asinkron yang terisolasi.
-- Gunakan Page Background Task (PBT) agar UI tidak freezing.
+- Gunakan **TaskScheduler** untuk proses asinkron yang terisolasi.
+
+</CheatGroup>
+
+<CheatGroup label="Respons UI dan filter">
+
+- Gunakan **Page Background Task** (PBT) agar UI tidak freezing.
 - Hindari loop tanpa filter ketat pada tabel transaksi besar.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -289,3 +289,29 @@
 - Verifikasi nyata: build 94 halaman/Pagefind dan 3 tes Bun lulus. Dua belas cheatsheet × 1920/1280/360px × light/dark = 72 tes browser lulus; lebar paragraf/list/blockquote desktop sesuai lebar parent dalam toleransi 1px. Pemeriksaan pemenggalan kata tabel, overflow body dan Axe WCAG 2A/AA + 2.1A/AA lulus. Dua belas PDF masing-masing tetap satu halaman A4. Screenshot Setup Checklist 1920px dark diperiksa; teks memakai lebar tersedia.
 - Artefak lokal di .codex-tmp/cheatsheet-text/. Preview port 4323 berhenti; git diff --check lulus. Suite Playwright penuh, Lighthouse, Firefox/WebKit, screen reader dan macOS tidak diulang; PDF hanya diverifikasi jumlah/ukuran halaman, tanpa inspeksi visual seluruh PDF. Tidak ada materi/dependensi baru, push/deploy atau perubahan favicon; AL-1 belum dimulai.
 - Commit message: `style: expand cheatsheet text to available width`.
+
+
+### Contoh praktik, simulasi, dan video modul — 2026-11-19
+
+- Menambahkan Contoh praktik di 68 modul Orientasi, Basic, Intermediate, Expert dan AL Developer. Masing-masing memuat kondisi awal, langkah, dan hasil yang diharapkan dengan skenario demo.
+- Menambahkan 9 simulasi untuk General Ledger, Purchasing, Inventory, Approval, Bank, RapidStart, UAT, Invoice Draft API, dan Debug AL. Total 11 termasuk Ekosistem dan Sales. Simulasi linear memakai penanda arah dan kontrol Putar/Jeda, Sebelumnya/Berikutnya, pilih tahap, serta Ulangi.
+- Bagian Tonton demo tersedia di 12 halaman. Sepuluh halaman memakai 12 embed dari 7 video Microsoft Learn, dan dua halaman memakai tautan koleksi resmi. Cakupan klip dijelaskan di tempat. Tidak ada dependensi baru.
+- Verifikasi nyata lewat bun run build (141 halaman, Pagefind), bun test (3 lulus), serta Playwright Chromium/Brave pada 1280 dan 360 px di tema terang dan gelap. Dari 388 kasus terarah, 386 lulus pada putaran awal. Dua kasus desktop Ekosistem memilih kontrol mobile yang tersembunyi. Setelah selector memakai node SVG di desktop, keempat kasus Ekosistem lulus pada pengujian ulang. Tes Sales mencakup Axe, reduced motion, mode tanpa JS, dan kontrol pemutaran. git diff --check lulus.
+- Batas pengujian mencakup pemutaran eksternal (embed diuji dengan respons simulasi), eksekusi langkah di sandbox BC, Firefox/WebKit, screen reader, macOS, dan suite Playwright penuh.
+- Commit message: `feat: add hands-on examples and demos across BC modules`.
+
+
+### Cheat box tiga kelompok di semua modul — 2026-11-19
+
+- Pola dari Ekosistem diterapkan ke 67 modul lain, termasuk Alur Sales interaktif. Tiga label mengikuti topik modul. Poin ringkasan yang sudah ada dipertahankan, dengan urutan Sales disesuaikan menurut tahap.
+- CheatBox dan CheatGroup berbagi markup serta aturan layout di DESIGN.md 4.3. Kotak memakai tiga kolom saat ruang cukup dan satu kolom saat sempit.
+- Build 141 halaman dan 3 tes Bun lulus. Hasil render seluruh 68 modul memuat tepat satu Cheat box dan tiga kelompok. Playwright Brave lulus 28 tes terarah pada 7 halaman dengan viewport 1280/360 px serta tema terang/gelap. Layout, overflow dalam kotak, dan Axe pada kotak lulus. Screenshot Sales desktop gelap dan mobile terang diperiksa.
+- Suite Playwright penuh, Firefox/WebKit, screen reader, macOS, dan cetak tidak diuji ulang. Preview dihentikan dan git diff --check lulus.
+- Commit message: `style: roll out grouped cheat boxes across modules`.
+
+
+### Sorotan kata kunci Cheat box — 2026-11-19
+
+- Istilah kunci di 67 modul diberi penekanan tebal. Ekosistem sudah memakai pola ini. Pintasan keyboard di Orientasi dan Navigasi memakai elemen kbd dengan token yang ada. Isi ringkasan dipertahankan.
+- Build 141 halaman dan 3 tes Bun lulus. Struktur 68 Cheat box diperiksa pada hasil render. Playwright Brave lulus 32 tes layout dan Axe terarah untuk 8 halaman × desktop/mobile × tema terang/gelap. Di Navigasi, tiga pintasan dan lima istilah diperiksa secara eksplisit.
+- Firefox/WebKit dan cetak belum diuji ulang. Preview dihentikan dan git diff --check lulus.

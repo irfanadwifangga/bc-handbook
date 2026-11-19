@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -39,16 +40,36 @@ Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks
 "idRanges": [{ "from": 50200, "to": 50220 }]
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Extension demo ditargetkan ke BC 29.x.
+- **Langkah** — Bandingkan runtime, application, platform dan dependency di `app.json` dengan target sandbox.
+- **Hasil yang diharapkan** — Kamu punya daftar versi yang harus cocok dan dapat menjelaskan identitas app serta scope PTE.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Identitas dan distribusi">
+
 - Identitas app harus stabil.
-- PTE dan AppSource berbeda distribusi.
-- Runtime berbeda dari application.
+- **PTE** dan AppSource berbeda distribusi.
+
+</CheatGroup>
+
+<CheatGroup label="Kompatibilitas">
+
+- **Runtime** berbeda dari application.
 - ID contoh belum tentu tersedia.
-- Gunakan prefix demo MYP.
+
+</CheatGroup>
+
+<CheatGroup label="Prefix dan dependensi">
+
+- Gunakan prefix demo **MYP**.
 - Catat dependency target.
+
+</CheatGroup>
 
 </CheatBox>
 

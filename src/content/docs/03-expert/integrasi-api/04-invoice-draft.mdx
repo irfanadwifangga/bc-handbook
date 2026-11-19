@@ -7,7 +7,9 @@ sidebar:
   order: 4
 ---
 
+import FlowPlayer from '../../../../components/FlowPlayer.astro';
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -59,16 +61,59 @@ with httpx.Client(timeout=30, follow_redirects=False) as transport:
 
 File client dan petunjuk tes ada di `examples/api/` pada repo. `company_id` harus dipilih melalui E4. Contoh diuji dengan mock, belum dikirim ke BC.
 
+## Contoh praktik
+
+- **Kondisi awal** — Satu invoice demo punya satu baris item dan quantity dua.
+- **Langkah** — Review payload header dan lines, lalu jalankan uji deep insert dengan mock.
+- **Hasil yang diharapkan** — Mock menerima request pembuatan draft beserta lines dan tidak mencatat request posting.
+
+### Simulasi alur
+
+<FlowPlayer intro="Simulasi payload invoice dua unit dengan transport mock." steps={[
+  {
+    "label": "Siapkan payload",
+    "analogy": "Toko memilih vendor dan satu item demo.",
+    "document": "JSON header dan purchaseInvoiceLines.",
+    "impact": "Validasi referensi dan quantity sebelum write."
+  },
+  {
+    "label": "Buat draft",
+    "analogy": "Kirim satu permintaan pembuatan dalam simulasi.",
+    "document": "POST purchaseInvoices dengan nested lines.",
+    "impact": "Expected mock: respons berisi ID draft."
+  },
+  {
+    "label": "Verifikasi draft",
+    "analogy": "Tim memeriksa ID sebelum melanjutkan review.",
+    "document": "Hasil test mock dan referensi draft.",
+    "impact": "Periksa quantity dan pastikan tidak ada permintaan posting."
+  }
+]} />
+
 ## Cheat box
 
 <CheatBox>
 
-- Draft berbeda dari posted.
-- GUID diperoleh dari API.
-- Review header dan lines.
+<CheatGroup label="Status dan ID">
+
+- **Draft** berbeda dari posted.
+- **GUID** diperoleh dari API.
+
+</CheatGroup>
+
+<CheatGroup label="Review dan pencatatan">
+
+- Review **header dan lines**.
 - Catat ID setiap write sukses.
-- Jangan retry POST buta.
+
+</CheatGroup>
+
+<CheatGroup label="Retry dan rekonsiliasi">
+
+- Jangan **retry POST** buta.
 - Rekonsiliasi total di UI.
+
+</CheatGroup>
 
 </CheatBox>
 

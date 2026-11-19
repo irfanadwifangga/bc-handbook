@@ -152,6 +152,52 @@ a, button, select, summary { transition: background-color var(--bc-transition), 
 }
 .bc-cheat-box ul { padding-inline-start: 1.25rem; margin: 0; }
 .bc-cheat-box li { margin-block: var(--bc-space-1); }
+.bc-cheat-box:has(.bc-cheat-map) { container-type: inline-size; }
+.sl-markdown-content .bc-cheat-map {
+  display: grid;
+  margin: 0;
+}
+.sl-markdown-content .bc-cheat-map section {
+  padding-block: var(--bc-space-3);
+  margin: 0;
+}
+.bc-cheat-map section + section {
+  border-block-start: var(--bc-border-width) solid var(--bc-border);
+}
+.sl-markdown-content .bc-cheat-map section:first-child { padding-block-start: 0; }
+.sl-markdown-content .bc-cheat-map section:last-child { padding-block-end: 0; }
+.sl-markdown-content .bc-cheat-map .bc-cheat-map-label {
+  margin: 0 0 var(--bc-space-2);
+  color: var(--bc-accent);
+  font-weight: var(--bc-weight-label);
+}
+.sl-markdown-content .bc-cheat-map ul { padding: 0; margin: 0; list-style: none; }
+.sl-markdown-content .bc-cheat-map li { margin: 0; }
+.sl-markdown-content .bc-cheat-map li strong {
+  color: var(--bc-text);
+  font-weight: var(--bc-weight-label);
+}
+.sl-markdown-content .bc-cheat-map kbd {
+  padding-inline: var(--bc-space-1);
+  border: var(--bc-border-width) solid var(--bc-border);
+  border-radius: var(--bc-radius-sm);
+  background: var(--bc-surface);
+  color: var(--bc-text);
+  font: inherit;
+  font-family: var(--bc-font-mono);
+  white-space: nowrap;
+}
+.sl-markdown-content .bc-cheat-map li + li { margin-block-start: var(--bc-space-2); }
+@container (min-width: 34rem) {
+  .sl-markdown-content .bc-cheat-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sl-markdown-content .bc-cheat-map section { padding-block: 0; padding-inline: var(--bc-space-3); }
+  .bc-cheat-map section + section {
+    border-block-start: 0;
+    border-inline-start: var(--bc-border-width) solid var(--bc-border);
+  }
+  .sl-markdown-content .bc-cheat-map section:first-child { padding-inline-start: 0; }
+  .sl-markdown-content .bc-cheat-map section:last-child { padding-inline-end: 0; }
+}
 .bc-footer-note { margin-top: var(--bc-space-5); color: var(--bc-text-muted); font-size: var(--bc-text-xs); }
 .bc-header-link { color: var(--bc-accent); font-size: var(--bc-text-sm); }
 starlight-theme-select select { width: auto; }

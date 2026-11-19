@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -56,16 +57,36 @@ Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks
 // .gitignore (abaikan .alpackages dan *.app)
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Pull request demo menambah objek AL baru.
+- **Langkah** — Siapkan aturan compile dan test sebelum merge. Simulasikan gagal build pada perubahan terisolasi.
+- **Hasil yang diharapkan** — Hasil build tersedia bagi reviewer dan langkah publish membutuhkan target serta persetujuan yang jelas.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Repo dan workflow">
+
 - Abaikan folder .alpackages dan file .app di dalam .gitignore.
-- Gunakan template AL-Go for GitHub untuk standarisasi CI/CD.
+- Gunakan template **AL-Go for GitHub** untuk standarisasi CI/CD.
+
+</CheatGroup>
+
+<CheatGroup label="Otomasi dan lingkungan">
+
 - Jalankan kompilasi dan suite pengujian otomatis pada setiap PR.
-- Manfaatkan BcContainerHelper untuk lingkungan build deterministik.
-- Aktifkan fitur TranslationFile untuk ekspor string ke format XLIFF.
-- Amankan kredensial deployment melalui GitHub Secrets tersanitasi.
+- Manfaatkan **BcContainerHelper** untuk lingkungan build deterministik.
+
+</CheatGroup>
+
+<CheatGroup label="Terjemahan dan deployment">
+
+- Aktifkan fitur **TranslationFile** untuk ekspor string ke format XLIFF.
+- Amankan kredensial deployment melalui **GitHub Secrets** tersanitasi.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ As-is mencatat proses yang diamati; to-be mengusulkan perubahan untuk tujuan bis
 5. Buat swimlane berupa tabel role, input, aktivitas, output dan pengecualian. Hubungkan perubahan dengan requirement ID dan fitur kandidat BC.
 6. Walkthrough skenario parsial, reject dan payment belum diaplikasikan. Bandingkan dengan alur dokumen serta pilot Sales interaktif sebagai contoh pemisahan barang, tagihan dan uang.
 
+## Contoh praktik
+
+- **Kondisi awal** — Di proses demo, gudang menerima barang setelah buyer menerima keputusan approval.
+- **Langkah** — Gambar swimlane Buyer, Manager, dan Warehouse. Buat cabang reject yang kembali ke buyer untuk revisi.
+- **Hasil yang diharapkan** — Panah menunjukkan handoff dan titik keputusan, termasuk ke mana draft yang ditolak kembali.
+
 ## Cheat box
 
 <CheatBox>
 
-- As-is berdasarkan observasi.
-- To-be adalah usulan.
+<CheatGroup label="As-is dan to-be">
+
+- **As-is** berdasarkan observasi.
+- **To-be** adalah usulan.
+
+</CheatGroup>
+
+<CheatGroup label="Batas dan keputusan">
+
 - Tandai awal dan akhir.
 - Setiap keputusan punya cabang.
-- Swimlane menunjukkan owner.
-- Hubungkan perubahan ke kebutuhan.
+
+</CheatGroup>
+
+<CheatGroup label="Pemilik dan kebutuhan">
+
+- **Swimlane** menunjukkan owner.
+- Hubungkan perubahan ke **kebutuhan**.
+
+</CheatGroup>
 
 </CheatBox>
 

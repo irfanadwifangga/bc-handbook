@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Assisted Setup memandu pekerjaan tertentu melalui wizard; Manual Setup mengelomp
 5. Review koneksi eksternal, email dan jadwal background pada company latihan; jangan berasumsi Copy menjaga semuanya aktif atau menjaga semuanya nonaktif.
 6. Uji preview transaksi kecil, posting groups dan laporan yang relevan. Selesainya wizard bukan bukti seluruh proses operasional siap.
 
+## Contoh praktik
+
+- **Kondisi awal** — Company demo butuh setup awal yang mencakup nomor dan kebijakan posting.
+- **Langkah** — Bandingkan langkah yang tersedia di Assisted Setup dengan satu konfigurasi tambahan lewat Manual Setup.
+- **Hasil yang diharapkan** — Checklist menunjukkan konfigurasi dari wizard dan konfigurasi manual yang harus direview.
+
 ## Cheat box
 
 <CheatBox>
 
-- Pilih titik awal company.
-- Assisted Setup memandu tugas.
-- Manual Setup membuka konfigurasi.
-- Copy bukan backup.
-- Periksa company aktif.
+<CheatGroup label="Persiapan company">
+
+- Pilih titik awal **company**.
+- **Assisted Setup** memandu tugas.
+
+</CheatGroup>
+
+<CheatGroup label="Pemilihan setup">
+
+- **Manual Setup** membuka konfigurasi.
+- **Copy** bukan backup.
+
+</CheatGroup>
+
+<CheatGroup label="Verifikasi">
+
+- Periksa **company** aktif.
 - Buktikan hasil dengan skenario.
+
+</CheatGroup>
 
 </CheatBox>
 

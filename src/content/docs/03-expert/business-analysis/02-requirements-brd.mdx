@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Wawancara menggali alasan; observasi menunjukkan pekerjaan nyata; workshop menye
 5. Lakukan walkthrough kembali dengan process owner. Catat konflik dan pertanyaan belum terjawab sebagai open issue, bukan menebak jawabannya.
 6. Tetapkan baseline versi dan alur change request. Perubahan kebutuhan setelah baseline perlu analisis dampak ke desain, tes dan training.
 
+## Contoh praktik
+
+- **Kondisi awal** — Buyer demo berkata semua PO besar perlu diperiksa.
+- **Langkah** — Tanyakan siapa yang menyetujui, berapa batasnya, dan apa yang terjadi bila ditolak. Ubah jawabannya menjadi requirement dengan acceptance.
+- **Hasil yang diharapkan** — Requirement punya actor, ambang, kondisi gagal, dan owner yang bisa mengonfirmasi.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Gali kebutuhan">
+
 - Tanyakan alasan bisnis.
 - Catat proses pengecualian.
+
+</CheatGroup>
+
+<CheatGroup label="Kriteria dan pemilik">
+
 - Kebutuhan harus dapat diuji.
 - Owner berbeda dari pencatat.
-- Pisahkan scope dan asumsi.
+
+</CheatGroup>
+
+<CheatGroup label="Scope dan perubahan">
+
+- Pisahkan **scope** dan asumsi.
 - Versikan keputusan dan perubahan.
+
+</CheatGroup>
 
 </CheatBox>
 

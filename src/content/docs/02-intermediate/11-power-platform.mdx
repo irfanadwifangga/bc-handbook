@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Connector menghubungkan produk Power Platform dengan API BC. Power Automate menj
 5. Untuk Dataverse, tentukan tabel, arah sinkronisasi, mapping serta penanganan konflik. Bedakan virtual access dari penyalinan/synchronization data.
 6. Uji kasus gagal dan record ganda pada demo terkontrol; catat run history dan tetapkan owner yang memantau kegagalan sebelum pemakaian nyata.
 
+## Contoh praktik
+
+- **Kondisi awal** — Tim ingin mengenali kebutuhan notifikasi PO tanpa mengirim email sungguhan.
+- **Langkah** — Gambar trigger, kondisi, penerima demo, dan cabang gagal. Simulasikan payload contoh dan pesan keluaran.
+- **Hasil yang diharapkan** — Kasus yang cocok dan tidak cocok menghasilkan keputusan yang berbeda tanpa pengiriman eksternal.
+
 ## Cheat box
 
 <CheatBox>
 
-- Connector memakai API.
-- Automate: alur kerja.
-- Apps: antarmuka.
-- Dataverse: model/integrasi data.
-- Permission dan license tetap berlaku.
-- Catat retry, duplikasi dan owner.
+<CheatGroup label="Connector dan Automate">
+
+- **Connector** memakai API.
+- **Automate**: alur kerja.
+
+</CheatGroup>
+
+<CheatGroup label="Apps dan Dataverse">
+
+- **Apps**: antarmuka.
+- **Dataverse**: model/integrasi data.
+
+</CheatGroup>
+
+<CheatGroup label="Kontrol integrasi">
+
+- Permission dan **license** tetap berlaku.
+- Catat **retry**, duplikasi dan owner.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -102,16 +103,36 @@ codeunit 50218 "MYP Calc Event Publisher"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Dua jenis strategi harga demo perlu dipilih dari setup.
+- **Langkah** — Rancang kontrak perhitungan yang sama, lalu uji dua strategi dengan input identik.
+- **Hasil yang diharapkan** — Kamu bisa mengganti implementasi dan membandingkan hasil tanpa mengganti kontrak pemanggil.
+
 ## Cheat box
 
 <CheatBox>
 
-- Interface mendefinisikan kontrak tanpa implementasi.
-- Enum extensible mengikat value ke codeunit via implements.
-- Menghilangkan switch/case bercabang panjang untuk plugin logic.
-- IntegrationEvent membuka titik integrasi bagi extension lain.
-- Gunakan false, false untuk IncludeSender dan GlobalVarAccess.
+<CheatGroup label="Kontrak dan implementasi">
+
+- **Interface** mendefinisikan kontrak tanpa implementasi.
+- **Enum extensible** mengikat value ke codeunit via implements.
+
+</CheatGroup>
+
+<CheatGroup label="Titik ekstensi">
+
+- Menghilangkan **switch/case** bercabang panjang untuk plugin logic.
+- **IntegrationEvent** membuka titik integrasi bagi extension lain.
+
+</CheatGroup>
+
+<CheatGroup label="Konfigurasi extension">
+
+- Gunakan false, false untuk **IncludeSender** dan GlobalVarAccess.
 - Ekstensi pihak ketiga dapat menambah value enum baru.
+
+</CheatGroup>
 
 </CheatBox>
 

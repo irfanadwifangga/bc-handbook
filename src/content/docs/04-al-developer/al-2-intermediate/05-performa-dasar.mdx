@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -93,16 +94,36 @@ begin
 end;
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Pembacaan 100 record demo hanya membutuhkan tiga field.
+- **Langkah** — Bandingkan iterasi awal dengan versi yang memilih field yang dibutuhkan. Gunakan data dan filter yang sama.
+- **Hasil yang diharapkan** — Hasil bisnis sama dan perbedaan durasi atau pembacaan SQL dicatat dari pengukuran.
+
 ## Cheat box
 
 <CheatBox>
 
-- Query object = join + aggregasi di server, bukan loop AL.
-- SetCurrentKey + CalcSums = aggregasi tanpa loop.
-- ModifyAll/DeleteAll = bulk SQL, trigger tidak jalan (default).
-- SetLoadFields = ambil field tertentu saja, hemat bandwidth.
-- AL Profiler untuk mengukur SQL statement dan waktu.
+<CheatGroup label="Query dan agregasi">
+
+- **Query object** = join + aggregasi di server, bukan loop AL.
+- **SetCurrentKey + CalcSums** = aggregasi tanpa loop.
+
+</CheatGroup>
+
+<CheatGroup label="Operasi data">
+
+- **ModifyAll/DeleteAll** = bulk SQL, trigger tidak jalan (default).
+- **SetLoadFields** = ambil field tertentu saja, hemat bandwidth.
+
+</CheatGroup>
+
+<CheatGroup label="Pengukuran">
+
+- **AL Profiler** untuk mengukur SQL statement dan waktu.
 - v29.x: periksa release note untuk perubahan performa.
+
+</CheatGroup>
 
 </CheatBox>
 

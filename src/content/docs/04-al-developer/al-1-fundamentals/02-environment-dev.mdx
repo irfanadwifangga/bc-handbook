@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -38,16 +39,40 @@ AL: Go! → review target → AL: Download Symbols
 F5: publish/jalankan dengan debugger sesuai konfigurasi
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Project AL demo baru belum memiliki symbols.
+- **Langkah** — Siapkan target Sandbox lewat VS Code, unduh symbols, lalu coba compile di sandbox milikmu sesuai panduan.
+- **Hasil yang diharapkan** — Bukti mencatat versi compiler, target dan hasil compile sebelum kamu memilih untuk publish.
+
+### Tonton demo
+
+[Buka playlist AL hacks and insights dari katalog developer Microsoft](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-landing#video). Pilih episode sesuai topik yang sedang kamu pelajari.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Project dan sandbox">
+
 - Project latihan terpisah.
-- Konfirmasi tipe Sandbox.
-- Review launch sebelum publish.
-- Download symbols target.
-- Compile berbeda dari publish.
+- Konfirmasi tipe **Sandbox**.
+
+</CheatGroup>
+
+<CheatGroup label="Target dan symbols">
+
+- Review launch sebelum **publish**.
+- Download **symbols** target.
+
+</CheatGroup>
+
+<CheatGroup label="Build dan bukti">
+
+- **Compile** berbeda dari publish.
 - Simpan bukti tanpa credential.
+
+</CheatGroup>
 
 </CheatBox>
 

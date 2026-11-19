@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ General Business × General Product menentukan akun transaksi pada General Posti
 5. Buat transaksi kecil dengan harga tidak termasuk pajak dan tanpa diskon. Preview, lalu cocokkan akun/nilai terhadap matriks setup sebelum Post.
 6. Untuk error setup, catat pasangan yang benar-benar dipakai pada baris transaksi. Perbaiki kombinasi itu lalu ulangi preview; jangan menghapus kombinasi bersama untuk bereksperimen.
 
+## Contoh praktik
+
+- **Kondisi awal** — Invoice demo gagal karena kombinasi posting belum lengkap.
+- **Langkah** — Catat group pada customer, item dan baris dokumen. Cari kombinasi yang dirujuk error dan bandingkan Preview Posting sebelum dan sesudah koreksi sandbox.
+- **Hasil yang diharapkan** — Kamu dapat menunjuk kombinasi yang bermasalah serta akun tujuan yang muncul setelah setup valid.
+
 ## Cheat box
 
 <CheatBox>
 
-- General groups memilih akun transaksi.
-- Specific groups menghubungkan subledger.
-- Inventory juga mempertimbangkan location.
-- VAT groups bukan General groups.
+<CheatGroup label="Akun dan subledger">
+
+- **General groups** memilih akun transaksi.
+- **Specific groups** menghubungkan subledger.
+
+</CheatGroup>
+
+<CheatGroup label="Inventory dan VAT">
+
+- **Inventory** juga mempertimbangkan location.
+- **VAT groups** bukan General groups.
+
+</CheatGroup>
+
+<CheatGroup label="Verifikasi transaksi">
+
 - Tarif latihan bukan aturan pajak Indonesia.
 - Cocokkan setup dengan baris transaksi.
+
+</CheatGroup>
 
 </CheatBox>
 

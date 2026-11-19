@@ -7,7 +7,9 @@ sidebar:
   order: 7
 ---
 
+import FlowPlayer from '../../../../components/FlowPlayer.astro';
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -39,16 +41,59 @@ Actual: Belum dijalankan
 Reproduksi → breakpoint → input/call stack → koreksi → retest
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Input persen 101 seharusnya memicu validasi.
+- **Langkah** — Setelah compile, pasang breakpoint sebelum validasi dan reproduksi di sandbox. Catat parameter serta call stack.
+- **Hasil yang diharapkan** — Bukti menunjukkan nilai 101 dan lokasi keputusan validasi yang menghasilkan error.
+
+### Simulasi alur
+
+<FlowPlayer intro="Ikuti contoh diagnosis saat input diskon 101 ditolak." steps={[
+  {
+    "label": "Reproduksi",
+    "analogy": "Tester memberi nilai di luar batas yang disetujui.",
+    "document": "Jalankan skenario demo setelah compile terverifikasi di sandbox.",
+    "impact": "Simpan expected result dan pesan aktual."
+  },
+  {
+    "label": "Breakpoint",
+    "analogy": "Developer berhenti tepat sebelum keputusan validasi.",
+    "document": "Amati parameter dan call stack di debugger.",
+    "impact": "Pastikan nilai dan jalur eksekusi cocok dengan skenario."
+  },
+  {
+    "label": "Retest",
+    "analogy": "Bandingkan jalur valid dan tidak valid.",
+    "document": "Jalankan uji untuk 10 dan 101.",
+    "impact": "Catat actual untuk keduanya serta versi pengujian."
+  }
+]} />
+
 ## Cheat box
 
 <CheatBox>
 
-- Compiler dan runtime berbeda.
+<CheatGroup label="Reproduksi">
+
+- **Compiler** dan runtime berbeda.
 - Reproduksi harus spesifik.
-- Amati input dan call stack.
+
+</CheatGroup>
+
+<CheatGroup label="Observasi aman">
+
+- Amati input dan **call stack**.
 - Jangan rekam credential.
-- Retest positif dan negatif.
+
+</CheatGroup>
+
+<CheatGroup label="Uji ulang">
+
+- **Retest** positif dan negatif.
 - Catat hasil, bukan dugaan.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -7,7 +7,10 @@ sidebar:
   order: 16
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
+import FlowPlayer from '../../../components/FlowPlayer.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -29,16 +32,74 @@ UoM menentukan satuan dan konversi. Costing Method adalah kebijakan penilaian, b
 6. Cocokkan perubahan bersih: +5 −2 = +3 unit pada location/UoM dasar yang sama. Jangan mengharapkan nilai negatif selalu sama dengan harga jual; penilaian mengikuti biaya dan setup.
 7. Bedakan jurnal adjustment dengan Physical Inventory Journal: penghitungan fisik membandingkan jumlah terhitung dengan jumlah buku, bukan mengubah field stok sesuka hati.
 
+## Contoh praktik
+
+- **Kondisi awal** — Stok awal tercatat pada satu item dan satu lokasi demo.
+- **Langkah** — Preview lalu jalankan adjustment +5 dan −2 unit dalam sandbox. Cocokkan Item Ledger Entry dan Value Entry.
+- **Hasil yang diharapkan** — Stok bersih naik tiga unit. Nilai dijelaskan lewat entry biaya, dengan unit dan lokasi yang konsisten.
+
+### Simulasi alur
+
+<FlowPlayer intro="Simulasi perubahan stok di satu lokasi dengan UoM yang sama." steps={[
+  {
+    "label": "Stok awal",
+    "analogy": "Catat kuantitas rak sebelum perubahan.",
+    "document": "Item Card dan Item Ledger Entries.",
+    "impact": "Gunakan jumlah awal sebagai acuan."
+  },
+  {
+    "label": "Masuk +5",
+    "analogy": "Lima unit demo ditambahkan.",
+    "document": "Item Journal: Positive Adjustment.",
+    "impact": "Setelah posting sandbox, Item Ledger mencatat +5."
+  },
+  {
+    "label": "Keluar −2",
+    "analogy": "Dua unit demo dikeluarkan.",
+    "document": "Item Journal: Negative Adjustment.",
+    "impact": "Setelah posting sandbox, Item Ledger mencatat −2."
+  },
+  {
+    "label": "Cocokkan",
+    "analogy": "Hitung selisih dari kedua gerakan.",
+    "document": "Bandingkan Item Ledger Entries dan Value Entries.",
+    "impact": "Perubahan stok bersih +3. Nilai mengikuti biaya dan setup item."
+  }
+]} />
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="a5e825b2-e309-4753-bdff-a6947dc314e6"
+  title="Menyiapkan item"
+  description="Lihat pembuatan Item Card sebelum latihan stok atau penjualan."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-sell-products-and-services#set-up-items-to-sell"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Inventory: barang yang dilacak stoknya.
-- UoM mengatur satuan dan konversi.
-- Item Ledger: kuantitas.
-- Value Entry: nilai biaya.
-- Costing Method berbeda dari harga jual.
-- Availability berbeda dari stok fisik saat ini.
+<CheatGroup label="Item dan satuan">
+
+- **Inventory**: barang yang dilacak stoknya.
+- **UoM** mengatur satuan dan konversi.
+
+</CheatGroup>
+
+<CheatGroup label="Kuantitas dan biaya">
+
+- **Item Ledger**: kuantitas.
+- **Value Entry**: nilai biaya.
+
+</CheatGroup>
+
+<CheatGroup label="Costing dan availability">
+
+- **Costing Method** berbeda dari harga jual.
+- **Availability** berbeda dari stok fisik saat ini.
+
+</CheatGroup>
 
 </CheatBox>
 

@@ -173,6 +173,8 @@ Hanya komponen di bawah yang boleh dipakai. Jika perlu komponen baru → tambahk
 Ringkasan 5–8 baris di akhir tiap modul / awal cheatsheet.
 - Latar `--bc-accent-soft`, border kiri 4px `--bc-accent`, radius md, padding 16px.
 - Judul "Cheat box" (`--bc-text-sm`, 600). Isi berupa list pendek atau tabel kecil.
+- Ringkasan modul memakai tiga kelompok dengan label sesuai topik. Ekosistem memakai Siapkan, Telusuri, dan Tindak lanjuti. Tampilkan tiga kolom dengan pemisah tipis saat isi kotak cukup lebar, lalu tumpuk bagian saat ruang menyempit. Judul Cheat box tetap di luar kotak dan tampil di TOC.
+- Sorot istilah inti dengan teks tebal. Pintasan keyboard memakai elemen kbd dengan border tipis dan token font mono.
 - Maksimal **1 per halaman**, kecuali halaman cheatsheet.
 
 ### 4.4 `Aside` (catatan)
@@ -228,12 +230,12 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Selector tema memakai lebar intrinsik agar label bahasa Indonesia tampil utuh; tanpa ukuran baru di luar token.
 - Verifikasi mencakup axe, Ctrl/Cmd+K sesuai platform, Escape, mobile, serta tema terang/gelap. Pengujian Windows tidak dianggap bukti pengujian macOS.
 
-### 4.11 FlowPlayer dan ReferenceVideo (pilot Sales)
+### 4.11 FlowPlayer dan ReferenceVideo
 - Komponen Astro dengan enhancement custom element; tanpa dependensi tambahan. Stylesheet `src/styles/learning-flow.css` memakai palet, font, spasi, radius, dan fokus yang sudah ditetapkan.
-- FlowPlayer menampilkan enam node bernomor dengan panah, penanda tahap aktif, serta panel Analogi toko → Dokumen / halaman BC → Dampak utama. Desktop tiga kolom dengan alur berkelok (1→2→3, turun ke 4 lalu 5←4 dan 6←5); urutan DOM/keyboard tetap 1–6. Di bawah 50rem, satu kolom vertikal. Token tambahan: `--bc-flow-touch: 44px` untuk target sentuh, `--bc-flow-columns: 3`, `--bc-video-ratio: 16 / 9`.
+- FlowPlayer menyelaraskan tahap aktif dan panel analogi, dokumen BC, serta dampak ledger. Pada halaman Ekosistem, node SVG bisa dipilih lewat klik atau keyboard di desktop. Di bawah 50rem, tombol tahap membungkus ke baris baru tanpa scroll horizontal. Zoom dan layar penuh memakai Panzoom dan API browser yang sudah terpasang. Layar penuh mencakup diagram serta kontrol dan panel. Simulasi linear seperti Sales, Purchasing, dan Inventory memakai deretan tombol tahap dengan penanda arah dan kontrol pemutaran yang sama.
 - Pemutaran mulai dijeda; Putar/Jeda, Sebelumnya, Berikutnya, Ulangi, dan pilihan tahap berupa tombol native. Delapan detik per tahap; progress waktu hanya visual. Jeda mempertahankan waktu; navigasi manual dan tab tersembunyi menjeda; Ulangi mereset tahap/waktu; akhir berhenti tanpa loop.
 - `aria-current="step"` menandai tahap aktif; status polite hanya berubah saat tahap atau status pemutaran berubah. Tidak mengambil alih shortcut keyboard. Reduced motion menyembunyikan gerak progress; teks dan pilihan tahap tetap berfungsi. Tanpa JS dan saat cetak, semua panel terbaca.
-- ReferenceVideo memuat iframe resmi setelah klik, tanpa autoplay, dengan judul dan tautan sumber permanen. Video dilabeli menurut topik sebenarnya; jangan mengklaim video lama mendemonstrasikan BC 29.x. Embed eksternal adalah pengecualian larangan CDN untuk media pembelajaran yang diminta pengguna; tidak memuat font/library eksternal.
+- ReferenceVideo memuat iframe resmi setelah klik, tanpa autoplay, dengan judul dan tautan sumber permanen. Bagian Tonton demo memakai embed hanya saat ada video Microsoft Learn yang sesuai. Koleksi video resmi ditautkan langsung jika tidak memakai player yang sama. Video dilabeli menurut topik sebenarnya; jangan mengklaim video lama mendemonstrasikan BC 29.x. Embed eksternal adalah pengecualian larangan CDN untuk media pembelajaran yang diminta pengguna; tidak memuat font/library eksternal.
 - Verifikasi: desktop/mobile, light/dark, keyboard, reduced motion, tanpa JS, pause/resume/reset/akhir, axe dan build. Playback video eksternal harus dilaporkan terpisah dari pengujian wrapper lokal.
 
 ### 4.12 `Tabs` (bawaan Starlight) — varian bahasa/platform

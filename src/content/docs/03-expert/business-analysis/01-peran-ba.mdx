@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ BA membantu pemilik proses menjelaskan masalah dan menilai solusi. BA tidak otom
 5. Hubungkan setiap perubahan dengan requirement ID dan acceptance criterion. Pisahkan asumsi dari observasi serta keputusan yang sudah disetujui.
 6. Gunakan studi kasus pada akhir track sebagai contoh draft. Latihan E1–E3 meminta bukti praktik sendiri, bukan menyalin status lulus dari situs.
 
+## Contoh praktik
+
+- **Kondisi awal** — Proses penerimaan PO parsial sering membingungkan tim demo.
+- **Langkah** — Buat satu requirement ber-ID, tentukan process owner, dan hubungkan ke test case yang akan direview.
+- **Hasil yang diharapkan** — Trace dari masalah sampai bukti uji bisa dibaca tanpa menganggap usulan sebagai persetujuan.
+
 ## Cheat box
 
 <CheatBox>
 
-- Tentukan process owner.
+<CheatGroup label="Masalah dan pemilik">
+
+- Tentukan **process owner**.
 - Tulis masalah sebelum solusi.
-- Setiap kebutuhan punya ID.
-- Pisahkan fakta dan asumsi.
-- Hubungkan desain dengan UAT.
-- Sign-off milik pihak berwenang.
+
+</CheatGroup>
+
+<CheatGroup label="Kebutuhan dan asumsi">
+
+- Setiap **kebutuhan** punya ID.
+- Pisahkan fakta dan **asumsi**.
+
+</CheatGroup>
+
+<CheatGroup label="UAT dan sign-off">
+
+- Hubungkan desain dengan **UAT**.
+- **Sign-off** milik pihak berwenang.
+
+</CheatGroup>
 
 </CheatBox>
 

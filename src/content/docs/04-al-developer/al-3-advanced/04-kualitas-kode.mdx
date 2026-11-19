@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -61,16 +62,36 @@ Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Compiler atau analyzer menandai satu objek demo.
+- **Langkah** — Catat kode aturan, perbaiki penyebab pada branch latihan, lalu ulangi analyzer dan kasus bisnis terkait.
+- **Hasil yang diharapkan** — Perubahan memperbaiki temuan dan bukti menunjukkan perilaku yang tetap benar.
+
 ## Cheat box
 
 <CheatBox>
 
-- Aktifkan CodeCop untuk mendeteksi pelanggaran sintaks dan performa.
-- Gunakan UICop untuk memastikan kelengkapan elemen UI dan ToolTip.
-- Pasang PerTenantExtensionCop pada seluruh project kustom penyewa.
-- Gunakan AppSourceCop dan baseline package untuk validasi rilis publik.
-- Kelola pengecualian aturan melalui file ruleset terstruktur.
+<CheatGroup label="Standar dan UI">
+
+- Aktifkan **CodeCop** untuk mendeteksi pelanggaran sintaks dan performa.
+- Gunakan **UICop** untuk memastikan kelengkapan elemen UI dan ToolTip.
+
+</CheatGroup>
+
+<CheatGroup label="Analyzer distribusi">
+
+- Pasang **PerTenantExtensionCop** pada seluruh project kustom penyewa.
+- Gunakan **AppSourceCop** dan baseline package untuk validasi rilis publik.
+
+</CheatGroup>
+
+<CheatGroup label="Pengecualian dan penamaan">
+
+- Kelola pengecualian aturan melalui file **ruleset** terstruktur.
 - Terapkan prefix/suffix wajib untuk mencegah benturan nama simbol.
+
+</CheatGroup>
 
 </CheatBox>
 

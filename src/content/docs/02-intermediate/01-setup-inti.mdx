@@ -7,7 +7,9 @@ sidebar:
   order: 1
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +28,45 @@ Setup inti mengikat aturan tanggal, nomor dokumen, penjualan, pembelian dan pers
 5. Telusuri satu draft sales/purchase ke customer/vendor, item, posting groups dan akun. Gunakan Preview Posting sebagai pemeriksaan lintas setup.
 6. Simpan perubahan demo yang disetujui dan bukti sebelum/sesudah. Jika gagal, catat pesan asli serta kombinasi field, bukan mengubah semua setup sekaligus.
 
+## Contoh praktik
+
+- **Kondisi awal** — Nomor dokumen latihan belum tersedia di company demo.
+- **Langkah** — Periksa No. Series yang dipakai oleh setup dokumen dan uji tanggal posting yang diizinkan pada draft.
+- **Hasil yang diharapkan** — Kalau draft gagal, kamu bisa membedakan konfigurasi nomor dari pembatasan tanggal.
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="944c65b0-9b0f-4d35-b330-de2fad57143a"
+  title="Menyiapkan Chart of Accounts"
+  description="Kenali struktur akun yang akan dirujuk saat memeriksa Preview Posting."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/quick-start-financial-information#set-up-the-chart-of-accounts"
+/>
+
 ## Cheat box
 
 <CheatBox>
 
-- Catat company dan work date.
-- Pisahkan tanggal posting dari accounting period.
-- Review setup Sales, Purchase dan Inventory.
-- No. Series mengatur penomoran.
-- Preview Posting sebelum Post.
+<CheatGroup label="Konteks kerja">
+
+- Catat **company** dan work date.
+- Pisahkan **tanggal posting** dari accounting period.
+
+</CheatGroup>
+
+<CheatGroup label="Setup transaksi">
+
+- Review setup Sales, Purchase dan **Inventory**.
+- **No. Series** mengatur penomoran.
+
+</CheatGroup>
+
+<CheatGroup label="Uji posting">
+
+- **Preview Posting** sebelum Post.
 - Ubah satu penyebab yang sudah dipahami.
+
+</CheatGroup>
 
 </CheatBox>
 

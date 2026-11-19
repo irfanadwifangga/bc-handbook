@@ -7,7 +7,9 @@ sidebar:
   order: 0
 ---
 
+import ReferenceVideo from '../../../components/ReferenceVideo.astro';
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -142,18 +144,53 @@ Sumber: [sorting, searching, dan filtering](https://learn.microsoft.com/en-us/dy
 
 [Sumber: Page Inspection](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-inspecting-pages).
 
+## Contoh praktik
+
+- **Kondisi awal** — Kamu akan mengikuti latihan stok di CRONUS.
+- **Langkah** — Periksa nama company dan environment, lalu cari Items lewat Tell Me dan buka satu item demo.
+- **Hasil yang diharapkan** — Kamu bisa menyebutkan company yang aktif dan menunjukkan tempat mengecek detail item tanpa mengubah data.
+
+### Tonton demo
+
+<ReferenceVideo
+  videoId="2887ddfe-3d46-47b3-8308-9715457ef939"
+  title="Tur Business Central"
+  description="Gambaran kemampuan inti untuk memahami peta modul."
+  source="https://learn.microsoft.com/en-us/dynamics365/business-central/welcome#core-business-functionality"
+/>
+
 ## Cheat box
 
 <CheatBox>
-  <ul>
-    <li>Belajar di sandbox dengan data demo CRONUS yang dikonfirmasi admin.</li>
-    <li>Tenant, environment, dan company adalah lingkup yang berbeda.</li>
-    <li>Ganti company lewat My Settings; pastikan company aktif sesudahnya.</li>
-    <li>Alt+Q membuka Tell Me pada Windows.</li>
-    <li>Ctrl+Alt+F1 membuka atau menutup Page Inspection.</li>
-    <li>Cek versi di Help & Support; informasi fitur baru ada di AI at Work roadmap.</li>
-    <li>Lokalisasi Indonesia berasal dari partner di atas W1; cek app yang digunakan.</li>
-  </ul>
+
+<CheatGroup label="Lokasi kerja">
+
+<ul>
+  <li>Belajar di <strong>sandbox</strong> dengan data demo <strong>CRONUS</strong> yang dikonfirmasi admin.</li>
+  <li><strong>Tenant, environment, dan company</strong> adalah lingkup yang berbeda.</li>
+  <li>Ganti <strong>company</strong> lewat <strong>My Settings</strong>; pastikan company aktif sesudahnya.</li>
+</ul>
+
+</CheatGroup>
+
+<CheatGroup label="Navigasi">
+
+<ul>
+  <li><kbd>Alt+Q</kbd> membuka <strong>Tell Me</strong> pada Windows.</li>
+  <li><kbd>Ctrl+Alt+F1</kbd> membuka atau menutup <strong>Page Inspection</strong>.</li>
+</ul>
+
+</CheatGroup>
+
+<CheatGroup label="Versi dan lokalisasi">
+
+<ul>
+  <li>Cek versi di <strong>Help & Support</strong>; informasi fitur baru ada di <strong>AI at Work roadmap</strong>.</li>
+  <li><strong>Lokalisasi Indonesia</strong> berasal dari partner di atas W1; cek app yang digunakan.</li>
+</ul>
+
+</CheatGroup>
+
 </CheatBox>
 
 ## Kesalahan umum

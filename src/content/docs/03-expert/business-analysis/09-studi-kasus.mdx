@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -138,16 +139,36 @@ Acceptance usulan: **Given** requester membuat PO tanpa kode alasan, **When** Se
 
 R09 (workaround review harian) dan R10 (kode alasan terstruktur) belum memiliki bukti penerimaan. Tambahkan test/PoC sebelum menutup keduanya. Defect register mencatat ID, test/requirement, expected/actual, severity, owner, evidence, status dan retest. Sign-off tetap **Belum diminta**; tidak ada persetujuan bisnis yang dibuat oleh situs.
 
+## Contoh praktik
+
+- **Kondisi awal** — Paket studi kasus belum punya bukti untuk kode alasan R10.
+- **Langkah** — Hubungkan R10 dengan FS-001, lalu tulis dua skenario tambahan untuk alasan kosong dan alasan valid.
+- **Hasil yang diharapkan** — Coverage menunjukkan test case baru dan status tetap terbuka sampai sandbox diuji.
+
 ## Cheat box
 
 <CheatBox>
 
-- BRD adalah draft simulasi.
-- R01–R10 berstatus hipotesis.
-- FS-001 belum diimplementasikan.
-- UAT-01–05 belum dijalankan.
-- R09/R10 masih terbuka.
-- Sign-off memerlukan keputusan owner.
+<CheatGroup label="BRD dan kebutuhan">
+
+- **BRD** adalah draft simulasi.
+- **R01–R10** berstatus hipotesis.
+
+</CheatGroup>
+
+<CheatGroup label="Spesifikasi dan UAT">
+
+- **FS-001** belum diimplementasikan.
+- **UAT-01–05** belum dijalankan.
+
+</CheatGroup>
+
+<CheatGroup label="Keputusan terbuka">
+
+- **R09/R10** masih terbuka.
+- **Sign-off** memerlukan keputusan owner.
+
+</CheatGroup>
 
 </CheatBox>
 

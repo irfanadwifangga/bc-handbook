@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -104,16 +105,36 @@ begin
 end;
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Endpoint mock mengembalikan JSON sukses lalu simulasi timeout.
+- **Langkah** — Parse field yang dibutuhkan pada respons sukses, dan uji penanganan gagal tanpa mengirim request nyata.
+- **Hasil yang diharapkan** — Hasil parsing benar, kegagalan tercatat dengan jelas, dan data rahasia tidak masuk log.
+
 ## Cheat box
 
 <CheatBox>
 
-- HttpClient kirim request; periksa boolean result sebelum status code.
-- JsonObject dan JsonArray diakses melalui JsonToken dasar.
-- Selalu set header Content-Type application/json pada HttpContent.
-- Gunakan IsSuccessStatusCode untuk validasi respon HTTP 2xx.
-- Tangani HTTP 429 (rate limit) dengan jeda Sleep dan retry.
-- Jangan simpan bearer token atau client secret di kode AL.
+<CheatGroup label="Request dan JSON">
+
+- **HttpClient** kirim request; periksa boolean result sebelum status code.
+- **JsonObject** dan JsonArray diakses melalui JsonToken dasar.
+
+</CheatGroup>
+
+<CheatGroup label="Header dan respons">
+
+- Selalu set header **Content-Type** application/json pada HttpContent.
+- Gunakan **IsSuccessStatusCode** untuk validasi respon HTTP 2xx.
+
+</CheatGroup>
+
+<CheatGroup label="Rate limit dan rahasia">
+
+- Tangani HTTP **429** (rate limit) dengan jeda Sleep dan retry.
+- Jangan simpan bearer token atau client **secret** di kode AL.
+
+</CheatGroup>
 
 </CheatBox>
 

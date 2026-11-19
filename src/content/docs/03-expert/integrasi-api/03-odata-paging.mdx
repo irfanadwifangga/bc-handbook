@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -38,16 +39,36 @@ for row in api.rows(f"companies({company_id})/customers", params):
     process_demo_row(row)  # fungsi milik latihan; jangan log data nyata
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Mock mengembalikan dua halaman data customer dengan nextLink.
+- **Langkah** — Minta id dan nama, ikuti nextLink dari server, lalu bandingkan kumpulan ID hasilnya.
+- **Hasil yang diharapkan** — Semua ID sintetis diproses sekali dan query awal tidak ditempel ulang ke nextLink.
+
 ## Cheat box
 
 <CheatBox>
 
-- Select hanya kolom yang perlu.
-- Top membatasi hasil.
-- Ikuti nextLink dari server.
-- Jangan buat skiptoken sendiri.
-- Escape literal dan encode URL.
+<CheatGroup label="Batas hasil">
+
+- **Select** hanya kolom yang perlu.
+- **Top** membatasi hasil.
+
+</CheatGroup>
+
+<CheatGroup label="Paging">
+
+- Ikuti **nextLink** dari server.
+- Jangan buat **skiptoken** sendiri.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi hasil">
+
+- Escape literal dan **encode URL**.
 - Rekonsiliasi hasil pembacaan.
+
+</CheatGroup>
 
 </CheatBox>
 

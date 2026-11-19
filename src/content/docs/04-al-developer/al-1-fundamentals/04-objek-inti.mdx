@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -60,16 +61,36 @@ pageextension 50201 "MYP Customer Card Training" extends "Customer Card"
 }
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Customer demo perlu menyimpan catatan latihan.
+- **Langkah** — Tambahkan field di table extension dan tampilkan dengan page extension sesuai symbols. Buka ulang record setelah uji.
+- **Hasil yang diharapkan** — Catatan terlihat kembali pada customer yang sama setelah compile, publish dan pengujian sandbox terverifikasi.
+
 ## Cheat box
 
 <CheatBox>
 
-- Table menyimpan data.
-- Page menyajikan record.
-- Tableext berbeda dari pageext.
-- Anchor dicocokkan ke symbols.
+<CheatGroup label="Table dan page">
+
+- **Table** menyimpan data.
+- **Page** menyajikan record.
+
+</CheatGroup>
+
+<CheatGroup label="Extension dan anchor">
+
+- **Tableext** berbeda dari pageext.
+- Anchor dicocokkan ke **symbols**.
+
+</CheatGroup>
+
+<CheatGroup label="Data dan verifikasi">
+
 - Klasifikasi data harus tepat.
 - Buktikan persistensi di UI.
+
+</CheatGroup>
 
 </CheatBox>
 

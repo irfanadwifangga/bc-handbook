@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -56,16 +57,36 @@ begin
 end;
 ```
 
+## Contoh praktik
+
+- **Kondisi awal** — Satu customer punya dua Sales Order demo.
+- **Langkah** — Uji filter pada nomor satu order dan bandingkan total line dengan tampilan UI pada scope yang sama.
+- **Hasil yang diharapkan** — Hasil hanya mencakup order yang dipilih, dan input nomor yang tidak ada teruji terpisah.
+
 ## Cheat box
 
 <CheatBox>
 
-- Get memakai primary key.
-- Filter scope sebelum jumlah.
-- Validate berbeda dari assignment.
+<CheatGroup label="Key dan filter">
+
+- **Get** memakai primary key.
+- Filter **scope** sebelum jumlah.
+
+</CheatGroup>
+
+<CheatGroup label="Validasi dan field">
+
+- **Validate** berbeda dari assignment.
 - Pilih field yang diperlukan.
-- FlowField butuh CalcFields.
-- Jangan Commit sembarangan.
+
+</CheatGroup>
+
+<CheatGroup label="FlowField dan transaksi">
+
+- **FlowField** butuh CalcFields.
+- Jangan **Commit** sembarangan.
+
+</CheatGroup>
 
 </CheatBox>
 

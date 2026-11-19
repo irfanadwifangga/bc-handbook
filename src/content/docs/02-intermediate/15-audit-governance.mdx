@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../components/CheatBox.astro';
+import CheatGroup from '../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -26,16 +27,36 @@ Change Log merekam perubahan pada tabel/field yang dipilih; bukan rekaman otomat
 5. Tinjau Retention Policies dan allowed tables tanpa Apply pada data produksi. Pahami bahwa policy otomatis dapat membuat job queue penghapusan.
 6. Catat cara review log dan perubahan policy. Bedakan posted ledger audit trail, Change Log, agent history dan job queue log.
 
+## Contoh praktik
+
+- **Kondisi awal** — Pembimbing ingin mengetahui siapa yang mengubah satu nilai setup demo.
+- **Langkah** — Aktifkan cakupan Change Log terbatas jika diizinkan, ubah satu field demo, lalu lihat entry yang terbentuk.
+- **Hasil yang diharapkan** — Kamu dapat menunjukkan field, waktu, dan jejak perubahan tanpa mengekspos data pribadi.
+
 ## Cheat box
 
 <CheatBox>
 
-- Pilih field audit yang relevan.
-- Change Log tidak mencakup semua aktivitas.
+<CheatGroup label="Cakupan audit">
+
+- Pilih field **audit** yang relevan.
+- **Change Log** tidak mencakup semua aktivitas.
+
+</CheatGroup>
+
+<CheatGroup label="Perubahan dan retensi">
+
 - Perhatikan sesi saat melihat perubahan.
-- Retention dapat menghapus data.
-- Allowed tables membatasi cakupan.
+- **Retention** dapat menghapus data.
+
+</CheatGroup>
+
+<CheatGroup label="Kebijakan simpan">
+
+- **Allowed tables** membatasi cakupan.
 - Owner menyetujui kebijakan simpan.
+
+</CheatGroup>
 
 </CheatBox>
 

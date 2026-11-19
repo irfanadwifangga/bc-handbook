@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import CheatBox from '../../../../components/CheatBox.astro';
+import CheatGroup from '../../../../components/CheatGroup.astro';
 
 ## Tujuan belajar
 
@@ -96,16 +97,36 @@ Authorization: Bearer <TOKEN>
 
 `<CUSTOM_BASE>` berakhir `/api/myp/demo/v1.0`. Gunakan GUID `id` balasan pada GET/PATCH/DELETE. Pada PATCH/DELETE sertakan ETag spesifik dari GET; jangan gunakan kode bisnis sebagai key URL.
 
+## Contoh praktik
+
+- **Kondisi awal** — Entity permintaan demo perlu bisa dibuat dan dibaca lewat endpoint kustom.
+- **Langkah** — Susun kontrak untuk ID, kode dan deskripsi. Cocokkan dengan contoh AL, lalu tulis skenario CRUD positif dan negatif.
+- **Hasil yang diharapkan** — Kontrak punya versi dan batas permission. Status kompilasi dan eksekusi baru diperbarui setelah pemeriksaan sandbox.
+
 ## Cheat box
 
 <CheatBox>
 
+<CheatGroup label="Objek demo">
+
 - Tabel demo sendiri.
-- SystemId menjadi key.
+- **SystemId** menjadi key.
+
+</CheatGroup>
+
+<CheatGroup label="Kontrak dan akses">
+
 - Kontrak memakai versi.
 - Permission minimum diuji.
-- Compiler adalah verifikasi wajib.
-- CRUD hanya data sandbox.
+
+</CheatGroup>
+
+<CheatGroup label="Kompilasi dan uji">
+
+- **Compiler** adalah verifikasi wajib.
+- **CRUD** hanya data sandbox.
+
+</CheatGroup>
 
 </CheatBox>
 
