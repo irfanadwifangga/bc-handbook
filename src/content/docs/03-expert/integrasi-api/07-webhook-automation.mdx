@@ -1,0 +1,66 @@
+---
+title: "3B.7 Polling, webhook dan Automation API"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 7
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih strategi sinkronisasi dan kelola lifecycle integrasi.
+
+## Konsep singkat
+
+Polling membaca perubahan menurut interval; webhook memberi pemberitahuan perubahan resource. Notification adalah pemicu pembacaan, bukan bukti seluruh proses bisnis selesai. Rancang consumer yang tahan duplikasi dan urutan berbeda; rekonsiliasi berkala tetap diperlukan. Automation API mempunyai scope dan permission berbeda untuk pekerjaan setup.
+
+## Langkah di BC
+
+1. Tentukan SLA, volume, kebutuhan deletions dan biaya operasional. Untuk pilot kecil, mulai polling terukur dengan checkpoint dan rekonsiliasi.
+2. Untuk webhook, sediakan endpoint HTTPS milik sendiri yang menangani handshake validationToken dan mengembalikannya sesuai dokumentasi. Jangan memakai URL pihak lain.
+3. Daftarkan subscription hanya untuk resource yang didukung. Catat subscription ID, expirationDateTime, clientState dan jadwal renew; rahasiakan clientState.
+4. Validasi clientState pada notifikasi, masukkan pekerjaan ke queue, deduplikasi, lalu ambil state terbaru melalui API. Tangani resource yang sudah dihapus dan kegagalan fetch.
+5. Uji notifikasi duplikat, renew gagal dan recovery setelah downtime dengan simulasi. Periksa batas resource/jenis perubahan pada sumber resmi.
+6. Untuk setup company lewat Automation API, buat rencana izin, review target dan rollback terpisah. Latihan ini tidak membuat company, menginstal extension atau menjalankan webhook publik.
+
+```json
+{
+  "notificationUrl": "https://<HOST_MILIK_SENDIRI>/bc-notifications",
+  "resource": "/api/v2.0/companies(<COMPANY_ID>)/customers",
+  "clientState": "<NILAI_RAHASIA_LOKAL>"
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Notification bukan hasil posting.
+- Validasi handshake dan clientState.
+- Catat expiration dan renew.
+- Antisipasi duplikasi.
+- Rekonsiliasi berkala.
+- Automation mempunyai scope berbeda.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengabaikan expiry subscription, mengeksekusi transaksi hanya dari payload notification, atau memakai izin automation untuk semua integrasi bisnis.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e4-api-baca/).
+
+## Sumber resmi
+
+- [webhooks](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/dynamics-subscriptions).
+- [auth](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication).
+- [limits](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/dynamics-rate-limits).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

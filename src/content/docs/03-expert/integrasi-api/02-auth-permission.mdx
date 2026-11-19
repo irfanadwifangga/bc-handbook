@@ -1,0 +1,63 @@
+---
+title: "3B.2 OAuth, S2S dan permission"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Bedakan identitas aplikasi, identitas user, consent dan izin objek BC.
+
+## Konsep singkat
+
+S2S memakai client credentials untuk proses tanpa user interaktif. Delegated authorization code berjalan atas nama user dan mengikuti kontrol sign-in/consent yang berlaku. Jangan menukar kedua model hanya agar login terasa mudah. Token bukan izin semua objek: registrasi Entra dan assignment BC sama-sama diperlukan.
+
+## Langkah di BC
+
+1. Admin membuat app demo terpisah; pilih application permission API.ReadWrite.All untuk API bisnis dan berikan admin consent sesuai prosedur. Automation.ReadWrite.All hanya bila automation memang diperlukan.
+2. Di Microsoft Entra Applications pada BC, daftarkan client ID, aktifkan State Enabled, lalu beri permission objek minimum dan company scope yang diuji. Aplikasi tidak dapat diberi SUPER.
+3. Simpan secret di pengelola secret/environment lokal; jangan tulis token di Markdown, screenshot atau log. Rotasi dan pencabutan akses menjadi tugas owner.
+4. Ambil token melalui endpoint tenant yang benar menggunakan form-urlencoded dan scope .default. Jangan kirim secret sebagai query URL.
+5. Uji GET companies dengan bearer token, pilih company CRONUS, lalu uji satu read yang diizinkan dan satu operasi yang harus ditolak. Catat hasil tanpa token.
+6. Bedakan 401 (autentikasi/token/audience/expiry), 403 (otorisasi), dan error validasi. Perbaiki penyebab; jangan memberi akses luas sebagai jalan pintas.
+
+```http
+POST https://login.microsoftonline.com/<TENANT_ID>/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>&scope=https%3A%2F%2Fapi.businesscentral.dynamics.com%2F.default
+```
+
+## Cheat box
+
+<CheatBox>
+
+- S2S memakai identitas app.
+- Consent bukan permission objek.
+- Pilih least privilege.
+- Jangan log token atau secret.
+- Uji penolakan akses.
+- Catat expiry dan rotasi.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memakai SUPER untuk app, menganggap consent Entra cukup, atau mengulang request tanpa memperbaiki permission.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e4-api-baca/).
+
+## Sumber resmi
+
+- [auth](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

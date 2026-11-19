@@ -1,0 +1,71 @@
+---
+title: "3B.3 Query OData dan paging"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Baca data yang diperlukan tanpa melewatkan halaman hasil atau mengambil kolom berlebihan.
+
+## Konsep singkat
+
+Filter menyaring record; select membatasi kolom; expand memuat navigasi terkait. Top membatasi hasil, bukan ukuran halaman untuk ekspor lengkap. Respons dapat memberi @odata.nextLink: ikuti URL server itu, tanpa membangun skiptoken sendiri. Paging bukan snapshot transaksi; rekonsiliasi diperlukan bila data berubah saat pembacaan.
+
+## Langkah di BC
+
+1. Mulai dengan GET companies. Pilih ID berdasarkan company demo yang kamu verifikasi di UI.
+2. Baca customers dengan parameter di bawah. Ganti MYP DEMO dengan nama customer latihan yang ada; hasil kosong juga hasil sah.
+3. Untuk ekspor lengkap, hapus batas top dan minta Prefer: odata.maxpagesize=100. Ikuti nextLink sampai habis; jangan menambahkan parameter awal lagi ke URL lanjutan.
+4. Validasi nextLink tetap HTTPS pada host dan environment yang diizinkan sebelum menyertakan token. Simpan checkpoint hanya setelah batch berhasil diproses.
+5. Uji nama yang mengandung apostrof: escape literal OData dengan menggandakan apostrof, lalu biarkan library meng-encode query. Jangan merangkai masukan bebas sebagai ekspresi.
+6. Gunakan expand hanya untuk relasi yang ada pada resource. Deep patch koleksi tidak didukung; OR lintas field dan lambda juga memiliki batas pada BC.
+
+```python
+params = {
+    "$filter": "displayName eq 'MYP DEMO'",
+    "$select": "id,number,displayName",
+    "$top": "50",
+    "$orderby": "number",
+}
+# Client contoh di examples/api/bc_client.py
+for row in api.rows(f"companies({company_id})/customers", params):
+    process_demo_row(row)  # fungsi milik latihan; jangan log data nyata
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Select hanya kolom yang perlu.
+- Top membatasi hasil.
+- Ikuti nextLink dari server.
+- Jangan buat skiptoken sendiri.
+- Escape literal dan encode URL.
+- Rekonsiliasi hasil pembacaan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap halaman pertama adalah seluruh data, memakai top/skip sebagai paging manual, atau meneruskan bearer token ke host dari nextLink tanpa validasi.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e4-api-baca/).
+
+## Sumber resmi
+
+- [query](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/odata-client-performance).
+- [paging](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/server-driven-paging-in-odata-web-services).
+- [filter](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/use-filter-expressions-in-odata-uris).
+- [limitations](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/webservices/odata-known-limitations).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

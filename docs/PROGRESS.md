@@ -4,13 +4,13 @@
 
 ---
 
-## Ringkasan status terkini — 2026-11-18
+## Ringkasan status terkini — 2026-11-19
 
-- Konten Fase 5.0–5.6 selesai dan terverifikasi sebagai situs: Fase 5.6 mencakup 9 modul BA + indeks, 2 cheatsheet (#15–#16) dan 3 latihan (E1–E3). Kelulusan latihan dan UAT tetap memerlukan bukti sandbox; bukan hasil tes situs.
+- Konten Fase 5.0–5.7 selesai sebagai materi situs. Track BA dan API tersedia; Fase 5.7 mencakup 8 modul + indeks, cheatsheet #9–#10, E4–E6, capstone BA/API dan client Python dengan tes mock. Kelulusan latihan/UAT, koneksi BC dan kompilasi AL tetap memerlukan bukti sandbox pemilik.
 - U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
-- Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7–5.9 tetap terbuka.
-- Verifikasi situs terakhir: build 79 halaman, 3 tes unit, suite Playwright lengkap 388 lulus, audit BA 60 kondisi lulus, dan 2 tes PDF A4 lulus (6 cetak duplikat dilewati). Seluruh 8.301 tautan internal/anchor valid pada working tree yang menyertakan favicon lokal. Tidak ada push/deploy.
+- Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
+- Verifikasi terakhir: build 94 halaman, 3 tes Bun, 7 tes Python mock, 444 tes Playwright penuh, audit API 60 kondisi dan 2 cetak A4 lulus (6 cetak duplikat dilewati). Seluruh 11.316 tautan internal/anchor valid pada working tree yang menyertakan favicon lokal. Tidak ada push/deploy.
 - Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
 
 ## Fase Pembangunan Situs
@@ -22,7 +22,7 @@
 - [x] **5.4** — Level 1 Basic (modul 1.1–1.8) + latihan B1–B8
 - [x] **5.5** — Level 2 Intermediate + cheatsheet #14 (RapidStart) + latihan M1–M10
 - [x] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
-- [ ] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
+- [x] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
 - [ ] **5.7a** — AL-1 Fundamentals + cheatsheet #17–#18 + latihan AL1–AL3
 - [ ] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
 - [ ] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
@@ -30,6 +30,30 @@
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.7 — 2026-11-19
+
+- Track 3B selesai sebagai materi situs: delapan modul dan indeks; cheatsheet #9 API/OData dan #10 AL; E4–E6; capstone Spreadsheet-to-BC. Indeks serta daftar 404 API diselaraskan. Kode contoh Python tersedia di examples/api; tidak ada perubahan komponen/CSS, font atau dependensi situs.
+- Client memakai HTTPX 0.28.1, timeout melalui transport, validasi tujuan nextLink, paging, retry terbatas hanya untuk GET 429/503, ETag spesifik untuk PATCH, serta deep insert draft. Client tidak melakukan posting otomatis, tidak menyediakan importer CSV lengkap, webhook receiver, token cache atau journal produksi. Implementasi importer dan bukti sandbox merupakan tugas capstone pembelajar.
+- Verifikasi nyata: bun run build berhasil (94 halaman/Pagefind); bun test 3 lulus; audit struktur 8 modul dan 4 latihan/capstone serta 11.316 tautan internal/anchor valid. Suite bunx playwright test --workers 4 --max-failures 1 lulus penuh 444 tes.
+- Audit terarah content.ui.ts lulus 62 tes/6 dilewati: 15 halaman × desktop 1280px/mobile 360px × light/dark = 60 kondisi, ditambah 2 cetak. Status/H1, Axe WCAG 2A/AA + 2.1A/AA, overflow body, error JS, CheatBox dan hint keyboard diperiksa tanpa pelanggaran. PDF cheatsheet #9/#10 masing-masing satu halaman A4; render PNG diperiksa dan konten/sumber terlihat utuh.
+- Tujuh tes Python dengan httpx.MockTransport lulus pada CPython 3.14.7: token form/error aman, paging, penolakan nextLink asing, retry GET 429 terbatas, timeout POST tanpa retry, PATCH/412, dan deep insert tanpa posting. Tidak ada token/kredensial nyata dibaca atau request tenant BC.
+- uv run --with gagal rename cache dua kali (Access is denied), termasuk cache baru. Probe rename direktori biasa berhasil. Solusi teruji: uv venv pada .codex-tmp/api-tests-venv, uv pip install --python .../Scripts/python.exe --link-mode copy httpx==0.28.1, lalu uv run --no-project --python .../Scripts/python.exe python -m unittest discover -s examples/api -p "test_*.py" -v. Run yang diuji juga memakai --no-sync; uv memperingatkan opsi tersebut tidak berpengaruh bersama --no-project sehingga tidak diperlukan. Akar penyebab rename sementara belum dipastikan; tidak ada perubahan ACL, antivirus atau Python sistem. README mencatat alternatif ini.
+- Koreksi audit 9 → 8 modul serta penambahan capstone diperiksa ulang. Karena highlighter AL tidak tersedia, dua snippet memakai text sesuai kurikulum tanpa library baru, tetap berstatus Belum dikompilasi. Warning build lama i18n kosong, fallback 404 dan sitemap tanpa site tetap ada.
+- Artefak lokal: .codex-tmp/phase-5.7/ (verified-build.log, regression.log, content.log dan print/). Preview berhenti; port 4323 tanpa listener. Favicon lokal tetap di luar commit; audit aset tidak membuktikan checkout bersih tanpa favicon.
+- Batas: tidak ada kompilasi/publish AL, posting/UAT BC, webhook sungguhan, atau impor CSV sandbox. Firefox/WebKit, screen reader, macOS dan Lighthouse tidak diuji ulang. U3 dan jalur AL-1–AL-3 belum dimulai. Tidak ada push/deploy.
+- Commit message: `docs: add api track, cheatsheets and capstone`. Fase konten berikutnya 5.7a masih menunggu persetujuan rencana.
+
+
+### Draf Fase 5.7 — 2026-11-19
+
+- Ditambahkan delapan modul Track 3B dan indeks, cheatsheet #9–#10, E4–E6 dan capstone Spreadsheet-to-BC (15 halaman). Materi mencakup endpoint, OAuth/S2S, query/paging, invoice draft, ETag/retry/posting, custom API, webhook/automation dan client/capstone. Contoh Python dan tujuh tes mock berada di examples/api; client tidak menyediakan importer CSV lengkap atau posting otomatis.
+- Sumber Microsoft diperiksa untuk S2S, invoice create/lines/update/post, custom API, webhook, query/paging, limit dan deprecation. Perubahan SOAP v29/OData v30 dibatasi pada Microsoft page yang diekspos sebagai web service. Snippet AL tetap Belum dikompilasi. Tidak ada request tenant, operasi Entra atau transaksi sandbox yang dijalankan.
+- Build awal berhasil menghasilkan 94 halaman/Pagefind; bun test 3 lulus. Highlighter tidak mendukung al dan memakai txt; diusulkan fence text eksplisit tanpa dependensi. HTTPX 0.28.1 untuk tes Python terisolasi melalui uv belum berhasil disiapkan: httpcore 1.0.9 gagal rename cache dengan Access is denied (os error 5). Tujuh tes Python belum berjalan.
+- Audit struktur awal berhenti karena salinan skrip masih mengharapkan 9 modul BA (8 !== 9); diusulkan ekspektasi 8 modul API, 3 latihan + 1 capstone. Audit browser dan cetak belum berjalan. Indeks/daftar 404 API disiapkan sebagai diff; regresi penuh menunggu penerapan.
+- Fase 5.7 belum selesai/di-commit. Verifikasi Python, tautan, browser/Axe dan cetak harus dituntaskan. Firefox/WebKit, screen reader, macOS dan praktik BC belum diuji; U3 dan jalur AL-1–AL-3 tidak dimulai. Tidak ada push/deploy.
+- Commit message yang direncanakan: `docs: add api track, cheatsheets and capstone`.
+
 
 ### Hasil Fase 5.6 — 2026-11-18
 

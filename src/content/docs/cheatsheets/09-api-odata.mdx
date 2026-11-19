@@ -1,0 +1,40 @@
+---
+title: "API & OData"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 9
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+**Target:** CRONUS sandbox. Prefix SaaS: `https://api.businesscentral.dynamics.com/v2.0/<TENANT_ID>/<ENV>/api/v2.0`. Pilih company GUID dari GET companies.
+
+| Operasi | Pola / perhatian |
+| --- | --- |
+| Auth | S2S: client credentials, scope BC .default; consent Entra + app Enabled/permission BC |
+| Baca | GET companies; GET companies(id)/customers |
+| Query | $filter menyaring; $select kolom; $orderby urutan; $expand relasi yang didukung |
+| Paging | Ikuti @odata.nextLink; top membatasi total hasil, bukan paging manual |
+| Draft | POST companies(id)/purchaseInvoices; nested purchaseInvoiceLines untuk deep insert |
+| Ubah | PATCH purchaseInvoices(id), If-Match berisi ETag spesifik dari GET |
+| Posting | POST purchaseInvoices(id)/Microsoft.NAV.post; sukses 204 tanpa body |
+| 401 / 403 | Periksa token/audience/expiry atau izin app/objek/company |
+| 412 / 429 | Baca ulang dan review konflik / cooldown serta retry terbatas |
+| Timeout write | Cari hasil di BC dahulu; jangan replay POST otomatis |
+
+```text
+$filter=displayName eq 'MYP DEMO'
+$select=id,number,displayName&$top=50&$orderby=number
+```
+
+**Kontrol:** jangan log token; validasi host nextLink; simpan ID write; review pajak/tanggal/permission; rekonsiliasi ledger setelah posting. Contoh belum dijalankan di BC. [Materi dan latihan](/03-expert/integrasi-api/).
+
+## Sumber resmi
+
+- [auth](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication).
+- [invoice](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/resources/dynamics_purchaseinvoice).
+
+</div>

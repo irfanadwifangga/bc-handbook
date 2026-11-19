@@ -1,12 +1,12 @@
 ---
 title: Cheatsheets
 bc_version_verified: "29.x"
-last_verified: "2026-11-18"
+last_verified: "2026-11-19"
 sidebar:
   order: 0
 ---
 
-Sepuluh cheatsheet tersedia: tujuh ringkasan harian, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
+Dua belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
@@ -35,6 +35,14 @@ Sepuluh cheatsheet tersedia: tujuh ringkasan harian, Configuration Worksheet / R
 ## Pre-posting checklist
 
 [Buka cheatsheet](./07-pre-posting-checklist/).
+
+## API & OData
+
+[Buka cheatsheet](./09-api-odata/) — endpoint, query, ETag, retry dan posting; praktik [E4–E6](/latihan/expert/).
+
+## AL untuk integrasi
+
+[Buka cheatsheet](./10-al/) — ringkasan extension/API, status Belum dikompilasi; contoh entity demo pada [modul 3B.6](/03-expert/integrasi-api/06-custom-api/).
 
 ## Configuration Worksheet / RapidStart
 

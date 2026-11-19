@@ -1,0 +1,74 @@
+---
+title: "3B.5 ETag, retry dan posting"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Tangani konflik versi, throttling dan hasil write yang belum diketahui tanpa transaksi ganda.
+
+## Konsep singkat
+
+ETag adalah versi record untuk optimistic concurrency. GET dahulu, lalu kirim nilai @odata.etag yang sama persis pada If-Match. Jika berubah, baca ulang dan review perbedaan; jangan mengganti dengan wildcard agar update dipaksa. Retry harus mempertimbangkan operasi dan kepastian hasil, bukan hanya status HTTP.
+
+## Langkah di BC
+
+1. Ambil invoice draft beserta ETag. PATCH hanya field yang ingin diubah, misalnya vendorInvoiceNumber, memakai If-Match spesifik.
+2. Uji konflik dengan menyimpan ETag lama, mengubah record melalui sesi lain, lalu PATCH memakai ETag lama. Catat 412 dan pastikan perubahan lain tidak tertimpa.
+3. Untuk GET 429/503, gunakan retry terbatas dengan cooldown/backoff; hormati Retry-After jika diberikan. Uji lewat mock, jangan sengaja membanjiri tenant.
+4. Untuk timeout POST/PATCH/action, hasil mungkin sudah diterapkan. Cari record dan rekonsiliasi dahulu. Batasi satu worker per external key; journal/checkpoint bukan pengganti unique constraint server.
+5. Setelah pemeriksaan dokumen dan persetujuan latihan, pemilik dapat memanggil action di bawah. Respons post didokumentasikan 204 tanpa JSON; jangan mencoba membaca body JSON kosong.
+6. Telusuri posted invoice dan ledger dari UI untuk membuktikan posting. Bila gagal validasi atau hasil tidak jelas, hentikan dan catat error tersanitasi serta correlation ID bila tersedia.
+
+```http
+PATCH <BASE>/companies(<COMPANY_ID>)/purchaseInvoices(<INVOICE_ID>)
+Authorization: Bearer <TOKEN>
+Content-Type: application/json
+If-Match: <ETAG_DARI_GET>
+
+{"vendorInvoiceNumber":"MYP-DEMO-001-REVIEW"}
+```
+
+```http
+POST <BASE>/companies(<COMPANY_ID>)/purchaseInvoices(<INVOICE_ID>)/Microsoft.NAV.post
+Authorization: Bearer <TOKEN>
+```
+
+`<BASE>` adalah prefix API v2.0 pada modul 3B.1. Posting hanya bagian praktik sandbox E5; tidak dijalankan otomatis oleh contoh client.
+
+## Cheat box
+
+<CheatBox>
+
+- ETag harus spesifik.
+- 412 meminta review konflik.
+- 429 perlu cooldown.
+- GET retry dibatasi.
+- Write timeout perlu rekonsiliasi.
+- 204 tidak punya body JSON.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Retry semua error dengan loop tak terbatas, mencetak token ke log, atau menganggap timeout berarti transaksi pasti batal.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e5-api-tulis/).
+
+## Sumber resmi
+
+- [patch](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_purchaseinvoice_update).
+- [invoice](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/resources/dynamics_purchaseinvoice).
+- [limits](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/dynamics-rate-limits).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

@@ -1,0 +1,65 @@
+---
+title: "3B.8 Client Python dan rencana capstone"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 8
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Hubungkan BRD, kontrak API, pengujian offline dan bukti sandbox.
+
+## Konsep singkat
+
+Contoh repo adalah client sinkron kecil dengan HTTPX dan timeout eksplisit. Import modul tidak melakukan request. Unit test memakai MockTransport dan data sintetis; ini memeriksa perilaku client, bukan kompatibilitas end-to-end BC. Capstone utama tetap Spreadsheet-to-BC (BA/API); capstone AL adalah fase lain.
+
+## Langkah di BC
+
+1. Baca README di examples/api. Jalankan perintah tes offline di bawah dengan uv; tidak memakai file .env atau akun BC.
+2. Pelajari test paging, nextLink asing, retry GET 429, timeout POST, konflik ETag dan deep insert. Pertahankan test yang mencegah write otomatis berulang.
+3. Untuk E4/E5, pemilik menyediakan environment kredensial melalui mekanisme aman. Pilih company demo; cek sandbox secara manual sebelum memanggil fungsi write.
+4. Untuk capstone CSV, tentukan mapping external key → endpoint/field, validasi seluruh baris dulu, lalu jalankan mode dry-run. Simpan rejects tanpa secret dan tinjau bersama owner.
+5. Bangun importer per entity Customer/Vendor/Item di workspace latihan sendiri. Catat checkpoint setelah sukses; pada kegagalan write jangan replay batch buta. Client ini tidak menyediakan importer/journal lengkap.
+6. Lengkapi bukti BRD, gap-fit, konfigurasi, impor dan UAT. Status capstone tetap Belum dijalankan sampai pemilik menguji di sandbox.
+
+```sh
+uv run --no-project --with httpx==0.28.1 python -m unittest discover -s examples/api -p "test_*.py" -v
+```
+
+`httpx` dipakai terisolasi oleh uv; tidak ditambahkan ke dependensi situs. Client tidak menyimpan token cache, tidak memperbarui token otomatis, tidak memiliki retry write otomatis, dan tidak memposting invoice. Renewal token serta journal produksi memerlukan rancangan terpisah.
+
+## Cheat box
+
+<CheatBox>
+
+- Mock bukan bukti BC.
+- Timeout harus eksplisit.
+- Tidak log secret/body penuh.
+- Dry-run sebelum import.
+- Checkpoint setelah sukses.
+- Bukti UAT menentukan gate.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengklaim client siap produksi karena unit test hijau, melewati data validation, atau menganggap dry-run sama dengan import sukses.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/capstone-spreadsheet-to-bc/).
+
+## Sumber resmi
+
+- [customer](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_customer_create).
+- [vendor](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_vendor_create).
+- [item](https://learn.microsoft.com/en-gb/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_item_create).
+- [create](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_purchaseinvoice_create).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

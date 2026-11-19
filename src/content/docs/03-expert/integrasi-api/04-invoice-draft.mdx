@@ -1,0 +1,90 @@
+---
+title: "3B.4 Purchase Invoice draft dari JSON"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Buat kontrak header/lines dan pahami hasil parsial sebelum menulis data ke BC.
+
+## Konsep singkat
+
+Create invoice menghasilkan draft; posting adalah operasi terpisah. Pola header lalu lines memberi ID dokumen lebih awal tetapi dapat meninggalkan draft parsial jika penambahan line gagal. Deep insert mengirim header dengan nested purchaseInvoiceLines dalam satu request. Keberhasilan HTTP belum membuktikan setup, pajak dan angka sesuai kebutuhan bisnis.
+
+## Langkah di BC
+
+1. Review vendor/item demo, UoM, currency, tax/posting setup, allowed dates dan permission. Ambil GUID lewat API; jangan menebak dari nomor kartu.
+2. Siapkan JSON di bawah dengan satu item demo dan tanggal yang diizinkan. Placeholder harus diganti sendiri di sandbox; ini bukan payload siap kirim.
+3. Gunakan POST companies(id)/purchaseInvoices. Untuk deep insert sertakan purchaseInvoiceLines; alternatifnya simpan id header lalu POST ke purchaseInvoices(id)/purchaseInvoiceLines.
+4. Simpan ID balasan dan correlation/run ID lokal. Periksa status, quantity, unit cost, tax dan total di UI sebelum lanjut.
+5. Jika line gagal atau koneksi putus setelah write, hentikan proses dan cari dokumen yang mungkin sudah tercipta. Jangan mengulang seluruh POST otomatis.
+6. Gunakan client contoh; fungsi create_draft tidak memanggil action post. Eksekusi jaringan dilakukan pemilik saat E5, bukan oleh tes situs.
+
+```json
+{
+  "vendorId": "<VENDOR_ID>",
+  "vendorInvoiceNumber": "MYP-DEMO-001",
+  "invoiceDate": "2026-11-19",
+  "postingDate": "2026-11-19",
+  "purchaseInvoiceLines": [
+    {
+      "lineType": "Item",
+      "itemId": "<ITEM_ID>",
+      "quantity": 2,
+      "unitCost": 25
+    }
+  ]
+}
+```
+
+```python
+import json
+import httpx
+from bc_client import from_environment
+
+# Jalankan hanya setelah target sandbox dan payload direview pemilik.
+with open("invoice-demo.json", encoding="utf-8") as source:
+    payload = json.load(source)
+with httpx.Client(timeout=30, follow_redirects=False) as transport:
+    api = from_environment(transport)
+    draft = api.create_draft(company_id, payload)
+    # Simpan ID ke catatan lokal demo; jangan log token/response penuh.
+```
+
+File client dan petunjuk tes ada di `examples/api/` pada repo. `company_id` harus dipilih melalui E4. Contoh diuji dengan mock, belum dikirim ke BC.
+
+## Cheat box
+
+<CheatBox>
+
+- Draft berbeda dari posted.
+- GUID diperoleh dari API.
+- Review header dan lines.
+- Catat ID setiap write sukses.
+- Jangan retry POST buta.
+- Rekonsiliasi total di UI.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memposting segera setelah HTTP 201, menganggap vendorInvoiceNumber sebagai jaminan idempotency lintas semua konfigurasi, atau menghapus draft parsial tanpa review.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e5-api-tulis/).
+
+## Sumber resmi
+
+- [create](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_purchaseinvoice_create).
+- [lines](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/api/dynamics_purchaseinvoiceline_create).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

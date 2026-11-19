@@ -1,0 +1,49 @@
+---
+title: "AL — ringkasan untuk integrasi"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 10
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+Bahasa AL tidak tersedia pada highlighter terpasang; snippet ditampilkan sebagai teks biasa tanpa dependensi tambahan.
+
+:::caution[Belum dikompilasi]
+Snippet AL belum dikompilasi atau dijalankan. Gunakan prefix MYP, ID demo bebas konflik, symbols target dan sandbox sendiri.
+:::
+
+| Kebutuhan | Ingat |
+| --- | --- |
+| Project | app.json: application/runtime/idRanges/dependencies sesuai target |
+| Siklus kerja | AL: Go! → Download Symbols → compile → publish sandbox → uji |
+| Field baru | TableExtension + PageExtension; Caption dan DataClassification |
+| Event | Temukan publisher/signature dari symbols; jangan ubah base app |
+| API | PageType API, publisher/group/version, entityName/entitySetName |
+| Key & izin | ODataKeyFields = SystemId; permission tabledata dan execute page |
+| Tes | Positif, negatif, ETag, akses ditolak; catat compiler/versi/tanggal |
+
+```text
+tableextension 50110 "MYP Customer Note" extends Customer
+{
+    fields
+    {
+        field(50110; "MYP Note"; Text[100])
+        {
+            Caption = 'Demo note';
+            DataClassification = CustomerContent;
+        }
+    }
+}
+```
+
+Contoh ini hanya menambah field tabel, belum menampilkannya pada UI. [API page dan E6](/03-expert/integrasi-api/06-custom-api/) memuat contoh entity kustom. Signature event wajib diambil dari symbols; jangan menempel signature dugaan. Jalur AL-1–AL-3 belum dimulai.
+
+## Sumber resmi
+
+- [custom](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-custom-api).
+
+</div>

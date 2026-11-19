@@ -1,0 +1,127 @@
+---
+title: "3B.6 Custom API page untuk entity demo"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Definisikan kontrak entity kustom, versioning, permission dan pengujian CRUD.
+
+## Konsep singkat
+
+API page memisahkan kontrak integrasi dari UI. Contoh memakai tabel demo sendiri, bukan menulis langsung ledger atau menyalin objek kantor. GUID SystemId menjadi key API; nomor bisnis tetap dapat dibaca manusia. Perubahan kontrak perlu keputusan kompatibilitas dan versi.
+
+## Langkah di BC
+
+1. Siapkan project AL demo terpisah, download symbols sesuai target, lalu pilih ID range yang tidak berbenturan dan prefix MYP. Folder situs ini bukan workspace extension produksi.
+2. Buat tabel dan API page berikut dalam file AL terpisah. Catat publisher/group/version/entityName/entitySetName sebagai kontrak.
+3. Tambahkan permission set demo untuk tabledata RIMD dan akses execute pada API page; sesuaikan kemampuan app pada BC. Jangan memakai SUPER untuk aplikasi.
+4. Kompilasi sendiri dan publish hanya ke sandbox. Cocokkan nama/properti dengan symbols; jika gagal, catat pesan compiler dan jangan menandai snippet telah dikompilasi.
+5. Pada E6, POST data demo, GET berdasarkan id, PATCH dengan ETag terbaru, lalu DELETE record demo setelah disetujui. Uji kode kosong/duplikat dan app tanpa permission.
+6. Dokumentasikan response, error dan versi. Integrasi custom tidak otomatis memenuhi acceptance sebelum uji di tenant.
+
+Bahasa AL tidak tersedia pada highlighter terpasang; snippet ditampilkan sebagai teks biasa tanpa dependensi tambahan.
+
+:::caution[Belum dikompilasi]
+Snippet demo belum dikompilasi atau dijalankan pada BC. ID 50120–50122 harus sesuai app.json dan bebas konflik. Pemilik wajib mencocokkan symbols, mengompilasi, menguji permission/CRUD, lalu baru mencatat versi dan tanggal hasil.
+:::
+
+```text
+table 50120 "MYP Demo Request"
+{
+    DataClassification = CustomerContent;
+    fields
+    {
+        field(1; "Code"; Code[20]) { }
+        field(2; Description; Text[100]) { }
+    }
+    keys { key(PK; "Code") { Clustered = true; } }
+    trigger OnInsert()
+    begin
+        TestField("Code");
+    end;
+    trigger OnModify()
+    begin
+        TestField("Code");
+    end;
+}
+
+page 50121 "MYP Demo Request API"
+{
+    PageType = API;
+    APIPublisher = 'myp';
+    APIGroup = 'demo';
+    APIVersion = 'v1.0';
+    EntityName = 'demoRequest';
+    EntitySetName = 'demoRequests';
+    SourceTable = "MYP Demo Request";
+    ODataKeyFields = SystemId;
+    DelayedInsert = true;
+    layout
+    {
+        area(Content)
+        {
+            repeater(General)
+            {
+                field(id; Rec.SystemId) { Editable = false; }
+                field(code; Rec."Code") { }
+                field(description; Rec.Description) { }
+            }
+        }
+    }
+}
+
+permissionset 50122 "MYP DEMO API"
+{
+    Assignable = true;
+    Permissions = tabledata "MYP Demo Request" = RIMD,
+                  table "MYP Demo Request" = X,
+                  page "MYP Demo Request API" = X;
+}
+```
+
+```http
+POST <CUSTOM_BASE>/companies(<COMPANY_ID>)/demoRequests
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{"code":"MYP-001","description":"Permintaan demo"}
+```
+
+`<CUSTOM_BASE>` berakhir `/api/myp/demo/v1.0`. Gunakan GUID `id` balasan pada GET/PATCH/DELETE. Pada PATCH/DELETE sertakan ETag spesifik dari GET; jangan gunakan kode bisnis sebagai key URL.
+
+## Cheat box
+
+<CheatBox>
+
+- Tabel demo sendiri.
+- SystemId menjadi key.
+- Kontrak memakai versi.
+- Permission minimum diuji.
+- Compiler adalah verifikasi wajib.
+- CRUD hanya data sandbox.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengubah standard API melalui asumsi field extension langsung muncul, mengekspos tabel sensitif, atau mengklaim kompilasi hanya karena code block terlihat benar.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e6-custom-api/).
+
+## Sumber resmi
+
+- [custom](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-custom-api).
+- [auth](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.

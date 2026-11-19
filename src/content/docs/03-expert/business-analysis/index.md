@@ -1,7 +1,7 @@
 ---
 title: "Business Analysis"
 bc_version_verified: "29.x"
-last_verified: "2026-11-18"
+last_verified: "2026-11-19"
 level: Expert
 sidebar:
   order: 0
@@ -23,4 +23,4 @@ Track 3A menghubungkan kebutuhan bisnis, proses, konfigurasi dan bukti penerimaa
 
 Satu paket BRD ringkas, process map, sepuluh kebutuhan dengan matriks gap-fit, functional specification dan lima script UAT tersedia sebagai [studi kasus draft](./09-studi-kasus/). Semua status masih hipotesis atau Belum dijalankan.
 
-Gunakan [E1–E3](/latihan/expert/) untuk membuat dan menguji dokumen sendiri. [Cheatsheet gap-fit](/cheatsheets/15-gap-fit-analysis/) serta [process mapping](/cheatsheets/16-process-mapping/) membantu review. Track API dilanjutkan pada Fase 5.7; jalur AL Developer menjadi prioritas tinggi pada Fase 5.7a–5.7c dan belum tersedia. Admin/DevOps tetap opsional.
+Gunakan [E1–E3](/latihan/expert/) untuk membuat dan menguji dokumen sendiri. [Cheatsheet gap-fit](/cheatsheets/15-gap-fit-analysis/) serta [process mapping](/cheatsheets/16-process-mapping/) membantu review. [Track API](/03-expert/integrasi-api/) tersedia sebagai materi; praktik integrasi belum dijalankan; jalur AL Developer menjadi prioritas tinggi pada Fase 5.7a–5.7c dan belum tersedia. Admin/DevOps tetap opsional.

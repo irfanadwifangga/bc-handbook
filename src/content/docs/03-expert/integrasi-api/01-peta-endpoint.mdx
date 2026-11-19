@@ -1,0 +1,65 @@
+---
+title: "3B.1 Peta endpoint dan kontrak integrasi"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih endpoint berdasarkan kebutuhan, owner, versi dan operasi yang diizinkan.
+
+## Konsep singkat
+
+Standard API v2.0 memberi kontrak entity; custom API page dipakai untuk kontrak extension milik sendiri. OData web service dari UI page mengikuti perilaku halaman, sehingga perlu evaluasi saat upgrade. SOAP adalah jalur legacy. Automation API menangani setup, bukan pengganti API transaksi.
+
+Dokumentasi deprecation menyebut Microsoft page tidak dapat diekspos sebagai SOAP pada v29 dan sebagai OData pada v30. Ini bukan penghapusan seluruh OData atau API v2.0. Inventaris publisher dan endpoint dahulu; migrasi ke API standar/custom lebih baik direncanakan daripada menganggap URL UI permanen.
+
+## Langkah di BC
+
+1. Tulis kontrak: sumber data, owner, frekuensi, entity, read/write, expected result, versi dan error yang ditangani.
+2. Verifikasi environment bertipe Sandbox di Admin Center dan pilih company demo CRONUS. Nama environment saja tidak membuktikan tipenya.
+3. Bentuk URL SaaS berikut; company memakai GUID hasil GET companies, bukan nama atau urutan record.
+4. Buka metadata/reference resource dan cocokkan field serta navigasi. Label pada UI bukan otomatis nama field API.
+5. Catat endpoint lama SOAP/OData dan publisher halaman. Buat rencana uji upgrade; tidak menyalin kode pelanggan ke repo.
+
+```text
+Standard: https://api.businesscentral.dynamics.com/v2.0/<TENANT_ID>/<ENV>/api/v2.0/companies(<COMPANY_ID>)/customers
+Custom:   .../api/myp/demo/v1.0/companies(<COMPANY_ID>)/demoRequests
+Automation: .../api/microsoft/automation/v2.0/companies
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Kontrak dimulai dari kebutuhan.
+- Bedakan UI dan API.
+- Pilih company secara eksplisit.
+- Periksa publisher endpoint lama.
+- Catat versi dan owner.
+- Gunakan sandbox demo.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengganti API version hanya dengan mengubah angka URL, memilih company pertama, atau menganggap semua OData dihapus pada v30.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/expert/e4-api-baca/).
+
+## Sumber resmi
+
+- [endpoints](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/endpoints-apis-for-dynamics).
+- [deprecated](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform).
+- [auth](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication).
+
+Dokumentasi diperiksa pada 19 November 2026. Tidak ada request ke tenant, kompilasi AL atau praktik sandbox yang dijalankan penulis. Validasi konfigurasi dan hasil aktual tetap dilakukan pemilik.
