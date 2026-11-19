@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import FlowPlayer from '../../../components/FlowPlayer.astro';
+import BCEcosystemDiagram from '../../../components/BCEcosystemDiagram.astro';
 import CheatBox from '../../../components/CheatBox.astro';
 
 ## Tujuan belajar
@@ -46,28 +47,9 @@ Di dalam BC, seluruh transaksi operasional terintegrasi langsung ke satu buku be
 
 ## Peta perputaran alur kerja di BC
 
-Berikut adalah alur perputaran bisnis lengkap dari pengadaan awal hingga laporan keuangan dan pertukaran data keluar sistem:
+Berikut adalah diagram perputaran bisnis terpadu dari pengadaan awal, pengelolaan stok, penjualan, penerimaan kas, hingga pembukuan buku besar dan integrasi sistem eksternal:
 
-```
-[ 1. Setup & Master Data ]
-   │ (COA, Posting Groups, Item, Vendor, Customer, Bank)
-   ▼
-[ 2. Purchasing (P2P) ] ──────────────► [ 3. Inventory & Costing ]
-   │                                           │
-   │ (Posted Purch. Invoice)                   │ (Pengurangan Stok & COGS)
-   ▼                                           ▼
-[ Vendor Ledger (Utang) ]                [ 4. Sales (O2C) ]
-   │                                           │
-   │ (Payment Journal)                         │ (Posted Sales Invoice)
-   ▼                                           ▼
-[ 5. Cash & Bank Management ] ◄────────── [ Cust. Ledger (Piutang) ]
-   │ (Cash Receipt & Bank Rec.)
-   ▼
-[ 6. General Ledger & Reporting ]
-   ▲
-   │ (OData API, Webhook, AL Extension, Power Automate)
-[ 7. Integrasi Eksternal & Ekosistem ]
-```
+<BCEcosystemDiagram />
 
 ---
 

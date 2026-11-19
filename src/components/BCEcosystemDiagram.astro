@@ -1,0 +1,204 @@
+---
+---
+<figure class="bc-ecosystem-diagram-wrapper" aria-label="Diagram Perputaran Kerja Ekosistem Business Central">
+  <div class="bc-ecosystem-diagram-scroll">
+    <svg
+      viewBox="0 0 900 550"
+      xmlns="http://www.w3.org/2000/svg"
+      class="bc-ecosystem-svg"
+      role="img"
+      aria-labelledby="bc-eco-title bc-eco-desc"
+    >
+      <title id="bc-eco-title">Diagram Alur Ekosistem Dynamics 365 Business Central</title>
+      <desc id="bc-eco-desc">Diagram visual perputaran siklus kerja dari master data, pembelian, persediaan, penjualan, kas dan bank, hingga buku besar dan integrasi.</desc>
+
+      <defs>
+        <!-- Marker Panah Standar -->
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="var(--bc-accent)" />
+        </marker>
+        <marker id="arrow-muted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="var(--bc-text-muted)" />
+        </marker>
+
+        <!-- Drop Shadow Halus -->
+        <filter id="soft-shadow" x="-5%" y="-5%" width="110%" height="115%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15" />
+        </filter>
+      </defs>
+
+      <!-- Garis Alur Penghubung (Connectors) -->
+      <!-- 1. Master Data -> Purchasing & Sales -->
+      <path d="M 370 85 L 180 85 L 180 135" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow-muted)" />
+      <path d="M 450 90 L 450 135" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow-muted)" />
+      <path d="M 530 85 L 720 85 L 720 135" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="4 4" fill="none" marker-end="url(#arrow-muted)" />
+
+      <!-- 2. Purchasing -> Inventory -->
+      <path d="M 300 185 L 340 185" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 3. Inventory -> Sales -->
+      <path d="M 560 185 L 600 185" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 4. Purchasing -> Cash & Bank (Bayar Utang) -->
+      <path d="M 180 230 L 180 295 L 290 295" stroke="var(--bc-accent)" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 5. Sales -> Cash & Bank (Terima Piutang) -->
+      <path d="M 720 230 L 720 295 L 590 295" stroke="var(--bc-accent)" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 6. Inventory -> General Ledger (Valuasi & COGS) -->
+      <path d="M 450 230 L 450 385 L 530 385" stroke="var(--bc-accent)" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 7. Cash & Bank -> General Ledger (Kas & Mutasi Bank) -->
+      <path d="M 440 335 L 440 370 L 530 370" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arrow)" />
+
+      <!-- 8. Integrasi API -> Ekosistem Operasional & Finansial -->
+      <path d="M 230 450 L 230 400 L 320 400" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+      <path d="M 680 450 L 680 435" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+
+      <!-- ================= KARTU NODE ================= -->
+
+      <!-- NODE 1: SETUP & MASTER DATA (Top Center) -->
+      <g class="bc-node-group" transform="translate(300, 15)">
+        <rect width="300" height="75" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="300" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="150" y="28" text-anchor="middle" class="bc-node-title">1. Setup & Master Data</text>
+        <text x="150" y="48" text-anchor="middle" class="bc-node-subtitle">Chart of Accounts • Posting Groups</text>
+        <text x="150" y="64" text-anchor="middle" class="bc-node-subdetail">Customer, Vendor, Item, Bank Cards</text>
+      </g>
+
+      <!-- NODE 2: PURCHASING (P2P) -->
+      <g class="bc-node-group" transform="translate(60, 140)">
+        <rect width="240" height="90" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="240" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="120" y="28" text-anchor="middle" class="bc-node-title">2. Purchasing (P2P)</text>
+        <text x="120" y="48" text-anchor="middle" class="bc-node-subtitle">Purchase Order → Receive & Invoice</text>
+        <text x="120" y="65" text-anchor="middle" class="bc-node-badge">Vendor Ledger Entry</text>
+        <text x="120" y="79" text-anchor="middle" class="bc-node-subdetail">+Kuantitas Stok & Utang Usaha</text>
+      </g>
+
+      <!-- LABEL KONEKSI: P2P -> Inventory -->
+      <g transform="translate(305, 172)">
+        <rect width="32" height="16" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
+        <text x="16" y="12" text-anchor="middle" class="bc-line-label">+Qty</text>
+      </g>
+
+      <!-- NODE 3: INVENTORY & COSTING -->
+      <g class="bc-node-group" transform="translate(345, 140)">
+        <rect width="210" height="90" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="210" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="105" y="28" text-anchor="middle" class="bc-node-title">3. Inventory & Costing</text>
+        <text x="105" y="48" text-anchor="middle" class="bc-node-subtitle">Stok Gudang & Mutasi Item</text>
+        <text x="105" y="65" text-anchor="middle" class="bc-node-badge">Item & Value Entries</text>
+        <text x="105" y="79" text-anchor="middle" class="bc-node-subdetail">Valuasi FIFO / Cost Adjustment</text>
+      </g>
+
+      <!-- LABEL KONEKSI: Inventory -> Sales -->
+      <g transform="translate(565, 172)">
+        <rect width="32" height="16" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
+        <text x="16" y="12" text-anchor="middle" class="bc-line-label">-Qty</text>
+      </g>
+
+      <!-- NODE 4: SALES (O2C) -->
+      <g class="bc-node-group" transform="translate(605, 140)">
+        <rect width="240" height="90" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="240" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="120" y="28" text-anchor="middle" class="bc-node-title">4. Sales (O2C)</text>
+        <text x="120" y="48" text-anchor="middle" class="bc-node-subtitle">Sales Order → Ship & Invoice</text>
+        <text x="120" y="65" text-anchor="middle" class="bc-node-badge">Customer Ledger Entry</text>
+        <text x="120" y="79" text-anchor="middle" class="bc-node-subdetail">-Kuantitas Stok & Piutang Usaha</text>
+      </g>
+
+      <!-- NODE 5: CASH & BANK MANAGEMENT -->
+      <g class="bc-node-group" transform="translate(295, 260)">
+        <rect width="290" height="85" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="290" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="145" y="27" text-anchor="middle" class="bc-node-title">5. Cash & Bank Management</text>
+        <text x="145" y="47" text-anchor="middle" class="bc-node-subtitle">Payment & Cash Receipt Journals</text>
+        <text x="145" y="64" text-anchor="middle" class="bc-node-badge">Bank Acc. Ledger • Apply Invoices</text>
+        <text x="145" y="77" text-anchor="middle" class="bc-node-subdetail">Rekonsiliasi Bank & Penutupan Faktur</text>
+      </g>
+
+      <!-- NODE 6: GENERAL LEDGER & REPORTING -->
+      <g class="bc-node-group" transform="translate(535, 345)">
+        <rect width="310" height="90" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="310" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="155" y="27" text-anchor="middle" class="bc-node-title">6. General Ledger & Reporting</text>
+        <text x="155" y="47" text-anchor="middle" class="bc-node-subtitle">G/L Entries • G/L Register (Immutable)</text>
+        <text x="155" y="64" text-anchor="middle" class="bc-node-badge">Financial Reports</text>
+        <text x="155" y="78" text-anchor="middle" class="bc-node-subdetail">Neraca Saldo, Laba Rugi, & Audit Trail</text>
+      </g>
+
+      <!-- NODE 7: INTEGRASI EKSTERNAL & EKOSISTEM -->
+      <g class="bc-node-group" transform="translate(60, 450)">
+        <rect width="785" height="75" rx="8" class="bc-node-rect" filter="url(#soft-shadow)" />
+        <rect width="785" height="4" rx="2" fill="var(--bc-info)" />
+        <text x="392" y="27" text-anchor="middle" class="bc-node-title">7. Ekosistem Integrasi & Extensibility</text>
+        <text x="392" y="47" text-anchor="middle" class="bc-node-subtitle">Standard APIs (v2.0) • Custom API Pages • Webhooks • Power Automate • Per-Tenant Extension (AL)</text>
+        <text x="392" y="64" text-anchor="middle" class="bc-node-subdetail">Otomasi Alur Bisnis Real-time & Pertukaran Data Pihak Ketiga</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="bc-ecosystem-caption">
+    Diagram Hubungan Modul Operasional, Ledger Entries, Buku Besar (G/L), dan Ekosistem Integrasi Dynamics 365 Business Central.
+  </figcaption>
+</figure>
+
+<style>
+  .bc-ecosystem-diagram-wrapper {
+    margin: var(--bc-space-4) 0;
+    padding: var(--bc-space-3);
+    border: var(--bc-border-width) solid var(--bc-border);
+    border-radius: var(--bc-radius-md);
+    background: var(--bc-surface);
+  }
+  .bc-ecosystem-diagram-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bc-ecosystem-svg {
+    display: block;
+    width: 100%;
+    min-width: 680px;
+    height: auto;
+    font-family: var(--bc-font-sans);
+  }
+  .bc-node-rect {
+    fill: var(--bc-surface-2);
+    stroke: var(--bc-border);
+    stroke-width: 1.5;
+    transition: stroke-color 0.15s ease;
+  }
+  .bc-node-group:hover .bc-node-rect {
+    stroke: var(--bc-accent);
+  }
+  .bc-node-title {
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--bc-text);
+  }
+  .bc-node-subtitle {
+    font-size: 11px;
+    fill: var(--bc-text-muted);
+  }
+  .bc-node-subdetail {
+    font-size: 10px;
+    fill: var(--bc-text-muted);
+  }
+  .bc-node-badge {
+    font-size: 10px;
+    font-weight: 600;
+    fill: var(--bc-accent);
+  }
+  .bc-line-label {
+    font-size: 9px;
+    font-weight: 600;
+    fill: var(--bc-accent);
+  }
+  .bc-ecosystem-caption {
+    margin-top: var(--bc-space-3);
+    text-align: center;
+    font-size: var(--bc-text-xs);
+    color: var(--bc-text-muted);
+  }
+</style>
