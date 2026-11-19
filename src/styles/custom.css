@@ -127,7 +127,7 @@ h1 { font-weight: var(--bc-weight-heading); line-height: var(--bc-line-h1); lett
 .sl-markdown-content h2 { font-weight: var(--bc-weight-heading); line-height: var(--bc-line-h2); letter-spacing: var(--bc-tracking-heading); }
 .sl-markdown-content h3 { font-weight: var(--bc-weight-heading); line-height: var(--bc-line-h3); letter-spacing: calc(var(--bc-tracking-heading) / 2); }
 .sl-markdown-content { min-width: 0; overflow-wrap: anywhere; }
-.sl-markdown-content a, .bc-footer-note a, .bc-header-link { text-decoration: underline; }
+.sl-markdown-content a, .bc-footer-note a { text-decoration: underline; }
 a:hover { color: var(--bc-accent-hover); }
 :focus-visible { outline: var(--bc-focus-width) solid var(--bc-accent); outline-offset: var(--bc-focus-offset); }
 a, button, select, summary { transition: background-color var(--bc-transition), border-color var(--bc-transition), color var(--bc-transition); }
@@ -199,7 +199,59 @@ a, button, select, summary { transition: background-color var(--bc-transition), 
   .sl-markdown-content .bc-cheat-map section:last-child { padding-inline-end: 0; }
 }
 .bc-footer-note { margin-top: var(--bc-space-5); color: var(--bc-text-muted); font-size: var(--bc-text-xs); }
-.bc-header-link { color: var(--bc-accent); font-size: var(--bc-text-sm); }
+.bc-header-link,
+header.header button[data-open-modal] {
+  min-block-size: 2.75rem;
+  border: var(--bc-border-width) solid transparent;
+  border-radius: var(--bc-radius-sm);
+  color: var(--bc-text);
+}
+.bc-header-link {
+  display: inline-flex;
+  gap: var(--bc-space-2);
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--bc-space-3);
+  font-size: var(--bc-text-sm);
+  font-weight: var(--bc-weight-label);
+  text-decoration: none;
+}
+.bc-header-github { min-inline-size: 2.75rem; }
+header.header button[data-open-modal] {
+  background: var(--bc-surface);
+  border-color: var(--bc-border);
+}
+.bc-header-link:hover,
+header.header button[data-open-modal]:hover {
+  background: var(--bc-surface-2);
+  border-color: var(--bc-border);
+  color: var(--bc-accent);
+}
+.bc-header-link[aria-current] {
+  background: var(--bc-accent-soft);
+  color: var(--bc-accent);
+}
+header.header .right-group,
+header.header .social-icons { gap: var(--bc-space-2); }
+.mobile-preferences .bc-header-github { display: none; }
+
+@media (width < 50rem) {
+  header.header > .header,
+  header.header .social-icons { gap: 0; }
+  header.header .title-wrapper { margin-inline-end: auto; }
+  header.header .site-title { font-size: var(--bc-text-lg); }
+  header.header .site-title span { text-overflow: ellipsis; }
+  header.header .right-group { display: flex; }
+  header.header .right-group starlight-theme-select,
+  header.header .social-icons::after,
+  header.header .bc-header-cheatsheets span { display: none; }
+  header.header .bc-header-link,
+  header.header button[data-open-modal] {
+    min-inline-size: 2.75rem;
+    padding-inline: 0;
+    justify-content: center;
+  }
+}
 starlight-theme-select select { width: auto; }
 .sl-markdown-content table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: var(--bc-text-sm); line-height: var(--bc-line-small); -webkit-overflow-scrolling: touch; }
 .sl-markdown-content :is(th, td) { padding: var(--bc-space-2) var(--bc-space-3); border-bottom: var(--bc-border-width) solid var(--bc-border); overflow-wrap: normal; word-break: normal; }
@@ -278,9 +330,11 @@ starlight-theme-select select { width: auto; }
     padding-inline: max(var(--bc-space-5), calc((100% - var(--bc-layout-width)) / 2 + var(--bc-space-5)));
   }
   header.header > .header {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 24rem) minmax(0, 1fr);
     gap: var(--bc-space-5);
   }
+  header.header button[data-open-modal] { max-width: none; }
+  header.header .right-group { justify-self: end; }
   [data-has-sidebar] .sidebar-pane {
     inset-inline-start: max(0px, calc((100% - var(--bc-layout-width)) / 2));
     width: var(--bc-sidebar-width);

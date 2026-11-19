@@ -1,1 +1,17 @@
-<a class="bc-header-link" href={`${import.meta.env.BASE_URL}cheatsheets/`}>Cheatsheets</a>
+---
+import { Icon } from '@astrojs/starlight/components';
+
+const cheatsheets = `${import.meta.env.BASE_URL}cheatsheets/`;
+const path = Astro.url.pathname;
+const current = path === cheatsheets ? 'page' : path.startsWith(cheatsheets) ? 'location' : undefined;
+---
+
+<a class="bc-header-link bc-header-cheatsheets" href={cheatsheets}
+  aria-label="Cheatsheets" aria-current={current}>
+  <Icon name="document" size="1.125rem" />
+  <span>Cheatsheets</span>
+</a>
+<a class="bc-header-link bc-header-github" href="https://github.com/irfanadwifangga"
+  aria-label="Profil GitHub" target="_blank" rel="noopener">
+  <Icon name="github" size="1.125rem" />
+</a>
