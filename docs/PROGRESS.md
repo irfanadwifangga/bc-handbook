@@ -7,7 +7,7 @@
 ## Ringkasan status terkini — 2026-11-19
 
 - Konten Fase 5.0–5.9 selesai secara menyeluruh. Track BA, API, seluruh Jalur AL Developer (AL-1, AL-2, AL-3), 22 cheatsheet, 35 latihan/capstone, glosarium, referensi, dan progress tracker telah terpasang dan diaudit tanpa tautan rusak atau kebocoran data rahasia.
-- U1, U2, dan U3 selesai. Font Geist Sans & Geist Mono terpasang self-hosted via paket fontsource variabel lokal tanpa CDN eksternal. U4–U6 menyusul.
+- U1, U2, U3, U4, dan U5 selesai. Font Geist self-hosted aktif, styling kartu/tabs/code block tuntas, dan landing page telah direstrukturisasi menjadi 3 seksi utama. U6 (audit visual) menyusul.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
 - Verifikasi terakhir: build 140 halaman, 3 tes Bun, 23.366 tautan internal/anchor valid, 0 rahasia kredensial (164 file dipindai), dan 139 file konten memiliki metadata bc_version_verified 29.x & last_verified lengkap. Seluruh fase kurikulum 5.0–5.9 selesai. Tidak ada push/deploy.
@@ -30,6 +30,13 @@
 - [x] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil U4 & U5 — 2026-11-19
+
+- **U4 (Gaya Kartu & Tabs):** Ditambahkan aturan CSS di `src/styles/custom.css` untuk `.card-grid`, `.sl-link-card`, `.card`, dan `starlight-tabs` mengikuti token desain neutral v2.0 (border 1px `--bc-border`, radius `--bc-radius-md`, tanpa bayangan, hover border `--bc-accent`).
+- **U5 (Restrukturisasi Landing Page):** Halaman `src/content/docs/index.mdx` disusun ulang mengikuti template `docs/DESIGN.md` Bagian 5: H1 + tujuan ringkas, 3 LinkCard seksi (*Belajar per Level*, *22 Cheatsheets*, *35 Latihan & Capstone*), panduan cara pakai, prasyarat sandbox CRONUS, dan komponen pelacak progres interaktif.
+- Verifikasi nyata: `bun run build` sukses 140 halaman statis, Pagefind index selesai; `bun test` 3 lulus.
+- Commit message: `feat: restructure landing into three sections and style cards`.
 
 ### Hasil U3 — 2026-11-19
 

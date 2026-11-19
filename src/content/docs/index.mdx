@@ -1,46 +1,54 @@
 ---
 title: BC Handbook
-description: Panduan belajar Business Central untuk Business Analysis dan Integrasi & API.
+description: Panduan belajar Business Central terstruktur untuk Business Analysis dan Integrasi & API.
 tableOfContents: false
 bc_version_verified: "29.x"
 last_verified: "2026-11-19"
 ---
 
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 import ProgressChecklist from '../../components/ProgressChecklist.astro';
 
-Panduan belajar Business Central dalam bahasa Indonesia, dengan prioritas Business Analysis dan Integrasi & API.
+Panduan belajar Dynamics 365 Business Central terstruktur untuk Business Analysis dan Integrasi & API, dilengkapi cheatsheet harian dan latihan praktik.
 
-## Mulai dari mana?
+## Peta Materi Utama
 
-1. [Orientasi](./00-orientasi/) — kenali lingkungan kerja BC.
-2. [Basic](./01-basic/) — pelajari operasional dan konsep inti.
-3. [Intermediate](./02-intermediate/) — pahami konfigurasi dan otomasi.
-4. [Expert](./03-expert/) — prioritaskan Business Analysis dan Integrasi & API.
-5. [AL Developer](./04-al-developer/) — Jalur AL lengkap (AL-1 Fundamentals, AL-2 Intermediate, AL-3 Advanced).
+<CardGrid>
+  <LinkCard
+    title="Belajar per Level"
+    href="./00-orientasi/"
+    description="Kurikulum bertingkat dari Orientasi, Basic, Intermediate, Expert (Track BA & API), hingga Jalur AL Developer."
+  />
+  <LinkCard
+    title="22 Cheatsheets"
+    href="./cheatsheets/"
+    description="Kumpulan contekan ringkas 1 halaman siap cetak A4 untuk navigasi, ledger, alur dokumen, API, dan sintaks AL."
+  />
+  <LinkCard
+    title="35 Latihan & Capstone"
+    href="./latihan/"
+    description="Skenario praktik mandiri di sandbox demo CRONUS dengan kriteria kelulusan terukur dan hint solusi."
+  />
+</CardGrid>
 
-Orientasi, delapan modul Basic, enam belas modul Intermediate, serta latihan B1–B8 dan M1–M10 sudah tersedia. Track [Business Analysis](./03-expert/business-analysis/) beserta E1–E3 tersedia; [Integrasi & API](./03-expert/integrasi-api/) beserta E4–E6 dan capstone tersedia sebagai materi.
+## Cara Memakai Handbook
 
-## Cheatsheet populer
+- **Mulai dari mana:** Pelajari secara berurutan mulai dari [Level 0 Orientasi](./00-orientasi/) dan [Level 1 Basic](./01-basic/) untuk memahami operasional ERP dan konsep posting buku besar sebelum masuk ke konfigurasi.
+- **Pilih fokus kerja:** Dalami [Track Business Analysis](./03-expert/business-analysis/) untuk kebutuhan analisis fungsional/UAT, [Track Integrasi & API](./03-expert/integrasi-api/) untuk otomasi data, atau ikuti [Jalur AL Developer](./04-al-developer/) jika membuat ekstensi custom.
+- **Rujukan cepat saat bekerja:** Buka menu [Cheatsheets](./cheatsheets/) harian untuk memverifikasi alur dokumen, matriks posting groups, shortcut Tell Me, atau checklist persiapan rilis.
+- **Versi yang diverifikasi:** Seluruh materi disusun dan diverifikasi terhadap fitur **Business Central 29.x (2026 release wave 2)**.
 
-- [Navigasi & shortcut](./cheatsheets/01-navigasi-shortcut/)
-- [Alur dokumen](./cheatsheets/02-alur-dokumen/)
-- [Ledger entries map](./cheatsheets/03-ledger-entries-map/)
-- [Posting groups matrix](./cheatsheets/04-posting-groups-matrix/)
-- [Troubleshooting error umum](./cheatsheets/05-troubleshooting-error/)
+## Prasyarat Lingkungan Belajar
 
-Dua puluh dua cheatsheet tersedia di [indeks cheatsheets](./cheatsheets/), termasuk [Configuration Worksheet / RapidStart](./cheatsheets/14-configuration-worksheet/), [Gap-Fit Analysis](./cheatsheets/15-gap-fit-analysis/), [Process Mapping](./cheatsheets/16-process-mapping/), dan [Release & Upgrade Checklist](./cheatsheets/12-release-upgrade-checklist/).
+- **Gunakan Sandbox Demo:** Semua latihan dan eksperimen wajib dijalankan di environment **Sandbox** dengan company demo **CRONUS**.
+- **Larangan Data Nyata:** Dilarang menggunakan kredensial produksi, tenant ID privat, atau data transaksi pelanggan nyata dalam latihan integrasi maupun repositori kode.
 
-## Latihan & Pelacak Progres
+## Pelacak Progres Pembelajaran
 
-- [Basic](./latihan/basic/) — B1–B8 tersedia, lengkap dengan kriteria lulus dan hint.
-- [Intermediate](./latihan/intermediate/) — M1–M10 tersedia, dari posting groups sampai Job Queue.
-- [Expert](./latihan/expert/) — E1–E3 Business Analysis; E4–E6 dan capstone BA/API.
-- [Jalur AL Developer](./latihan/al/) — AL1–AL9 dan capstone AL Vendor Invoice Staging.
-
-Centang latihan yang telah selesai dikerjakan di bawah ini untuk mencatat progres di browser Anda:
+Gunakan daftar checklist di bawah ini untuk mencatat kemajuan belajar Anda. Status tersimpan secara otomatis di peramban lokal (*localStorage*):
 
 <ProgressChecklist />
 
-[Glosarium](./glosarium/) · [Referensi](./referensi/)
+---
 
-Metadata versi mengikuti target kurikulum. Materi diperiksa terhadap dokumentasi resmi; praktik dan kelulusan latihan harus diverifikasi sendiri di sandbox.
+[Glosarium Istilah](./glosarium/) · [Referensi Resmi](./referensi/)

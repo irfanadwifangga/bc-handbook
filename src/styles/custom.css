@@ -339,6 +339,52 @@ starlight-theme-select select { width: auto; }
   size: A4;
   margin: 12mm;
 }
+/* U4: Card and Tabs Styling */
+.card-grid {
+  display: grid;
+  gap: var(--bc-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  margin: var(--bc-space-4) 0;
+}
+.sl-link-card, .card {
+  border: 1px solid var(--bc-border);
+  background-color: var(--bc-surface);
+  border-radius: var(--bc-radius-md);
+  box-shadow: none;
+  transition: border-color var(--bc-transition);
+  padding: var(--bc-space-4);
+}
+.sl-link-card:hover, .card:hover {
+  border-color: var(--bc-accent);
+}
+.sl-link-card a {
+  text-decoration: none;
+}
+.sl-link-card .title {
+  color: var(--bc-text);
+  font-weight: var(--bc-weight-heading);
+  font-size: var(--bc-text-lg);
+  margin-bottom: var(--bc-space-2);
+}
+.sl-link-card .description {
+  color: var(--bc-text-muted);
+  font-size: var(--bc-text-sm);
+  line-height: var(--bc-line-small);
+}
+
+starlight-tabs [role="tablist"] {
+  border-bottom: 1px solid var(--bc-border);
+}
+starlight-tabs [role="tab"] {
+  border-bottom: 2px solid transparent;
+  color: var(--bc-text-muted);
+  font-size: var(--bc-text-sm);
+}
+starlight-tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--bc-accent);
+  color: var(--bc-text);
+}
+
 @media print {
   body:has(.bc-cheatsheet) {
     page: bc-cheatsheet;
