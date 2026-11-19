@@ -6,11 +6,11 @@
 
 ## Ringkasan status terkini — 2026-11-19
 
-- Konten Fase 5.0–5.7c selesai sebagai materi situs. Track BA, API, serta seluruh Jalur AL Developer (AL-1 Fundamentals, AL-2 Intermediate, AL-3 Advanced) telah lengkap dengan 22 cheatsheet, latihan B1–B8, M1–M10, E1–E6, AL1–AL9, dan 2 capstone (BA/API Spreadsheet-to-BC & AL Invoice Staging). Kelulusan latihan/UAT, koneksi BC dan kompilasi AL tetap memerlukan bukti sandbox pemilik.
+- Konten Fase 5.0–5.9 selesai secara menyeluruh. Track BA, API, seluruh Jalur AL Developer (AL-1, AL-2, AL-3), 22 cheatsheet, 35 latihan/capstone, glosarium, referensi, dan progress tracker telah terpasang dan diaudit tanpa tautan rusak atau kebocoran data rahasia.
 - U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
-- Verifikasi terakhir: build 140 halaman, 3 tes Bun, 23.366 tautan internal/anchor valid tanpa target hilang. Fase 5.8 selesai, Fase 5.9 (Audit final) tersisa. Tidak ada push/deploy.
+- Verifikasi terakhir: build 140 halaman, 3 tes Bun, 23.366 tautan internal/anchor valid, 0 rahasia kredensial (164 file dipindai), dan 139 file konten memiliki metadata bc_version_verified 29.x & last_verified lengkap. Seluruh fase kurikulum 5.0–5.9 selesai. Tidak ada push/deploy.
 - Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
 
 ## Fase Pembangunan Situs
@@ -27,9 +27,17 @@
 - [x] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
 - [x] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
 - [x] **5.8** — Glosarium, referensi, release checklist, progress tracker component
-- [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
+- [x] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.9 — 2026-11-19
+
+- Audit metadata: 139 file materi Markdown/MDX diverifikasi memuat `bc_version_verified: "29.x"` dan `last_verified: "2026-11-19"`; 15 catatan penanda `> ⚠️ Verifikasi:` terdata dengan penjelasan terperinci.
+- Audit keamanan: 164 file kode/konten dipindai dengan pola regex rahasia (client secret, API key, token bearer, UUID tenant); 0 temuan data sensitif atau kredensial nyata.
+- Audit navigasi: 140 halaman HTML hasil build diverifikasi Pagefind dan seluruh 23.366 tautan internal & anchor valid 100% tanpa error 404.
+- Seluruh fase utama pembangunan situs (Fase 5.0 s.d. 5.9) resmi selesai.
+- Commit message: `chore: content audit and link check`.
 
 ### Hasil Fase 5.8 — 2026-11-19
 
