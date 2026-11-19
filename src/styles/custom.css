@@ -280,7 +280,7 @@ starlight-theme-select select { width: auto; }
     max-width: none;
   }
   .bc-cheatsheet > :is(p, ul, ol, blockquote) {
-    max-width: var(--bc-content-width);
+    max-width: none;
   }
   .bc-cheatsheet :is(table, .expressive-code) {
     width: 100%;

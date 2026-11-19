@@ -131,7 +131,7 @@ Bobot: 400 isi · 500 label UI/sidebar/nav · 600 semua heading dan judul kecil.
 - Skala spasi (basis 4px): `4 · 8 · 12 · 16 · 24 · 32 · 48 · 64` → token `--bc-space-1…8`.
 - Radius: `--bc-radius-sm: 6px` (badge, input, kode inline) · `--bc-radius-md: 8px` (kartu, CheatBox, code block).
 - Border: 1px `--bc-border`. Bayangan: **tidak dipakai** (pengecualian: dropdown/dialog search bawaan Starlight).
-- Lebar konten maksimum: **72ch** untuk teks secara umum; khusus modul dengan TOC pada desktop mulai 72rem memakai token `--bc-module-width: 88ch`. Teks pada layar lebih sempit tetap mengikuti lebar kolom. tabel & kode boleh lebih lebar dan **scroll horizontal di dalam kontainernya sendiri**.
+- Lebar konten maksimum: **72ch** untuk teks secara umum; khusus modul dengan TOC pada desktop mulai 72rem memakai token `--bc-module-width: 88ch`. Khusus cheatsheet desktop mulai 72rem, paragraf/list/blockquote memakai seluruh lebar konten tersedia. Teks pada layar lebih sempit tetap mengikuti lebar kolom. tabel & kode boleh lebih lebar dan **scroll horizontal di dalam kontainernya sendiri**.
 - Gerak: hanya `transition: background-color, border-color, color 150ms ease-out`. Hormati `prefers-reduced-motion` (matikan transisi).
 - Breakpoint: `≤ 640px` mobile · `641–1024px` tablet · `≥ 1025px` desktop.
 
@@ -148,7 +148,7 @@ Bobot: 400 isi · 500 label UI/sidebar/nav · 600 semua heading dan judul kecil.
 
 ### 3.5 Geometri layout desktop
 - Container header dan halaman maksimum 1440px, terpusat; kolom sidebar kiri dan TOC kanan masing-masing 288px.
-- Artikel memakai sisa kolom; padding horizontal 48px. Modul desktop dengan TOC memakai batas baca 88ch; teks lain tetap 72ch sesuai 3.3. Tabel/kode tetap scroll di kontainer sendiri.
+- Artikel memakai sisa kolom; padding horizontal 48px. Modul desktop dengan TOC memakai batas baca 88ch; teks lain tetap 72ch sesuai 3.3, kecuali teks cheatsheet desktop yang mengikuti seluruh lebar konten tersedia. Tabel/kode tetap scroll di kontainer sendiri.
 - Logo di kiri; search dan kontrol header di kanan. Header solid dan border bawah tetap; sidebar/TOC tidak memakai garis vertikal sepanjang layar.
 - Padding atas konten sidebar, panel judul artikel dan isi TOC adalah 48px; posisi visual akhir juga mengikuti wrapper bawaan Starlight. TOC sticky dengan scroll internal sendiri.
 - Penerapan geometri tiga kolom dimulai 72rem, mengikuti breakpoint TOC Starlight terpasang; di bawahnya perilaku sidebar/menu/TOC tetap bawaan. Ini pengecualian operasional terhadap kategori desktop ≥1025px di 3.3, agar tidak mengubah skrip menu/fokus Starlight.
@@ -205,7 +205,7 @@ Struktur tetap, berurutan: **Judul + LevelBadge + estimasi waktu** → Prasyarat
 - Di mobile: kontainer `overflow-x: auto`, kolom pertama boleh `position: sticky; left: 0`.
 - Kolom pertama memakai pemenggalan kata normal (istilah seperti *Inventory* tidak boleh terpotong di tengah kata); scroll terjadi di dalam tabel.
 
-- Cheatsheet desktop mulai 72rem: kontainer artikel memakai seluruh kolom tersedia, tabel/kode lebar 100%; paragraf dan list tetap maksimum 72ch. TOC pada sepuluh cheatsheet individual tetap dinonaktifkan sesuai front-matter; indeks cheatsheet tetap memiliki TOC. Aturan mobile dan cetak tidak berubah.
+- Cheatsheet desktop mulai 72rem: kontainer artikel memakai seluruh kolom tersedia, tabel/kode lebar 100%; paragraf, list dan blockquote juga mengikuti seluruh lebar konten tersedia, tanpa batas 72ch. TOC pada sepuluh cheatsheet individual tetap dinonaktifkan sesuai front-matter; indeks cheatsheet tetap memiliki TOC. Aturan mobile dan cetak tidak berubah.
 
 ### 4.9 Navigasi
 - Sidebar dikelompokkan: **Orientasi · Basic · Intermediate · Expert · Cheatsheets · Latihan · Referensi**.

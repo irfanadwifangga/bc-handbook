@@ -211,3 +211,10 @@
 - Verifikasi nyata setelah penerapan: build 94 halaman/Pagefind dan bun test 3 lulus. Audit terarah 12 cheatsheet × 1920/1280/360px × light/dark = 72 tes lulus; tidak ada overflow body atau pelanggaran Axe WCAG 2A/AA + 2.1A/AA. Semua kata alfabetis pada sel desktop diperiksa agar tidak terpecah antarbaris. Dua belas PDF masing-masing satu halaman A4; jumlah/ukuran halaman diuji, inspeksi visual seluruh PDF belum diulang. Screenshot pre-posting 1920px diperiksa dan pembagian kolom terbaca.
 - Artefak lokal .codex-tmp/table-review/ mencakup tests.log, screenshot dan print/. git diff --check lulus; preview port 4323 berhenti. Suite Playwright penuh, Firefox/WebKit, screen reader, macOS dan Lighthouse tidak diulang. Tidak ada materi, dependency, U3, push/deploy atau perubahan favicon.
 - Commit message: `fix: balance cheatsheet table columns`.
+
+### Pelebaran teks cheatsheet desktop — 2026-11-19
+
+- Batas 72ch pada paragraf/list/blockquote langsung dalam bc-cheatsheet dilepas untuk desktop mulai 72rem. Teks kini memakai lebar konten yang sama dengan tabel; DESIGN.md 3.3/3.5/4.8 diselaraskan. Aturan mobile dan cetak tetap.
+- Verifikasi nyata: build 94 halaman/Pagefind dan 3 tes Bun lulus. Dua belas cheatsheet × 1920/1280/360px × light/dark = 72 tes browser lulus; lebar paragraf/list/blockquote desktop sesuai lebar parent dalam toleransi 1px. Pemeriksaan pemenggalan kata tabel, overflow body dan Axe WCAG 2A/AA + 2.1A/AA lulus. Dua belas PDF masing-masing tetap satu halaman A4. Screenshot Setup Checklist 1920px dark diperiksa; teks memakai lebar tersedia.
+- Artefak lokal di .codex-tmp/cheatsheet-text/. Preview port 4323 berhenti; git diff --check lulus. Suite Playwright penuh, Lighthouse, Firefox/WebKit, screen reader dan macOS tidak diulang; PDF hanya diverifikasi jumlah/ukuran halaman, tanpa inspeksi visual seluruh PDF. Tidak ada materi/dependensi baru, push/deploy atau perubahan favicon; AL-1 belum dimulai.
+- Commit message: `style: expand cheatsheet text to available width`.
