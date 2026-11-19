@@ -199,12 +199,11 @@
 
   if (svg) {
     const panzoom = Panzoom(svg, {
-      maxScale: 4,
-      minScale: 0.8,
-      contain: 'outside',
+      maxScale: 3,
+      minScale: 1,
+      contain: 'inside',
     });
 
-    svg.parentElement?.addEventListener('wheel', panzoom.zoomWithWheel);
     zoomInBtn?.addEventListener('click', () => panzoom.zoomIn());
     zoomOutBtn?.addEventListener('click', () => panzoom.zoomOut());
     zoomResetBtn?.addEventListener('click', () => panzoom.reset());
@@ -351,20 +350,31 @@
     color: var(--bc-text-muted);
   }
 
-  /* Modal Dialog */
+  /* Modal Dialog Layar Penuh Sejati */
   .bc-diagram-dialog {
-    width: 90vw;
-    max-width: 1200px;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 95vw;
+    height: 90vh;
+    max-width: 1500px;
+    max-height: 92vh;
     border: var(--bc-border-width) solid var(--bc-border);
     border-radius: var(--bc-radius-lg);
     background: var(--bc-surface);
     color: var(--bc-text);
     padding: var(--bc-space-4);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+  }
+  .bc-diagram-dialog:not([open]) {
+    display: none;
   }
   .bc-diagram-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
   }
   .bc-dialog-header {
     display: flex;
@@ -372,28 +382,43 @@
     align-items: center;
     border-bottom: var(--bc-border-width) solid var(--bc-border);
     padding-bottom: var(--bc-space-3);
-    margin-bottom: var(--bc-space-3);
+    margin-bottom: var(--bc-space-2);
+    flex-shrink: 0;
   }
   .bc-dialog-header h3 {
     margin: 0;
     font-size: 1.125rem;
+    font-weight: 600;
   }
   .bc-dialog-close-btn {
     background: var(--bc-surface-2);
     border: var(--bc-border-width) solid var(--bc-border);
     color: var(--bc-text);
-    padding: 6px 14px;
+    padding: 6px 16px;
     border-radius: var(--bc-radius-sm);
     cursor: pointer;
     font-size: var(--bc-text-xs);
+    font-weight: 600;
+    transition: all 0.15s ease;
   }
   .bc-dialog-close-btn:hover {
     border-color: var(--bc-danger);
     color: var(--bc-danger);
   }
   .bc-dialog-body {
-    padding: var(--bc-space-2) 0;
-    max-height: 80vh;
-    overflow: auto;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--bc-space-2);
+    overflow: hidden;
+    position: relative;
+  }
+  .bc-dialog-body svg {
+    width: 100%;
+    height: 100%;
+    max-height: 78vh;
+    object-fit: contain;
+    cursor: grab;
   }
 </style>

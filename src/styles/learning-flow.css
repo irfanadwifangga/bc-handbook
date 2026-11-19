@@ -5,11 +5,14 @@
 /* Stepper Map Linear (Berurutan Kiri ke Kanan) */
 .bc-flow .bc-flow-map {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: var(--bc-space-2);
   list-style: none;
-  padding: 0;
+  padding: var(--bc-space-1) 0 var(--bc-space-2) 0;
   margin: var(--bc-space-3) 0 var(--bc-space-4) 0;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 .bc-flow-map li {
   margin: 0;
