@@ -31,6 +31,13 @@
 
 ## Log
 
+### Penyempurnaan Diagram Ekosistem & Tab Walkthrough Alur Kerja — 2026-11-19
+
+- **BCEcosystemDiagram (`src/components/BCEcosystemDiagram.astro`):** Toolbar zoom/pan dan modal fullscreen dihapus untuk menghilangkan scroll hijacking dan glitch tampilan. Spacing antar-node dilebarkan (gap 80px), viewBox diperbesar ke 1020x640, label status (+Qty, -Qty, Jurnal, Pelunasan) digeser keluar jalur agar tidak bertabrakan dengan kartu modul.
+- **FlowPlayer (`src/components/FlowPlayer.astro` & `src/styles/learning-flow.css`):** Kontrol player media (Putar, Sebelumnya, Berikutnya, Ulangi) dan bilah timer otomatis 8 detik dihapus. Diubah menjadi tab walkthrough interaktif: tombol pill nomor tahap dipertahankan, sedangkan konten panel diubah dari 3 kolom sempit menjadi tata letak bertingkat luas (Analogi & Konsep Bisnis di atas, diikuti subgrid 2 kolom untuk Dokumen BC dan Dampak Ledger).
+- Verifikasi nyata: `bun run build` sukses 141 halaman, Pagefind search index 141 file; `bun test` 3 lulus.
+- Commit message: `feat: convert FlowPlayer to clean tab walkthrough and expand diagram spacing`.
+
 ### Tambahan Halaman Ekosistem & Perbaikan UI — 2026-11-19
 
 - Ditambahkan halaman `src/content/docs/00-orientasi/01-ekosistem-alur-kerja.mdx` yang memuat peta helikopter perputaran bisnis menyeluruh di BC (P2P, O2C, Inventory Costing, Cash Management, General Ledger, dan Integrasi API) dilengkapi simulasi `FlowPlayer` interaktif dan matriks dokumen operasional vs subledger.

@@ -80,14 +80,7 @@
 .bc-flow button:disabled { cursor: default; color: var(--bc-text-muted); opacity: 0.6; }
 .bc-flow button:not(:disabled):hover, .bc-reference-video button:hover { border-color: var(--bc-accent); }
 
-/* Kontrol Navigasi & Pemutaran */
-.bc-flow-controls { display: flex; flex-wrap: wrap; gap: var(--bc-space-2); margin-top: var(--bc-space-3); }
-.bc-flow-controls [data-action="play"] { font-weight: 600; border-color: var(--bc-accent); }
-.bc-flow [data-status] { font-size: var(--bc-text-xs); color: var(--bc-text-muted); margin-block: var(--bc-space-2); }
-.bc-flow-time { height: var(--bc-space-1); background: var(--bc-border); overflow: hidden; border-radius: 2px; }
-.bc-flow-time span { display: block; height: 100%; background: var(--bc-accent); transform: scaleX(0); transform-origin: left; }
-
-/* Panel Detail Aktif (Struktur Kartu 3 Kolom) */
+/* Panel Detail Aktif (Tampilan Luas & Lega) */
 .bc-flow-panel {
   background: var(--bc-surface-2);
   border: var(--bc-border-width) solid var(--bc-border);
@@ -96,9 +89,9 @@
   margin-top: var(--bc-space-3);
 }
 .bc-panel-header {
-  margin-bottom: var(--bc-space-3);
+  margin-bottom: var(--bc-space-4);
   border-bottom: var(--bc-border-width) solid var(--bc-border);
-  padding-bottom: var(--bc-space-2);
+  padding-bottom: var(--bc-space-3);
 }
 .bc-panel-badge {
   display: inline-block;
@@ -110,30 +103,43 @@
   margin-bottom: var(--bc-space-1);
 }
 .bc-panel-header h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.35rem;
+  font-weight: 700;
   margin: 0;
   color: var(--bc-text);
 }
-.bc-panel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.bc-panel-body {
+  display: flex;
+  flex-direction: column;
   gap: var(--bc-space-3);
 }
 .bc-panel-card {
   background: var(--bc-surface);
   border: var(--bc-border-width) solid var(--bc-border);
   border-radius: var(--bc-radius-sm);
-  padding: var(--bc-space-3);
+  padding: var(--bc-space-3) var(--bc-space-4);
+}
+.bc-panel-card-primary {
+  border-left: 3px solid var(--bc-accent);
+  padding: var(--bc-space-4);
+}
+.bc-panel-card-primary p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.bc-panel-subgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--bc-space-3);
 }
 .bc-card-tag {
   display: block;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--bc-accent);
-  margin-bottom: var(--bc-space-1);
+  margin-bottom: var(--bc-space-2);
 }
 .bc-panel-card p {
   font-size: var(--bc-text-sm);
@@ -150,8 +156,7 @@
 
 .bc-video-slot iframe { display: block; width: 100%; aspect-ratio: var(--bc-video-ratio); border: 0; margin-top: var(--bc-space-4); }
 
-@media (prefers-reduced-motion: reduce) { .bc-flow-time { visibility: hidden; } }
 @media print {
-  .bc-flow-controls, .bc-flow-time, .bc-video-slot, .bc-reference-video button { display: none !important; }
+  .bc-video-slot, .bc-reference-video button { display: none !important; }
   .bc-flow [data-panel][hidden] { display: block !important; }
 }
