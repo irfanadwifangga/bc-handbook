@@ -31,6 +31,16 @@
 
 ## Log
 
+### Draf Fase 5.7a — 2026-11-19
+
+- Struktur AL Developer dan Latihan AL diterapkan setelah persetujuan diff DESIGN/sidebar. Placeholder .gitkeep dipindah dari 03-expert/developer-al ke 04-al-developer; tidak ada materi atau URL aktif lama yang dipindahkan. Grup AL-2/AL-3 belum ditambahkan.
+- Lima belas halaman baru: indeks jalur, indeks AL-1, tujuh modul Fundamentals, indeks latihan AL, AL1–AL3 serta cheatsheet #17–#18. Materi berlabel Basic, memakai contoh MYP dan ID demo yang harus diperiksa konflik. Semua snippet AL ditampilkan sebagai text dan berstatus Belum dikompilasi. Tidak ada publish/operasi BC, komponen, CSS, font atau dependency baru.
+- Verifikasi awal nyata: bun run build berhasil 109 halaman/Pagefind; bun test 3 lulus; audit struktur 7 modul/3 latihan dan 14.728 tautan internal/anchor lulus tanpa target hilang pada working tree yang menyertakan favicon lokal.
+- Audit browser awal: 4 lulus, 1 gagal, 3 terinterupsi, 60 belum dijalankan. Tes mengharapkan details hint pada indeks /latihan/al/ yang tidak memiliki hint; error element(s) not found. Diusulkan kondisi hint hanya halaman latihan AL1–AL3; indeks tetap menjalani audit status/H1/Axe/overflow. Hasil cetak dan audit browser akhir belum tersedia. Preview berhenti (port 4323 tanpa listener).
+- Fase 5.7a belum selesai/di-commit. Indeks lama disiapkan sebagai diff ketersediaan; belum diterapkan pada verifikasi di atas. Regresi lengkap, audit akhir dan cetak perlu dituntaskan. Kompilasi/symbols tenant, sandbox, Firefox/WebKit, screen reader dan macOS belum diuji. U3/AL-2/AL-3 belum dimulai; tidak ada push/deploy.
+- Commit message rencana: `docs: add al developer path level 1 and cheatsheets`.
+
+
 ### Hasil Fase 5.7 — 2026-11-19
 
 - Track 3B selesai sebagai materi situs: delapan modul dan indeks; cheatsheet #9 API/OData dan #10 AL; E4–E6; capstone Spreadsheet-to-BC. Indeks serta daftar 404 API diselaraskan. Kode contoh Python tersedia di examples/api; tidak ada perubahan komponen/CSS, font atau dependensi situs.

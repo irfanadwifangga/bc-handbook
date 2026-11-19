@@ -1,0 +1,43 @@
+---
+title: "AL — Project dan app.json"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 17
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+**Alur:** AL: Go! → review target → Download Symbols → compile → publish Sandbox → uji positif/negatif. Project extension dibuat terpisah dari situs.
+
+| Bagian | Fungsi / pemeriksaan |
+| --- | --- |
+| id | Identitas app stabil, jangan ganti untuk upgrade biasa |
+| name/publisher/version | Identitas paket dan versi; pakai nama demo MYP |
+| platform/application | Minimum dependency symbols target |
+| runtime | Kemampuan bahasa/platform; compiler tidak mendeteksi runtime server otomatis |
+| idRanges/dependencies | ID tersedia, app dependency serta versi yang cocok |
+| launch.json | Review tipe Sandbox, environment dan startup object; jangan commit credential |
+
+| BC | Runtime AL |
+| --- | --- |
+| 27.0 | 16.0 |
+| 28.0 | 17.0 |
+| 29.0 | 18.0 |
+
+**Struktur:** app.json + .vscode/launch.json + file objek .al; symbols di .alpackages. Prefix demo MYP, ID contoh 50200–50220 wajib diperiksa konflik. Catat BC/AL Language/version/date. Compile bukan publish; publish bukan bukti perilaku benar. [AL1](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [runtime](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-choosing-runtime).
+- [json](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-json-files).
+
+</div>

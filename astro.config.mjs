@@ -18,6 +18,13 @@ export default defineConfig({
         { label: 'Basic', items: [{ autogenerate: { directory: '01-basic' } }] },
         { label: 'Intermediate', items: [{ autogenerate: { directory: '02-intermediate' } }] },
         { label: 'Expert', items: [{ autogenerate: { directory: '03-expert' } }] },
+        {
+          label: 'AL Developer',
+          items: [
+            { label: 'Jalur AL Developer', slug: '04-al-developer' },
+            { label: 'AL-1 Fundamentals', items: [{ autogenerate: { directory: '04-al-developer/al-1-fundamentals' } }] },
+          ],
+        },
         { label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheets' } }] },
         {
           label: 'Latihan',
@@ -26,6 +33,7 @@ export default defineConfig({
             { label: 'Basic', items: [{ autogenerate: { directory: 'latihan/basic' } }] },
             { label: 'Intermediate', items: [{ autogenerate: { directory: 'latihan/intermediate' } }] },
             { label: 'Expert', items: [{ autogenerate: { directory: 'latihan/expert' } }] },
+            { label: 'AL', items: [{ autogenerate: { directory: 'latihan/al' } }] },
           ],
         },
         {

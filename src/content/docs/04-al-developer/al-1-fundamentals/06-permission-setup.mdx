@@ -1,0 +1,124 @@
+---
+title: "AL-1.6 Permission dan pola Setup"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Buat konfigurasi single-record serta rancang akses minimum.
+
+## Konsep singkat
+
+Permission set memberi hak objek/data; entitlement dan permission lain tetap memengaruhi akses efektif. Objek baru belum otomatis boleh diakses semua user. Setup table single-record memakai key konvensional yang sama pada semua pemanggil; pembatasan page saja tidak menjadi constraint database untuk semua jalur.
+
+## Langkah di BC
+
+1. Buat Setup table dan Card di bawah. Key kosong adalah konvensi demo, tidak berarti database melarang key lain. Semua kode latihan harus memakai Setup.Get('').
+2. Siapkan seri MYP-REQ di halaman No. Series sandbox melalui pemilik, dengan baris tanggal dan increment yang valid. Isikan Request Nos. pada Setup card.
+3. Buat tabel MYP Request: No. Code[20] sebagai primary key, Description Text[100]; tambah Card dan List dengan CardPageId serta UsageCategory agar bisa ditemukan.
+4. Pada trigger OnInsert, jika No. kosong, ambil Setup dan gunakan codeunit No. Series sebagaimana fragmen berikut. Cocokkan namespace Microsoft.Foundation.NoSeries dan dependency dengan symbols target.
+5. Buat permission set Assignable berisi tabledata Setup/Request RIMD, object table/page execute dan codeunit demo execute yang diperlukan. Dependency standard No. Series memerlukan hak sesuai role yang direview.
+6. Uji user terpisah dengan akses minimum; cek menu, baca/tulis, serta akses yang harus ditolak. Jangan menganggap lolos dengan admin sebagai bukti least privilege.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+table 50203 "MYP Training Setup"
+{
+    DataClassification = CustomerContent;
+    fields
+    {
+        field(1; "Primary Key"; Code[10]) { }
+        field(2; "Request Nos."; Code[20])
+        {
+            TableRelation = "No. Series";
+        }
+    }
+    keys { key(PK; "Primary Key") { Clustered = true; } }
+}
+
+page 50204 "MYP Training Setup Card"
+{
+    PageType = Card;
+    SourceTable = "MYP Training Setup";
+    ApplicationArea = All;
+    UsageCategory = Administration;
+    InsertAllowed = false;
+    DeleteAllowed = false;
+    layout
+    {
+        area(Content)
+        {
+            group(General)
+            {
+                field("Request Nos."; Rec."Request Nos.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Menentukan seri nomor dokumen latihan.';
+                }
+            }
+        }
+    }
+    trigger OnOpenPage()
+    begin
+        if not Rec.Get('') then begin
+            Rec.Init();
+            Rec."Primary Key" := '';
+            Rec.Insert(true);
+        end;
+    end;
+}
+```
+
+```text
+// Bagian dari trigger OnInsert tabel MYP Request milik latihan.
+// Variabel: Setup: Record "MYP Training Setup";
+//           NoSeries: Codeunit "No. Series";
+if "No." = '' then begin
+    Setup.Get('');
+    Setup.TestField("Request Nos.");
+    "No." := NoSeries.GetNextNo(Setup."Request Nos.", WorkDate());
+end;
+```
+
+Contoh adalah fondasi AL3, bukan extension lengkap siap publish; tabel Request, Card/List dan permission set harus disusun pembelajar. Gap nomor dapat terjadi karena konfigurasi/transaksi; gate meminta nomor unik sesuai seri, bukan janji nomor selalu tanpa celah.
+
+## Cheat box
+
+<CheatBox>
+
+- Setup memakai key konsisten.
+- Table berbeda dari tabledata.
+- Permission diuji user terpisah.
+- Seri nomor bukan hitung Max+1.
+- Cocokkan API dengan symbols.
+- Missing setup harus jelas.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memberi akses luas agar error hilang, membuat nomor dengan Max+1, atau mencampur company scope setup tanpa review.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al3-setup-request/).
+
+## Sumber resmi
+
+- [permission](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-permissionset-object).
+- [series](https://learn.microsoft.com/en-us/dynamics365/business-central/application/business-foundation/codeunit/microsoft.foundation.noseries.no.-series).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

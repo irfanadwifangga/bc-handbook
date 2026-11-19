@@ -1,0 +1,91 @@
+---
+title: "AL-1.4 Objek inti dan field customer"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Hubungkan penyimpanan, tampilan dan perilaku extension.
+
+## Konsep singkat
+
+Table menyimpan skema/data; Page menyajikannya. TableExtension menambah field pada tabel yang extensible, PageExtension menampilkan field/action pada halaman yang mendukungnya. Card untuk satu record, List untuk banyak record, Document untuk pola header/lines. Enum/EnumExtension memberi pilihan; Codeunit mengelompokkan perilaku.
+
+## Langkah di BC
+
+1. Tambahkan dua objek contoh berikut dalam file terpisah. Cocokkan Customer, Customer Card dan kontrol General melalui symbols/AL Explorer.
+2. Review Caption, ToolTip, ApplicationArea dan DataClassification. Field tambahan tidak otomatis tampil di UI jika hanya TableExtension yang dibuat.
+3. Kompilasi dan publish ke Sandbox; buka Customer demo, isi MYP Training Note, tutup dan buka kembali untuk memeriksa persistensi.
+4. Tambahkan Table/Page demo sendiri untuk AL3 dan panggil codeunit melalui action milik halaman latihan; hindari logika berat pada OnAfterGetRecord.
+5. Catat fungsi setiap objek dan permission yang diperlukan. Jika anchor halaman berubah, cari anchor yang benar pada symbols, bukan menebak nama.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+tableextension 50200 "MYP Customer Training" extends Customer
+{
+    fields
+    {
+        field(50200; "MYP Training Note"; Text[100])
+        {
+            Caption = 'Training note';
+            DataClassification = CustomerContent;
+        }
+    }
+}
+
+pageextension 50201 "MYP Customer Card Training" extends "Customer Card"
+{
+    layout
+    {
+        addlast(General)
+        {
+            field("MYP Training Note"; Rec."MYP Training Note")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Mencatat keterangan latihan demo.';
+            }
+        }
+    }
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Table menyimpan data.
+- Page menyajikan record.
+- Tableext berbeda dari pageext.
+- Anchor dicocokkan ke symbols.
+- Klasifikasi data harus tepat.
+- Buktikan persistensi di UI.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menganggap field baru langsung terlihat, menaruh seluruh bisnis logic di halaman, atau menyalin nama kontrol dari screenshot tanpa symbols.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [tableext](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-table-ext-object).
+- [pageext](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-page-ext-object).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

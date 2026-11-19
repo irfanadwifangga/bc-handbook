@@ -6,7 +6,7 @@ sidebar:
   order: 0
 ---
 
-Dua belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
+Empat belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
@@ -55,3 +55,11 @@ Dua belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configurat
 ## Process Mapping
 
 [Buka cheatsheet](./16-process-mapping/) — elemen flowchart/swimlane, as-is/to-be dan contoh Order-to-Cash; latihan [E1](/latihan/expert/e1-process-mapping/).
+
+## AL Project dan app.json
+
+[Buka cheatsheet](./17-al-project/) — manifest, target runtime dan siklus kerja sandbox.
+
+## AL Sintaks dan tipe data
+
+[Buka cheatsheet](./18-al-syntax/) — tipe, scope, kontrol alur dan validasi; snippet belum dikompilasi.

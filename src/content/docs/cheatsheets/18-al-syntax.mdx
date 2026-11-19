@@ -1,0 +1,46 @@
+---
+title: "AL — Sintaks dan tipe data"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 18
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+| Pilihan | Gunakan untuk |
+| --- | --- |
+| Integer / Decimal | Hitungan bulat / pecahan |
+| Code / Text | Kode bisnis ternormalisasi / teks bebas |
+| Boolean / Date / DateTime | Kondisi / tanggal / waktu |
+| Enum / List / Dictionary | Pilihan bernama / urutan nilai / pasangan key-value |
+| Label | Teks aplikasi yang dapat diterjemahkan |
+| local / internal | Scope procedure di objek / module, bukan izin data |
+| parameter var | Perubahan ke nilai caller; gunakan jika disengaja |
+| if/case/repeat/for | Cabang dan pengulangan yang dibatasi |
+| condition ? a : b | Ternary pada runtime yang mendukung; if/else tetap cukup |
+| Message/Error/Confirm | Informasi / hentikan operasi / keputusan user interaktif |
+
+```text
+// Fragmen procedure demo, belum dikompilasi.
+if (Percent < 0) or (Percent > 100) then
+    Error(InvalidPercentErr);
+Result := Amount * (1 - Percent / 100);
+```
+
+`:=` assignment, `=` perbandingan; gunakan Label untuk InvalidPercentErr. Validate(field,value) menjalankan OnValidate; assignment tidak. Get memakai primary key; filter dahulu sebelum FindSet/CalcSums. [Materi bahasa](/04-al-developer/al-1-fundamentals/03-dasar-bahasa/) dan [akses data](/04-al-developer/al-1-fundamentals/05-akses-data/).
+
+## Sumber resmi
+
+- [variables](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-variables).
+- [control](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-control-statements).
+
+</div>

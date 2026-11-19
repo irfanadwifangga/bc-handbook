@@ -1,0 +1,88 @@
+---
+title: "AL-1.5 Record, filter dan validasi"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Baca subset yang benar dan bedakan perubahan nilai dari validasi bisnis.
+
+## Konsep singkat
+
+Get mencari primary key; filter normal tidak membuat Get menjadi pencarian menurut filter. FindFirst mencari satu record sesuai filter; FindSet dipakai untuk iterasi set dan Next melanjutkan. SetRange cocok untuk nilai/rentang, SetFilter untuk ekspresi. Validate menjalankan OnValidate field; assignment langsung tidak menggantikannya.
+
+## Langkah di BC
+
+1. Tetapkan Customer dan satu Sales Order demo miliknya. Filter document type dan document number agar penjumlahan tidak mencampur quote/order/invoice atau currency berbeda.
+2. Jalankan contoh OrderAmount dan cocokkan Amount line tanpa pajak pada order yang sama, termasuk diskon line yang sudah dihitung BC; jangan membandingkan dengan total termasuk VAT.
+3. Gunakan SetLoadFields pada pembacaan normal yang hanya memerlukan beberapa field. Jangan memilih semua field atau meminta field yang tidak dimuat dalam loop karena dapat memicu pembacaan tambahan.
+4. Gunakan CalcFields untuk FlowField setelah filter/FlowFilter yang diperlukan. CalcSums menjumlah field normal sesuai filter; bukan pengganti perhitungan FlowField.
+5. Sebelum Insert/Modify/Delete pahami parameter RunTrigger; true menjalankan trigger record terkait, bukan otomatis OnValidate semua field. Validate nilai yang perlu business validation lalu persist secara sengaja.
+6. Jangan menambah Commit untuk menutupi error. Commit memisahkan transaksi dan dapat meninggalkan hasil parsial; latihan ini memakai read agar dampaknya kecil.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+// Procedure di dalam codeunit demo; sesuaikan namespace dengan symbols.
+procedure OrderAmount(CustomerNo: Code[20]; OrderNo: Code[20]): Decimal
+var
+    SalesLine: Record "Sales Line";
+begin
+    SalesLine.SetRange("Document Type", SalesLine."Document Type"::Order);
+    SalesLine.SetRange("Document No.", OrderNo);
+    SalesLine.SetRange("Sell-to Customer No.", CustomerNo);
+    SalesLine.CalcSums(Amount);
+    exit(SalesLine.Amount);
+end;
+
+procedure FindDemoCustomer(CustomerNo: Code[20]): Text[100]
+var
+    Customer: Record Customer;
+begin
+    Customer.SetLoadFields(Name);
+    if not Customer.Get(CustomerNo) then
+        exit('');
+    exit(Customer.Name);
+end;
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Get memakai primary key.
+- Filter scope sebelum jumlah.
+- Validate berbeda dari assignment.
+- Pilih field yang diperlukan.
+- FlowField butuh CalcFields.
+- Jangan Commit sembarangan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menjumlah Amount antarcurrency, memanggil Get sambil mengira SetRange melindungi scope, atau Insert(true) dianggap memvalidasi semua field.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al2-data-filter/).
+
+## Sumber resmi
+
+- [record](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-get-find-and-next-methods).
+- [partial](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-partial-records).
+- [validate](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/record/record-validate-method).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

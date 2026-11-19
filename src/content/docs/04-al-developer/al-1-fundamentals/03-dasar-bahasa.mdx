@@ -1,0 +1,78 @@
+---
+title: "AL-1.3 Dasar bahasa dan procedure"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Pilih tipe, scope dan alur kontrol untuk fungsi kecil yang dapat diuji.
+
+## Konsep singkat
+
+Code cocok untuk kode bisnis yang dinormalisasi, Text untuk teks bebas, Decimal untuk nilai pecahan, Integer untuk hitungan dan Boolean untuk kondisi. Date berbeda dari DateTime. Enum mewakili pilihan bernama; List dan Dictionary adalah koleksi. Label menampung teks yang dapat diterjemahkan, bukan data runtime.
+
+## Langkah di BC
+
+1. Buat variabel lokal pada procedure; gunakan parameter var hanya jika memang ingin memodifikasi nilai caller. Tanpa var, perubahan nilai sederhana tidak dikirim balik.
+2. Baca scope local (objek ini), internal (module/app ini) dan procedure yang diekspos ke caller sesuai kontrak. Jangan memberi akses lebih luas tanpa kebutuhan.
+3. Gunakan if/case untuk cabang dan repeat/for untuk pengulangan terbatas. Tulis validasi di awal agar happy path mudah dibaca.
+4. Pelajari operator ternary sebagai ekspresi condition ? trueValue : falseValue pada runtime yang mendukung; if/else tetap cukup untuk latihan awal.
+5. Bandingkan Message untuk informasi, Error untuk menghentikan operasi, dan Confirm untuk keputusan user interaktif. Confirm/Message bukan mekanisme integrasi headless.
+6. Uji procedure di bawah dengan amount 100 dan percent 10 (expected 90), percent 0/100, serta -1/101 yang harus error. Catat actual setelah eksekusi sandbox.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50202 "MYP Training Logic"
+{
+    procedure DiscountedAmount(Amount: Decimal; Percent: Decimal): Decimal
+    var
+        InvalidPercentErr: Label 'Persentase harus antara 0 dan 100.';
+    begin
+        if (Percent < 0) or (Percent > 100) then
+            Error(InvalidPercentErr);
+        exit(Amount * (1 - Percent / 100));
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Pilih tipe sesuai makna.
+- Scope procedure disengaja.
+- var mengubah nilai caller.
+- Label untuk teks aplikasi.
+- Validasi batas di awal.
+- Uji positif dan negatif.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memakai Integer untuk pecahan, Confirm pada proses tanpa user, atau menganggap local/internal sama dengan permission data.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [variables](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-variables).
+- [methods](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-methods).
+- [control](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-control-statements).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

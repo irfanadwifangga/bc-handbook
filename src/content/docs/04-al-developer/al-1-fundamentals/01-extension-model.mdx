@@ -1,0 +1,70 @@
+---
+title: "AL-1.1 Peta extension model"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Jelaskan extension, identitas app, dependency dan target runtime.
+
+## Konsep singkat
+
+Base Application menyediakan fungsi standar; extension menambah kemampuan melalui objek extension dan kontrak yang didukung. PTE dipakai untuk kebutuhan tenant tertentu, sedangkan distribusi Marketplace/AppSource mempunyai persyaratan publikasi tambahan. Keduanya tetap memerlukan kualitas kode dan pengujian. Mengubah ID app bukan cara aman membuat versi berikutnya.
+
+## Langkah di BC
+
+1. Tentukan batas demo MYP Hello BC: field customer, halaman demo, codeunit dan permission. Jangan memasukkan nama objek atau logika kantor.
+2. Baca app.json hasil scaffold: id adalah identitas app, name/publisher/version mengidentifikasi paket; dependencies menyebut app lain yang diperlukan. Simpan identitas app stabil antarversi.
+3. Bedakan runtime (kemampuan bahasa/platform) dari application/platform (minimum dependency). Referensi resmi memasangkan BC 29 dengan runtime 18.0; target harus benar-benar mendukung ketiganya.
+4. Pilih ID range demo yang tersedia dan prefix MYP. Rentang 50200–50220 pada materi hanyalah contoh, bukan alokasi resmi atau jaminan bebas konflik.
+5. Catat target Sandbox, versi BC, versi AL Language, symbols dan pemilik app pada README latihan. Jangan membawa launch.json berisi data tenant ke repo publik.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+// Fragmen manifest, bukan app.json lengkap.
+"runtime": "18.0",
+"application": "29.0.0.0",
+"platform": "29.0.0.0",
+"idRanges": [{ "from": 50200, "to": 50220 }]
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Identitas app harus stabil.
+- PTE dan AppSource berbeda distribusi.
+- Runtime berbeda dari application.
+- ID contoh belum tentu tersedia.
+- Gunakan prefix demo MYP.
+- Catat dependency target.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengganti app ID saat upgrade, menaikkan runtime tanpa memeriksa server, atau menggunakan ID kantor untuk demo.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [runtime](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-choosing-runtime).
+- [json](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-json-files).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

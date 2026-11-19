@@ -1,0 +1,70 @@
+---
+title: "AL-1.2 Environment development"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Siapkan project dan pahami compile, publish serta debug sebagai langkah berbeda.
+
+## Konsep singkat
+
+Workspace situs berisi materi; project extension latihan dibuat di folder terpisah di bawah D:/project/. Compile memeriksa kode terhadap symbols, publish mengirim app ke server, dan debug menjalankan kode dengan pemeriksaan runtime. Build situs tidak melakukan ketiganya.
+
+## Langkah di BC
+
+1. Pemilik memastikan environment bertipe Sandbox dan company CRONUS melalui Admin Center/UI. Nama environment tidak cukup menjadi bukti tipenya.
+2. Pasang VS Code dan AL Language di komputer sendiri, lalu AL: Go! pada folder kosong. Pilih target Microsoft cloud sandbox; review file yang dihasilkan.
+3. Periksa app.json dan launch.json: environmentType Sandbox, target yang benar, startup object demo. Jangan simpan password/token; autentikasi dilakukan pemilik melalui alur resmi.
+4. Jalankan AL: Download Symbols, lalu compile/package melalui perintah AL yang tersedia pada versi extension. Catat error dan dependency yang diminta.
+5. Gunakan Ctrl+F5 untuk menjalankan tanpa debugger atau F5 untuk sesi debug setelah review target. Periksa app terpasang dan perilaku melalui UI sandbox.
+6. Buka AL Explorer untuk menemukan objek dan field yang benar. Rekam compiler/BC/version/date pada bukti latihan yang telah disanitasi.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+AL: Go! → review target → AL: Download Symbols
+→ compile/package → review Sandbox → Ctrl+F5
+F5: publish/jalankan dengan debugger sesuai konfigurasi
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Project latihan terpisah.
+- Konfirmasi tipe Sandbox.
+- Review launch sebelum publish.
+- Download symbols target.
+- Compile berbeda dari publish.
+- Simpan bukti tanpa credential.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menekan F5 tanpa memeriksa environment atau menyebut situs berhasil build sebagai bukti extension sudah terpasang.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [start](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-get-started).
+- [json](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-json-files).
+- [debug](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-debugging).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

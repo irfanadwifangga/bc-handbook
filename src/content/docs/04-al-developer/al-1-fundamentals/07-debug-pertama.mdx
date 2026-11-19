@@ -1,0 +1,70 @@
+---
+title: "AL-1.7 Debug dan pembacaan error"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Basic
+sidebar:
+  order: 7
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Reproduksi masalah kecil dan telusuri input, breakpoint serta call stack.
+
+## Konsep singkat
+
+Compiler error terjadi sebelum app dijalankan; runtime error terjadi ketika kode dieksekusi. Debugger membantu melihat nilai dan alur, tetapi tidak menggantikan expected result. Page Inspection menghubungkan UI dengan page/table/extension yang terlihat pada role tersebut.
+
+## Langkah di BC
+
+1. Buat langkah reproduksi untuk percent 101 pada procedure modul bahasa; expected result adalah error validasi, bukan hasil diskon.
+2. Kompilasi dahulu. Baca kode error, file, line dan pesan pertama yang relevan; error lanjutan dapat berasal dari kesalahan sebelumnya.
+3. Pasang breakpoint sebelum validasi, jalankan F5 ke sandbox, panggil action demo dan amati parameter, local variable serta call stack.
+4. Gunakan step over untuk melewati pemanggilan atau step into ketika perlu memeriksa procedure lain; hindari melihat/merekam credential dan data nyata.
+5. Buka Page Inspection pada halaman demo untuk memeriksa source table serta extension. Catat object name/ID demo tanpa identitas tenant.
+6. Setelah koreksi di workspace latihan, ulangi kasus gagal dan kasus normal. Simpan expected/actual, versi compiler/BC dan bukti tersanitasi; ubah status kompilasi hanya setelah benar-benar diuji.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+Kasus: DiscountedAmount(100, 101)
+Expected: validasi menolak percent di luar 0–100
+Actual: Belum dijalankan
+Reproduksi → breakpoint → input/call stack → koreksi → retest
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Compiler dan runtime berbeda.
+- Reproduksi harus spesifik.
+- Amati input dan call stack.
+- Jangan rekam credential.
+- Retest positif dan negatif.
+- Catat hasil, bukan dugaan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menebak akar masalah dari satu screenshot, menghapus validasi agar kasus lulus, atau menyebut breakpoint tersentuh sebagai bukti hasil bisnis benar.
+:::
+
+## Latihan terkait
+
+[Latihan terkait](/latihan/al/al1-hello-extension/).
+
+## Sumber resmi
+
+- [debug](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-debugging).
+- [start](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-get-started).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.
