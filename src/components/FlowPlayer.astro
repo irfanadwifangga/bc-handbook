@@ -1,30 +1,78 @@
 ---
 import '../styles/learning-flow.css';
-interface Step { label: string; analogy: string; document: string; impact: string }
-interface Props { steps: Step[] }
-const { steps } = Astro.props;
+
+interface Step {
+  label: string;
+  analogy: string;
+  document: string;
+  impact: string;
+}
+
+interface Props {
+  steps: Step[];
+  intro?: string;
+}
+
+const { steps, intro } = Astro.props;
+const cleanLabel = (text: string) => text.replace(/^\d+[\.\s\-]+/, '');
 ---
 <bc-flow class="bc-flow">
-  <p class="bc-flow-intro">Toko CRONUS menjual dua kursi. Ikuti perpindahan barang, tagihan, dan pembayaran.</p>
-  <ol class="bc-flow-map" aria-label="Tahapan alur Sales">
-    {steps.map((step, index) => <li><button type="button" data-stage={index} data-label={step.label} disabled><span>{index + 1}</span>{step.label}</button></li>)}
+  <p class="bc-flow-intro">{intro || 'Toko CRONUS menjual dua kursi. Ikuti perpindahan barang, tagihan, dan pembayaran.'}</p>
+
+  <ol class="bc-flow-map" aria-label="Tahapan Alur Kerja">
+    {steps.map((step, index) => {
+      const name = cleanLabel(step.label);
+      return (
+        <li>
+          <button type="button" data-stage={index} data-label={name} disabled>
+            <span class="bc-step-number">{index + 1}</span>
+            <span class="bc-step-text">{name}</span>
+          </button>
+        </li>
+      );
+    })}
   </ol>
+
   <div class="bc-flow-controls" hidden>
     <button type="button" data-action="previous">Sebelumnya</button>
     <button type="button" data-action="play">Putar</button>
     <button type="button" data-action="next">Berikutnya</button>
     <button type="button" data-action="reset">Ulangi</button>
   </div>
-  <p data-status role="status" aria-live="polite" aria-atomic="true">Enam tahap; semua penjelasan tersedia di bawah.</p>
+
+  <p data-status role="status" aria-live="polite" aria-atomic="true">{steps.length} tahap; semua penjelasan tersedia di bawah.</p>
   <div class="bc-flow-time" aria-hidden="true" hidden><span></span></div>
+
   <div class="bc-flow-panels">
-    {steps.map((step, index) => <article data-panel={index} aria-label={`Tahap ${index + 1}: ${step.label}`}>
-      <h3>{index + 1}. {step.label}</h3>
-      <dl><dt>Analogi toko</dt><dd>{step.analogy}</dd><dt>Dokumen / halaman BC</dt><dd>{step.document}</dd><dt>Dampak utama</dt><dd>{step.impact}</dd></dl>
-    </article>)}
+    {steps.map((step, index) => {
+      const name = cleanLabel(step.label);
+      return (
+        <article data-panel={index} class="bc-flow-panel" aria-label={`Tahap ${index + 1}: ${name}`}>
+          <header class="bc-panel-header">
+            <span class="bc-panel-badge">Tahap {index + 1} dari {steps.length}</span>
+            <h3>{name}</h3>
+          </header>
+          <div class="bc-panel-grid">
+            <div class="bc-panel-card">
+              <span class="bc-card-tag">Analogi & Konsep Bisnis</span>
+              <p>{step.analogy}</p>
+            </div>
+            <div class="bc-panel-card">
+              <span class="bc-card-tag">Halaman & Dokumen BC</span>
+              <p>{step.document}</p>
+            </div>
+            <div class="bc-panel-card">
+              <span class="bc-card-tag">Dampak Finansial & Ledger</span>
+              <p>{step.impact}</p>
+            </div>
+          </div>
+        </article>
+      );
+    })}
   </div>
-  <noscript><p>JavaScript nonaktif: baca keenam tahap secara berurutan di bawah diagram.</p></noscript>
+  <noscript><p>JavaScript nonaktif: baca seluruh tahapan secara berurutan di bawah diagram.</p></noscript>
 </bc-flow>
+
 <script>
   class LearningFlow extends HTMLElement {
     private timer?: ReturnType<typeof setInterval>;

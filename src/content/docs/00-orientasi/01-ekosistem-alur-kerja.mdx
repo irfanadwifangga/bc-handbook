@@ -57,46 +57,48 @@ Berikut adalah diagram perputaran bisnis terpadu dari pengadaan awal, pengelolaa
 
 Gunakan simulasi interaktif di bawah untuk melihat bagaimana data dan nilai uang berpindah dari satu modul ke modul berikutnya di lingkungan CRONUS:
 
-<FlowPlayer steps={[
+<FlowPlayer
+  intro="Ikuti 7 tahapan perputaran bisnis di Business Central: pelajari bagaimana data berpindah dari master data, transaksi pengadaan, persediaan fisik, penjualan, mutasi kas, hingga pembukuan buku besar dan integrasi sistem eksternal."
+  steps={[
   {
-    label: '1. Master Data',
+    label: 'Master Data',
     analogy: 'Membangun toko: menyiapkan katalog barang, daftar pemasok terpercaya, daftar pelanggan, dan buku rekening bank.',
     document: 'Item Card, Vendor Card, Customer Card, Bank Account, Chart of Accounts, General Posting Setup.',
     impact: 'Menjadi fondasi acuan transaksi. Tanpa kelompok posting (Posting Groups) yang lengkap pada master data, sistem akan menolak proses posting.'
   },
   {
-    label: '2. Purchasing',
+    label: 'Purchasing (P2P)',
     analogy: 'Toko memesan barang dagangan ke pemasok (supplier). Pemasok mengirim barang dan mengirimkan lembar tagihan.',
     document: 'Purchase Order → Post Receive & Invoice (Posted Purchase Receipt, Posted Purchase Invoice).',
     impact: 'Membentuk Item Ledger Entry (kuantitas stok masuk), Value Entry (biaya beli), dan Vendor Ledger Entry (kewajiban utang dagang).'
   },
   {
-    label: '3. Inventory',
+    label: 'Inventory & Costing',
     analogy: 'Gudang menyimpan stok, memindahkan barang antar lokasi, dan menghitung nilai modal barang yang tersedia.',
     document: 'Item Ledger Entries, Value Entries, Item Journals, Adjust Cost - Item Entries.',
     impact: 'Mengatur valuasi persediaan (FIFO, Average, Standard). Mengirim nilai biaya persediaan aktual ke General Ledger akun Persediaan vs Biaya.'
   },
   {
-    label: '4. Sales',
+    label: 'Sales (O2C)',
     analogy: 'Pelanggan memesan barang, toko mengirimkan pesanan dari gudang, lalu menerbitkan faktur tagihan resmi.',
     document: 'Sales Order → Post Ship & Invoice (Posted Sales Shipment, Posted Sales Invoice).',
     impact: 'Membentuk Item Ledger Entry (kuantitas stok keluar), Customer Ledger Entry (piutang pelanggan), pendapatan penjualan (Revenue), dan PPN Keluaran.'
   },
   {
-    label: '5. Cash & Bank',
+    label: 'Cash & Bank',
     analogy: 'Toko menerima pembayaran transfer dari pelanggan dan melunasi tagihan pemasok melalui rekening bank.',
     document: 'Cash Receipt Journal, Payment Journal, Bank Account Ledger Entries, Bank Account Reconciliation.',
     impact: 'Mencocokkan (Apply) pembayaran dengan faktur terkait, menutup saldo piutang/utang, mencatat mutasi kas/bank, dan memvalidasi rekening koran.'
   },
   {
-    label: '6. General Ledger',
+    label: 'General Ledger',
     analogy: 'Pemilik toko memeriksa ringkasan neraca keuangan dan laporan untung-rugi untuk mengetahui kondisi bisnis.',
     document: 'Chart of Accounts, G/L Entries, G/L Registers, Financial Reports (Income Statement & Balance Sheet).',
     impact: 'Mengagregasikan seluruh jurnal operasional ke dalam akun aset, kewajiban, ekuitas, pendapatan, dan beban secara seimbang (Debit = Kredit).'
   },
   {
-    label: '7. Integrasi API',
-    analogy: 'Toko menghubungkan sistem kasir kasir cabang, toko online (e-commerce), dan dashboard Power BI pimpinan.',
+    label: 'Integrasi API',
+    analogy: 'Toko menghubungkan sistem kasir cabang, toko online (e-commerce), dan dashboard Power BI pimpinan.',
     document: 'Standard APIs v2.0, Custom API Pages/Queries, Webhook Subscriptions, Power Automate Flows.',
     impact: 'Data operasional mengalir keluar-masuk secara real-time tanpa duplikasi input manual, dengan tetap mematuhi aturan validasi bisnis BC.'
   }
