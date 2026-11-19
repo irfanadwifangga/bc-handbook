@@ -205,6 +205,21 @@ starlight-theme-select select { width: auto; }
   --ec-uiSelFg: var(--bc-text);
 }
 
+.bc-mermaid-wrapper {
+  margin: var(--bc-space-4) 0;
+  padding: var(--bc-space-4);
+  background: var(--bc-surface);
+  border: var(--bc-border-width) solid var(--bc-border);
+  border-radius: var(--bc-radius-md);
+  overflow-x: auto;
+  text-align: center;
+}
+.bc-mermaid-wrapper svg {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 /* Usulan layout desktop; belum diterapkan. */
 @media screen and (min-width: 72rem) {
   :root {

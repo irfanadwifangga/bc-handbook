@@ -3,10 +3,15 @@
 <figure class="bc-ecosystem-diagram-wrapper" aria-label="Diagram Perputaran Kerja Ekosistem Business Central">
   <div class="bc-diagram-toolbar">
     <span class="bc-diagram-tag">Arsitektur End-to-End Business Central</span>
-    <button type="button" class="bc-diagram-expand-btn" id="bc-open-diag-btn" aria-haspopup="dialog">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-      Perbesar Layar Penuh
-    </button>
+    <div class="bc-diagram-actions">
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-in" title="Perbesar">+</button>
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-out" title="Perkecil">−</button>
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-reset" title="Reset Zoom">↺</button>
+      <button type="button" class="bc-diagram-expand-btn" id="bc-open-diag-btn" aria-haspopup="dialog">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        Layar Penuh
+      </button>
+    </div>
   </div>
 
   <div class="bc-ecosystem-diagram-viewport">
@@ -185,17 +190,43 @@
 </figure>
 
 <script>
+  import Panzoom from '@panzoom/panzoom';
+
+  const svg = document.querySelector<SVGElement>('.bc-ecosystem-svg');
+  const zoomInBtn = document.getElementById('bc-zoom-in');
+  const zoomOutBtn = document.getElementById('bc-zoom-out');
+  const zoomResetBtn = document.getElementById('bc-zoom-reset');
+
+  if (svg) {
+    const panzoom = Panzoom(svg, {
+      maxScale: 4,
+      minScale: 0.8,
+      contain: 'outside',
+    });
+
+    svg.parentElement?.addEventListener('wheel', panzoom.zoomWithWheel);
+    zoomInBtn?.addEventListener('click', () => panzoom.zoomIn());
+    zoomOutBtn?.addEventListener('click', () => panzoom.zoomOut());
+    zoomResetBtn?.addEventListener('click', () => panzoom.reset());
+  }
+
   const openBtn = document.getElementById('bc-open-diag-btn');
   const closeBtn = document.getElementById('bc-close-diag-btn');
   const modal = document.getElementById('bc-diag-modal') as HTMLDialogElement | null;
   const target = document.getElementById('bc-dialog-target');
-  const svg = document.querySelector('.bc-ecosystem-svg');
 
   if (openBtn && closeBtn && modal && target && svg) {
     openBtn.addEventListener('click', () => {
       target.innerHTML = '';
-      target.appendChild(svg.cloneNode(true));
+      const clone = svg.cloneNode(true) as SVGElement;
+      target.appendChild(clone);
       modal.showModal();
+
+      const modalPanzoom = Panzoom(clone, {
+        maxScale: 5,
+        minScale: 0.6,
+      });
+      clone.parentElement?.addEventListener('wheel', modalPanzoom.zoomWithWheel);
     });
     closeBtn.addEventListener('click', () => modal.close());
     modal.addEventListener('click', (e) => {
@@ -216,9 +247,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--bc-space-2);
     margin-bottom: var(--bc-space-3);
     padding-bottom: var(--bc-space-2);
     border-bottom: var(--bc-border-width) solid var(--bc-border);
+  }
+  .bc-diagram-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bc-space-1);
+  }
+  .bc-diagram-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    font-size: var(--bc-text-sm);
+    font-weight: 600;
+    color: var(--bc-text);
+    background: var(--bc-surface-2);
+    border: var(--bc-border-width) solid var(--bc-border);
+    border-radius: var(--bc-radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .bc-diagram-tool-btn:hover {
+    border-color: var(--bc-accent);
+    color: var(--bc-accent);
   }
   .bc-diagram-tag {
     font-size: var(--bc-text-xs);
