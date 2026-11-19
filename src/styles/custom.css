@@ -1,3 +1,6 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
 :root, ::backdrop {
   color-scheme: dark;
   --bc-bg: #0a0a0a;
@@ -14,8 +17,8 @@
   --bc-warning: #fbbf24;
   --bc-danger: #f87171;
   --bc-expert: #c084fc;
-  --bc-font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --bc-font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --bc-font-sans: 'Geist Variable', 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --bc-font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
   --bc-text-xs: 12px;
   --bc-text-sm: 14px;
   --bc-text-base: 16px;

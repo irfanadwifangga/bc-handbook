@@ -7,7 +7,7 @@
 ## Ringkasan status terkini — 2026-11-19
 
 - Konten Fase 5.0–5.9 selesai secara menyeluruh. Track BA, API, seluruh Jalur AL Developer (AL-1, AL-2, AL-3), 22 cheatsheet, 35 latihan/capstone, glosarium, referensi, dan progress tracker telah terpasang dan diaudit tanpa tautan rusak atau kebocoran data rahasia.
-- U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
+- U1, U2, dan U3 selesai. Font Geist Sans & Geist Mono terpasang self-hosted via paket fontsource variabel lokal tanpa CDN eksternal. U4–U6 menyusul.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
 - Verifikasi terakhir: build 140 halaman, 3 tes Bun, 23.366 tautan internal/anchor valid, 0 rahasia kredensial (164 file dipindai), dan 139 file konten memiliki metadata bc_version_verified 29.x & last_verified lengkap. Seluruh fase kurikulum 5.0–5.9 selesai. Tidak ada push/deploy.
@@ -30,6 +30,13 @@
 - [x] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil U3 — 2026-11-19
+
+- Dipasang dependensi font self-hosted `@fontsource-variable/geist` dan `@fontsource-variable/geist-mono` (v5.3.0) via bun, terkunci di `bun.lock`.
+- `src/styles/custom.css` mengimpor font lokal dan memperbarui `--bc-font-sans` serta `--bc-font-mono` dengan fallback sistem lengkap.
+- Verifikasi nyata: `bun run build` sukses 140 halaman; 11 berkas `.woff2` terbundel di `dist/_astro/`; 0 request ke CDN font eksternal (Google Fonts/Fontsource CDN bebas); `bun test` 3 lulus.
+- Commit message: `style: self-host geist fonts`.
 
 ### Hasil Fase 5.9 — 2026-11-19
 
