@@ -31,6 +31,13 @@
 
 ## Log
 
+### Tambahan Halaman Ekosistem & Perbaikan UI — 2026-11-19
+
+- Ditambahkan halaman `src/content/docs/00-orientasi/01-ekosistem-alur-kerja.mdx` yang memuat peta helikopter perputaran bisnis menyeluruh di BC (P2P, O2C, Inventory Costing, Cash Management, General Ledger, dan Integrasi API) dilengkapi simulasi `FlowPlayer` interaktif dan matriks dokumen operasional vs subledger.
+- Perbaikan UI: Ikon copy Expressive Code dipulihkan, komponen `CheatBox` dirapikan tanpa judul ganda, dan `FlowPlayer` dipercantik dengan badge nomor bulat dan card layout terstruktur.
+- Verifikasi nyata: `bun run build` sukses 141 halaman, Pagefind search index 141 file; `bun test` 3 lulus.
+- Commit message: `feat: add BC ecosystem overview page and polish UI components`.
+
 ### Hasil U4 & U5 — 2026-11-19
 
 - **U4 (Gaya Kartu & Tabs):** Ditambahkan aturan CSS di `src/styles/custom.css` untuk `.card-grid`, `.sl-link-card`, `.card`, dan `starlight-tabs` mengikuti token desain neutral v2.0 (border 1px `--bc-border`, radius `--bc-radius-md`, tanpa bayangan, hover border `--bc-accent`).

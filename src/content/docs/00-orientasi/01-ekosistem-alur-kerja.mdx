@@ -1,0 +1,182 @@
+---
+title: Ekosistem dan Alur Kerja BC
+description: Peta perputaran kerja menyeluruh dari master data, pembelian, persediaan, penjualan, kas, hingga buku besar dan integrasi.
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+sidebar:
+  order: 1
+---
+
+import FlowPlayer from '../../../components/FlowPlayer.astro';
+import CheatBox from '../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Setelah mempelajari materi ini, kamu bisa:
+
+- Menjelaskan gambaran helikopter (*bird's-eye view*) bagaimana roda operasional dan finansial berputar di dalam Microsoft Dynamics 365 Business Central (BC).
+- Menelusuri rantai keterkaitan antar bagian: Master Data & Setup Inti, Purchasing, Inventory, Sales, Cash & Bank Management, General Ledger, hingga Integrasi Eksternal.
+- Memahami bagaimana sebuah dokumen operasional (seperti Sales Order atau Purchase Order) bermuara pada Subledger dan General Ledger (G/L Entries).
+- Menggunakan peta ekosistem ini sebagai panduan utama Business Analyst saat menganalisis kebutuhan klien, memetakan proses bisnis (*process mapping*), dan mendesain integrasi API.
+
+:::note[Batas verifikasi]
+Materi diverifikasi pada 19 November 2026 terhadap arsitektur standar Dynamics 365 Business Central 29.x (2026 release wave 2). Konfigurasi add-on pihak ketiga, ekstensi khusus (*Per-Tenant Extension*), dan regulasi perpajakan lokal dapat menambah variasi langkah transaksi.
+:::
+
+## Konsep singkat
+
+### 1. Prinsip Single Source of Truth dan Immutability
+
+Di dalam BC, seluruh transaksi operasional terintegrasi langsung ke satu buku besar utama tanpa perlu integrasi batch terpisah:
+
+- **Buku Pembantu (Subledger):** Mencatat transaksi detail per entitas (misalnya: *Customer Ledger Entries* untuk piutang pelanggan, *Vendor Ledger Entries* untuk utang vendor, *Item Ledger Entries* untuk kuantitas fisik stok, dan *Bank Account Ledger Entries* untuk saldo kas/bank).
+- **Buku Besar Umum (General Ledger):** Mencatat ringkasan dampak finansial debit dan kredit ke akun *Chart of Accounts* (G/L Account).
+- **Posting Groups sebagai Jembatan:** Operasional gudang dan penjualan tidak perlu tahu nomor akun akuntansi; pemilihan *Posting Groups* pada master data otomatis menentukan ke mana nilai finansial dialokasikan.
+- **Audit Trail yang Tak Dapat Diubah (*Immutable*):** Dokumen yang sudah diposting menghasilkan *Ledger Entries* bernomor urut yang tidak bisa dihapus atau diedit. Koreksi selalu dilakukan melalui transaksi balik (*Reverse Transaction* atau *Credit Memo*).
+
+### 2. Tiga Tingkatan Data di Ekosistem BC
+
+| Tingkatan | Karakteristik | Contoh Halaman / Tabel |
+| --- | --- | --- |
+| **Setup & Master Data** | Fondasi acuan yang jarang berubah tetapi menjadi syarat transaksi. | Chart of Accounts, Customer, Vendor, Item, Bank Account, General Posting Setup. |
+| **Transaksi Berjalan (*Unposted*)** | Dokumen operasional terbuka yang bersifat dinamis dan dapat diubah sebelum disetujui/diposting. | Sales Order, Purchase Order, Item Journal, Payment Journal. |
+| **Arsip Transaksi (*Posted & Ledgers*)** | Catatan permanen hasil posting yang mengunci kuantitas fisik dan nilai rupiah ke jurnal akuntansi. | Posted Sales Invoice, Item Ledger Entries, Cust. Ledger Entries, G/L Entries. |
+
+---
+
+## Peta perputaran alur kerja di BC
+
+Berikut adalah alur perputaran bisnis lengkap dari pengadaan awal hingga laporan keuangan dan pertukaran data keluar sistem:
+
+```
+[ 1. Setup & Master Data ]
+   │ (COA, Posting Groups, Item, Vendor, Customer, Bank)
+   ▼
+[ 2. Purchasing (P2P) ] ──────────────► [ 3. Inventory & Costing ]
+   │                                           │
+   │ (Posted Purch. Invoice)                   │ (Pengurangan Stok & COGS)
+   ▼                                           ▼
+[ Vendor Ledger (Utang) ]                [ 4. Sales (O2C) ]
+   │                                           │
+   │ (Payment Journal)                         │ (Posted Sales Invoice)
+   ▼                                           ▼
+[ 5. Cash & Bank Management ] ◄────────── [ Cust. Ledger (Piutang) ]
+   │ (Cash Receipt & Bank Rec.)
+   ▼
+[ 6. General Ledger & Reporting ]
+   ▲
+   │ (OData API, Webhook, AL Extension, Power Automate)
+[ 7. Integrasi Eksternal & Ekosistem ]
+```
+
+---
+
+## Langkah di BC
+
+Gunakan simulasi interaktif di bawah untuk melihat bagaimana data dan nilai uang berpindah dari satu modul ke modul berikutnya di lingkungan CRONUS:
+
+<FlowPlayer steps={[
+  {
+    label: '1. Master Data',
+    analogy: 'Membangun toko: menyiapkan katalog barang, daftar pemasok terpercaya, daftar pelanggan, dan buku rekening bank.',
+    document: 'Item Card, Vendor Card, Customer Card, Bank Account, Chart of Accounts, General Posting Setup.',
+    impact: 'Menjadi fondasi acuan transaksi. Tanpa kelompok posting (Posting Groups) yang lengkap pada master data, sistem akan menolak proses posting.'
+  },
+  {
+    label: '2. Purchasing',
+    analogy: 'Toko memesan barang dagangan ke pemasok (supplier). Pemasok mengirim barang dan mengirimkan lembar tagihan.',
+    document: 'Purchase Order → Post Receive & Invoice (Posted Purchase Receipt, Posted Purchase Invoice).',
+    impact: 'Membentuk Item Ledger Entry (kuantitas stok masuk), Value Entry (biaya beli), dan Vendor Ledger Entry (kewajiban utang dagang).'
+  },
+  {
+    label: '3. Inventory',
+    analogy: 'Gudang menyimpan stok, memindahkan barang antar lokasi, dan menghitung nilai modal barang yang tersedia.',
+    document: 'Item Ledger Entries, Value Entries, Item Journals, Adjust Cost - Item Entries.',
+    impact: 'Mengatur valuasi persediaan (FIFO, Average, Standard). Mengirim nilai biaya persediaan aktual ke General Ledger akun Persediaan vs Biaya.'
+  },
+  {
+    label: '4. Sales',
+    analogy: 'Pelanggan memesan barang, toko mengirimkan pesanan dari gudang, lalu menerbitkan faktur tagihan resmi.',
+    document: 'Sales Order → Post Ship & Invoice (Posted Sales Shipment, Posted Sales Invoice).',
+    impact: 'Membentuk Item Ledger Entry (kuantitas stok keluar), Customer Ledger Entry (piutang pelanggan), pendapatan penjualan (Revenue), dan PPN Keluaran.'
+  },
+  {
+    label: '5. Cash & Bank',
+    analogy: 'Toko menerima pembayaran transfer dari pelanggan dan melunasi tagihan pemasok melalui rekening bank.',
+    document: 'Cash Receipt Journal, Payment Journal, Bank Account Ledger Entries, Bank Account Reconciliation.',
+    impact: 'Mencocokkan (Apply) pembayaran dengan faktur terkait, menutup saldo piutang/utang, mencatat mutasi kas/bank, dan memvalidasi rekening koran.'
+  },
+  {
+    label: '6. General Ledger',
+    analogy: 'Pemilik toko memeriksa ringkasan neraca keuangan dan laporan untung-rugi untuk mengetahui kondisi bisnis.',
+    document: 'Chart of Accounts, G/L Entries, G/L Registers, Financial Reports (Income Statement & Balance Sheet).',
+    impact: 'Mengagregasikan seluruh jurnal operasional ke dalam akun aset, kewajiban, ekuitas, pendapatan, dan beban secara seimbang (Debit = Kredit).'
+  },
+  {
+    label: '7. Integrasi API',
+    analogy: 'Toko menghubungkan sistem kasir kasir cabang, toko online (e-commerce), dan dashboard Power BI pimpinan.',
+    document: 'Standard APIs v2.0, Custom API Pages/Queries, Webhook Subscriptions, Power Automate Flows.',
+    impact: 'Data operasional mengalir keluar-masuk secara real-time tanpa duplikasi input manual, dengan tetap mematuhi aturan validasi bisnis BC.'
+  }
+]} />
+
+---
+
+## Matriks keterkaitan dokumen operasional dan ledger
+
+Sebagai Business Analyst, tabel berikut adalah acuan utama untuk memahami dampak nyata dari setiap aksi posting dokumen di BC:
+
+| Modul & Aksi | Dokumen Sumber | Subledger Terbentuk | Ledger Finansial Terbentuk | Akun G/L Utama yang Tersentuh |
+| --- | --- | --- | --- | --- |
+| **Pembelian (Receive)** | Purchase Order | `Item Ledger Entry` (+Qty) | `Value Entry` (Expected Cost) | Persediaan Interim vs Utang Belum Ditagih (*Accrued Liability*) |
+| **Pembelian (Invoice)** | Purchase Order / Invoice | `Vendor Ledger Entry` (Utang) | `Value Entry` (Actual Cost), `VAT Entry` (PPN Masukan) | Utang Dagang (*Accounts Payable*), PPN Masukan, Persediaan Aktual |
+| **Penjualan (Ship)** | Sales Order | `Item Ledger Entry` (-Qty) | `Value Entry` (Expected COGS) | Persediaan Interim vs Beban Pokok Penjualan (*COGS Interim*) |
+| **Penjualan (Invoice)** | Sales Order / Invoice | `Customer Ledger Entry` (Piutang) | `Value Entry` (Actual COGS), `VAT Entry` (PPN Keluaran) | Piutang Dagang (*Accounts Receivable*), Pendapatan (*Sales Revenue*), PPN Keluaran, Beban Pokok (*COGS*) |
+| **Penerimaan Kas (Customer)** | Cash Receipt Journal | `Customer Ledger Entry` (Apply) | `Bank Acc. Ledger Entry` | Kas / Bank vs Piutang Dagang |
+| **Pembayaran Kas (Vendor)** | Payment Journal | `Vendor Ledger Entry` (Apply) | `Bank Acc. Ledger Entry` | Utang Dagang vs Kas / Bank |
+| **Rekonsiliasi Bank** | Bank Acc. Reconciliation | `Bank Acc. Ledger Entry` | - | Menyamakan catatan buku internal dengan mutasi rekening bank eksternal |
+| **Tutup Buku Tahunan** | Close Income Statement | - | `G/L Entry` | Menutup saldo seluruh akun Laba/Rugi ke akun Laba Ditahan (*Retained Earnings*) |
+
+---
+
+## Cheat box
+
+<CheatBox>
+
+- Semua perputaran bisnis di BC bermuara pada **General Ledger (G/L Entries)** melalui jalur audit bernomor unik (*G/L Register*).
+- **Posting Groups** adalah otak integrasi yang menghubungkan aksi fisik operasional dengan jurnal finansial akuntansi.
+- Transaksi stok selalu tercatat ganda: kuantitas di **Item Ledger Entry** dan nilai rupiah di **Value Entry**.
+- Subledger (Customer, Vendor, Bank, Item) menjamin rincian buku pembantu selalu cocok (*reconciled*) dengan akun induk di neraca.
+- Dokumen yang sudah diposting bersifat **immutable** (tidak dapat dihapus); pembatalan wajib melalui dokumen lawan atau *credit memo*.
+- Integrasi eksternal (API/AL) berinteraksi dengan tabel dokumen atau jurnal staging sebelum memicu logika posting resmi BC.
+
+</CheatBox>
+
+---
+
+## Kesalahan umum
+
+- **Mengira operasional terpisah dari akuntansi:** Mengubah transaksi penjualan atau penerimaan gudang tanpa menyadari dampaknya langsung ke nilai persediaan dan beban di General Ledger.
+- **Mengabaikan Posting Groups pada Master Data:** Membuat item atau customer baru tanpa mengisi *Gen. Bus. Posting Group* atau *Gen. Prod. Posting Group*, yang mengakibatkan transaksi gagal diposting saat di kasir/gudang.
+- **Mencatat pelunasan langsung di General Journal:** Memasukkan mutasi kas tanpa menghubungkan (*Apply*) ke dokumen invoice asal, sehingga faktur tetap berstatus *Open* dan laporan umur piutang (*Aging*) keliru.
+- **Tidak menjalankan penyesuaian biaya (*Cost Adjustment*):** Mengabaikan proses *Adjust Cost - Item Entries* sebelum tutup buku bulanan, menyebabkan nilai laba kotor dan valuasi persediaan di neraca tidak akurat.
+- **Mencoba mengedit atau menghapus ledger terposting:** Berasumsi bahwa kesalahan posting bisa diperbaiki dengan tombol hapus; solusi yang benar adalah memposting jurnal koreksi (*Correct / Cancel / Reverse*).
+
+---
+
+## Latihan terkait
+
+- [Latihan B1 — Navigasi dan Role Center](/latihan/basic/b1-navigasi/)
+- [Latihan B2 — Master Data Customer dan Vendor](/latihan/basic/b2-master-data/)
+- [Latihan B4 — Siklus Sales Order-to-Cash](/latihan/basic/b4-sales/)
+- [Latihan B5 — Siklus Purchasing Procure-to-Pay](/latihan/basic/b5-purchasing/)
+- [Latihan M1 — Konfigurasi Posting Groups](/latihan/intermediate/m1-posting-groups/)
+
+---
+
+## Sumber resmi
+
+- [Microsoft Learn: Business functionality in Dynamics 365 Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/across-business-functionality)
+- [Microsoft Learn: Design details - Inventory costing](https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-inventory-costing)
+- [Microsoft Learn: Setting up Posting Groups in Business Central](https://learn.microsoft.com/en-us/training/modules/posting-groups-dynamics-365-business-central/)
+- [Microsoft Learn: API overview for Dynamics 365 Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-api-overview)
