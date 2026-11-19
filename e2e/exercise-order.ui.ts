@@ -17,21 +17,26 @@ test('sidebar latihan mengikuti urutan tingkat dan nomor', async ({ page }) => {
 
 test('B8 menuju Intermediate dan dapat kembali', async ({ page }) => {
   await page.goto('/latihan/basic/b8-laporan/');
-  const next = page.locator('.pagination-links a[rel="next"]');
+  const next = page.locator('.pagination-links a[rel~="next"]');
   await expect(next).toHaveAttribute('href', '/latihan/intermediate/');
-  await next.click();
-  await expect(page).toHaveURL(/\/latihan\/intermediate\/$/);
-  await expect(page.locator('.pagination-links a[rel="next"]')).toHaveAttribute('href', '/latihan/intermediate/m1-posting-groups/');
-  await page.locator('.pagination-links a[rel="prev"]').click();
+  const [newTab] = await Promise.all([page.waitForEvent('popup'), next.click()]);
+  await expect(newTab).toHaveURL(/\/latihan\/intermediate\/$/);
   await expect(page).toHaveURL(/\/latihan\/basic\/b8-laporan\/$/);
+  await expect(next).toHaveAttribute('rel', 'next noopener');
+  await expect(newTab.locator('.pagination-links a[rel~="next"]')).toHaveAttribute('href', '/latihan/intermediate/m1-posting-groups/');
+  const previous = newTab.locator('.pagination-links a[rel~="prev"]');
+  const [previousTab] = await Promise.all([newTab.waitForEvent('popup'), previous.click()]);
+  await expect(previousTab).toHaveURL(/\/latihan\/basic\/b8-laporan\/$/);
 });
 
 test('M10 menuju Expert dan dapat kembali', async ({ page }) => {
   await page.goto('/latihan/intermediate/m10-job-queue/');
-  const next = page.locator('.pagination-links a[rel="next"]');
+  const next = page.locator('.pagination-links a[rel~="next"]');
   await expect(next).toHaveAttribute('href', '/latihan/expert/');
-  await next.click();
-  await expect(page).toHaveURL(/\/latihan\/expert\/$/);
-  await page.locator('.pagination-links a[rel="prev"]').click();
+  const [newTab] = await Promise.all([page.waitForEvent('popup'), next.click()]);
+  await expect(newTab).toHaveURL(/\/latihan\/expert\/$/);
   await expect(page).toHaveURL(/\/latihan\/intermediate\/m10-job-queue\/$/);
+  const previous = newTab.locator('.pagination-links a[rel~="prev"]');
+  const [previousTab] = await Promise.all([newTab.waitForEvent('popup'), previous.click()]);
+  await expect(previousTab).toHaveURL(/\/latihan\/intermediate\/m10-job-queue\/$/);
 });

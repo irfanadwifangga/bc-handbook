@@ -104,4 +104,13 @@ test('shortcut dan dialog search tetap berfungsi', async ({ page }) => {
   await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
+
+  await page.keyboard.press('Control+k');
+  await dialog.getByRole('textbox').fill('sandbox');
+  const result = dialog.getByRole('link').first();
+  await expect(result).toBeVisible();
+  const resultUrl = new URL((await result.getAttribute('href'))!, page.url());
+  const [newTab] = await Promise.all([page.waitForEvent('popup'), result.click()]);
+  await expect(newTab).toHaveURL(resultUrl.href);
+  await expect(page).toHaveURL('/');
 });
