@@ -31,6 +31,13 @@
 
 ## Log
 
+### Penyelarasan Grid Diagram & Fullscreen Native — 2026-11-19
+
+- **BCEcosystemDiagram (`src/components/BCEcosystemDiagram.astro`):** Seluruh baris kartu diselaraskan secara simetris rata kiri-kanan (`x=40` s.d. `x=980`, total rentang 940px) pada Baris 2 (3 kartu, lebar 280px, gap 50px), Baris 3 (2 kartu, lebar 445px, gap 50px), dan Baris 4 (1 kartu, lebar 940px). Toolbar interaktif (`+`, `−`, `↺`, dan `Layar Penuh`) dikembalikan dengan memanfaatkan browser native Fullscreen API (`wrapper.requestFullscreen()`) sehingga tampilan layar penuh terpusat di tengah layar secara responsif tanpa bug `<dialog>` atau scroll hijacking.
+- **FlowPlayer (`src/styles/learning-flow.css`):** Subgrid kartu panel diatur memiliki proporsi seragam 2 kolom dengan `align-items: stretch` sehingga tinggi dan lebar kartu selalu seimbang.
+- Verifikasi nyata: `bun run build` sukses 141 halaman, Pagefind search index 141 file; `bun test` 3 lulus.
+- Commit message: `feat: align diagram grid symmetrically and restore native fullscreen toolbar`.
+
 ### Penyempurnaan Diagram Ekosistem & Tab Walkthrough Alur Kerja — 2026-11-19
 
 - **BCEcosystemDiagram (`src/components/BCEcosystemDiagram.astro`):** Toolbar zoom/pan dan modal fullscreen dihapus untuk menghilangkan scroll hijacking dan glitch tampilan. Spacing antar-node dilebarkan (gap 80px), viewBox diperbesar ke 1020x640, label status (+Qty, -Qty, Jurnal, Pelunasan) digeser keluar jalur agar tidak bertabrakan dengan kartu modul.

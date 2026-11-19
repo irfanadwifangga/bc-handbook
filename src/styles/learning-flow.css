@@ -118,6 +118,9 @@
   border: var(--bc-border-width) solid var(--bc-border);
   border-radius: var(--bc-radius-sm);
   padding: var(--bc-space-3) var(--bc-space-4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 .bc-panel-card-primary {
   border-left: 3px solid var(--bc-accent);
@@ -129,8 +132,14 @@
 }
 .bc-panel-subgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--bc-space-3);
+  align-items: stretch;
+}
+@media (max-width: 640px) {
+  .bc-panel-subgrid {
+    grid-template-columns: 1fr;
+  }
 }
 .bc-card-tag {
   display: block;
@@ -146,6 +155,7 @@
   line-height: var(--bc-line-base);
   color: var(--bc-text);
   margin: 0;
+  flex: 1;
 }
 
 /* Fallback dl/dt untuk kompatibilitas */

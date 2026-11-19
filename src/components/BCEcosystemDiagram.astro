@@ -3,6 +3,15 @@
 <figure class="bc-ecosystem-diagram-wrapper" aria-label="Diagram Perputaran Kerja Ekosistem Business Central">
   <div class="bc-diagram-header">
     <span class="bc-diagram-title">Peta Alur Kerja Ekosistem Dynamics 365 Business Central</span>
+    <div class="bc-diagram-actions">
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-in" title="Perbesar">+</button>
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-out" title="Perkecil">−</button>
+      <button type="button" class="bc-diagram-tool-btn" id="bc-zoom-reset" title="Reset Zoom">↺</button>
+      <button type="button" class="bc-diagram-expand-btn" id="bc-fullscreen-btn" title="Layar Penuh">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        <span class="bc-fs-text">Layar Penuh</span>
+      </button>
+    </div>
   </div>
 
   <div class="bc-ecosystem-diagram-viewport">
@@ -32,136 +41,136 @@
       <!-- ================= JALUR KONEKSI LEGA (BEBAS TABRAKAN) ================= -->
 
       <!-- 1. Master Data turun ke 3 Modul Operasional -->
-      <path d="M 350 100 L 170 100 L 170 145" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr-muted)" />
+      <path d="M 330 100 L 180 100 L 180 145" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr-muted)" />
       <path d="M 510 100 L 510 145" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr-muted)" />
-      <path d="M 670 100 L 850 100 L 850 145" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr-muted)" />
+      <path d="M 690 100 L 840 100 L 840 145" stroke="var(--bc-text-muted)" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr-muted)" />
 
-      <!-- 2. Alur Fisik: Purchasing -> Inventory -> Sales (Gap 80px) -->
-      <path d="M 300 205 L 375 205" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
-      <path d="M 640 205 L 715 205" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
+      <!-- 2. Alur Fisik: Purchasing -> Inventory -> Sales (Gap 50px) -->
+      <path d="M 320 207 L 365 207" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
+      <path d="M 650 207 L 695 207" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
 
       <!-- 3. Purchasing turun ke Cash & Bank (Bayar Utang Vendor) -->
-      <path d="M 170 265 L 170 325" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
+      <path d="M 180 265 L 180 325" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
 
       <!-- 4. Sales turun langsung ke General Ledger (Faktur Jual & Revenue) -->
-      <path d="M 850 265 L 850 325" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
+      <path d="M 840 265 L 840 325" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
 
       <!-- 5. Sales masuk ke Cash & Bank (Pelunasan Piutang) -->
-      <path d="M 740 265 L 740 295 L 390 295 L 390 325" stroke="var(--bc-accent)" stroke-width="2" fill="none" marker-end="url(#arr-accent)" />
+      <path d="M 740 265 L 740 295 L 380 295 L 380 325" stroke="var(--bc-accent)" stroke-width="2" fill="none" marker-end="url(#arr-accent)" />
 
       <!-- 6. Inventory turun ke General Ledger (Valuasi & COGS) -->
-      <path d="M 510 265 L 510 295 L 630 295 L 630 325" stroke="var(--bc-accent)" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arr-accent)" />
+      <path d="M 510 265 L 510 295 L 620 295 L 620 325" stroke="var(--bc-accent)" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arr-accent)" />
 
-      <!-- 7. Cash & Bank masuk ke General Ledger (Jurnal Kas & Mutasi, Gap 80px) -->
-      <path d="M 470 390 L 545 390" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
+      <!-- 7. Cash & Bank masuk ke General Ledger (Jurnal Kas & Mutasi, Gap 50px) -->
+      <path d="M 485 390 L 530 390" stroke="var(--bc-accent)" stroke-width="2.5" fill="none" marker-end="url(#arr-accent)" />
 
       <!-- 8. Ekosistem Integrasi menopang Finansial & Operasional -->
-      <path d="M 280 515 L 280 455" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arr-info)" />
-      <path d="M 740 515 L 740 455" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arr-info)" />
+      <path d="M 240 515 L 240 455" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arr-info)" />
+      <path d="M 780 515 L 780 455" stroke="var(--bc-info)" stroke-width="2" fill="none" marker-end="url(#arr-info)" />
 
       <!-- ================= LABEL ALUR TERPISAH DENGAN LEGA ================= -->
 
-      <!-- Label P2P -> Inventory (di atas panah, gap 80px) -->
-      <g transform="translate(322, 180)">
+      <!-- Label P2P -> Inventory -->
+      <g transform="translate(327, 185)">
         <rect width="36" height="18" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
         <text x="18" y="13" text-anchor="middle" class="bc-flow-pill-text">+Qty</text>
       </g>
 
-      <!-- Label Inventory -> Sales (di atas panah, gap 80px) -->
-      <g transform="translate(662, 180)">
+      <!-- Label Inventory -> Sales -->
+      <g transform="translate(657, 185)">
         <rect width="36" height="18" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
         <text x="18" y="13" text-anchor="middle" class="bc-flow-pill-text">-Qty</text>
       </g>
 
       <!-- Label Purchasing -> Cash -->
-      <g transform="translate(90, 285)">
-        <rect width="140" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
-        <text x="70" y="14" text-anchor="middle" class="bc-flow-pill-text">Bayar Utang Vendor</text>
+      <g transform="translate(115, 285)">
+        <rect width="130" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
+        <text x="65" y="14" text-anchor="middle" class="bc-flow-pill-text">Bayar Utang Vendor</text>
       </g>
 
-      <!-- Label Sales -> Cash -->
-      <g transform="translate(485, 285)">
-        <rect width="150" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
-        <text x="75" y="14" text-anchor="middle" class="bc-flow-pill-text">Pelunasan Piutang</text>
+      <!-- Label Sales -> Cash (Pelunasan Piutang) -->
+      <g transform="translate(500, 285)">
+        <rect width="130" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
+        <text x="65" y="14" text-anchor="middle" class="bc-flow-pill-text">Pelunasan Piutang</text>
       </g>
 
-      <!-- Label Cash -> GL (di atas panah, gap 80px) -->
-      <g transform="translate(485, 365)">
-        <rect width="50" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
-        <text x="25" y="14" text-anchor="middle" class="bc-flow-pill-text">Jurnal</text>
+      <!-- Label Cash -> GL -->
+      <g transform="translate(488, 365)">
+        <rect width="44" height="20" rx="4" fill="var(--bc-surface-2)" stroke="var(--bc-border)" />
+        <text x="22" y="14" text-anchor="middle" class="bc-flow-pill-text">Jurnal</text>
       </g>
 
       <!-- ================= KARTU TAHAPAN (NODES) ================= -->
 
-      <!-- TINGKAT 1: MASTER DATA (Fondasi Atas) -->
-      <g class="bc-node-group" transform="translate(280, 15)">
-        <rect width="460" height="85" rx="8" class="bc-node-rect" />
-        <rect width="460" height="4" rx="2" fill="var(--bc-text-muted)" />
-        <text x="230" y="30" text-anchor="middle" class="bc-node-title">1. Setup & Master Data</text>
-        <text x="230" y="52" text-anchor="middle" class="bc-node-subtitle">Chart of Accounts • Posting Groups • Item • Vendor • Customer • Bank</text>
-        <text x="230" y="70" text-anchor="middle" class="bc-node-badge">Fondasi Aturan Akuntansi & Master Data Acuan</text>
+      <!-- TINGKAT 1: MASTER DATA (Fondasi Atas, Senter 510) -->
+      <g class="bc-node-group" transform="translate(260, 15)">
+        <rect width="500" height="85" rx="8" class="bc-node-rect" />
+        <rect width="500" height="4" rx="2" fill="var(--bc-text-muted)" />
+        <text x="250" y="30" text-anchor="middle" class="bc-node-title">1. Setup & Master Data</text>
+        <text x="250" y="52" text-anchor="middle" class="bc-node-subtitle">Chart of Accounts • Posting Groups • Item • Vendor • Customer • Bank</text>
+        <text x="250" y="70" text-anchor="middle" class="bc-node-badge">Fondasi Aturan Akuntansi & Master Data Acuan</text>
       </g>
 
-      <!-- TINGKAT 2: RANTAI OPERASIONAL UTAMA (Purchasing -> Inventory -> Sales) -->
-      <!-- 2. Purchasing -->
+      <!-- TINGKAT 2: RANTAI OPERASIONAL UTAMA (Purchasing -> Inventory -> Sales: 40 s.d. 980) -->
+      <!-- 2. Purchasing (40 s.d. 320) -->
       <g class="bc-node-group" transform="translate(40, 150)">
-        <rect width="260" height="115" rx="8" class="bc-node-rect" />
-        <rect width="260" height="4" rx="2" fill="var(--bc-accent)" />
-        <text x="130" y="30" text-anchor="middle" class="bc-node-title">2. Purchasing (P2P)</text>
-        <text x="130" y="52" text-anchor="middle" class="bc-node-subtitle">Purchase Order → Receive & Invoice</text>
-        <text x="130" y="74" text-anchor="middle" class="bc-node-badge">Vendor Ledger Entry</text>
-        <text x="130" y="94" text-anchor="middle" class="bc-node-subdetail">+Kuantitas Stok & Utang Usaha (A/P)</text>
+        <rect width="280" height="115" rx="8" class="bc-node-rect" />
+        <rect width="280" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="140" y="30" text-anchor="middle" class="bc-node-title">2. Purchasing (P2P)</text>
+        <text x="140" y="52" text-anchor="middle" class="bc-node-subtitle">Purchase Order → Receive & Invoice</text>
+        <text x="140" y="74" text-anchor="middle" class="bc-node-badge">Vendor Ledger Entry</text>
+        <text x="140" y="94" text-anchor="middle" class="bc-node-subdetail">+Kuantitas Stok & Utang Usaha (A/P)</text>
       </g>
 
-      <!-- 3. Inventory -->
-      <g class="bc-node-group" transform="translate(380, 150)">
-        <rect width="260" height="115" rx="8" class="bc-node-rect" />
-        <rect width="260" height="4" rx="2" fill="var(--bc-warning, #f59e0b)" />
-        <text x="130" y="30" text-anchor="middle" class="bc-node-title">3. Inventory & Costing</text>
-        <text x="130" y="52" text-anchor="middle" class="bc-node-subtitle">Stok Gudang, Lokasi & Nilai Modal</text>
-        <text x="130" y="74" text-anchor="middle" class="bc-node-badge">Item & Value Entries</text>
-        <text x="130" y="94" text-anchor="middle" class="bc-node-subdetail">Valuasi FIFO / Cost Adjustment</text>
+      <!-- 3. Inventory (370 s.d. 650) -->
+      <g class="bc-node-group" transform="translate(370, 150)">
+        <rect width="280" height="115" rx="8" class="bc-node-rect" />
+        <rect width="280" height="4" rx="2" fill="var(--bc-warning, #f59e0b)" />
+        <text x="140" y="30" text-anchor="middle" class="bc-node-title">3. Inventory & Costing</text>
+        <text x="140" y="52" text-anchor="middle" class="bc-node-subtitle">Stok Gudang, Lokasi & Nilai Modal</text>
+        <text x="140" y="74" text-anchor="middle" class="bc-node-badge">Item & Value Entries</text>
+        <text x="140" y="94" text-anchor="middle" class="bc-node-subdetail">Valuasi FIFO / Cost Adjustment</text>
       </g>
 
-      <!-- 4. Sales -->
-      <g class="bc-node-group" transform="translate(720, 150)">
-        <rect width="260" height="115" rx="8" class="bc-node-rect" />
-        <rect width="260" height="4" rx="2" fill="var(--bc-success, #10b981)" />
-        <text x="130" y="30" text-anchor="middle" class="bc-node-title">4. Sales (O2C)</text>
-        <text x="130" y="52" text-anchor="middle" class="bc-node-subtitle">Sales Order → Ship & Invoice</text>
-        <text x="130" y="74" text-anchor="middle" class="bc-node-badge">Customer Ledger Entry</text>
-        <text x="130" y="94" text-anchor="middle" class="bc-node-subdetail">-Kuantitas Stok & Piutang Usaha (A/R)</text>
+      <!-- 4. Sales (700 s.d. 980) -->
+      <g class="bc-node-group" transform="translate(700, 150)">
+        <rect width="280" height="115" rx="8" class="bc-node-rect" />
+        <rect width="280" height="4" rx="2" fill="var(--bc-success, #10b981)" />
+        <text x="140" y="30" text-anchor="middle" class="bc-node-title">4. Sales (O2C)</text>
+        <text x="140" y="52" text-anchor="middle" class="bc-node-subtitle">Sales Order → Ship & Invoice</text>
+        <text x="140" y="74" text-anchor="middle" class="bc-node-badge">Customer Ledger Entry</text>
+        <text x="140" y="94" text-anchor="middle" class="bc-node-subdetail">-Kuantitas Stok & Piutang Usaha (A/R)</text>
       </g>
 
-      <!-- TINGKAT 3: PUSAT KEUANGAN & AUDIT -->
-      <!-- 5. Cash & Bank -->
-      <g class="bc-node-group" transform="translate(90, 330)">
-        <rect width="380" height="120" rx="8" class="bc-node-rect" />
-        <rect width="380" height="4" rx="2" fill="var(--bc-accent)" />
-        <text x="190" y="30" text-anchor="middle" class="bc-node-title">5. Cash & Bank Management</text>
-        <text x="190" y="52" text-anchor="middle" class="bc-node-subtitle">Payment & Cash Receipt Journals • Bank Rec.</text>
-        <text x="190" y="74" text-anchor="middle" class="bc-node-badge">Bank Acc. Ledger • Apply Invoices</text>
-        <text x="190" y="94" text-anchor="middle" class="bc-node-subdetail">Pelunasan Utang/Piutang & Pencocokan Rekening Koran</text>
+      <!-- TINGKAT 3: PUSAT KEUANGAN & AUDIT (40 s.d. 980, Rata dengan Kartu Atas) -->
+      <!-- 5. Cash & Bank (40 s.d. 485) -->
+      <g class="bc-node-group" transform="translate(40, 330)">
+        <rect width="445" height="120" rx="8" class="bc-node-rect" />
+        <rect width="445" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="222" y="30" text-anchor="middle" class="bc-node-title">5. Cash & Bank Management</text>
+        <text x="222" y="52" text-anchor="middle" class="bc-node-subtitle">Payment & Cash Receipt Journals • Bank Rec.</text>
+        <text x="222" y="74" text-anchor="middle" class="bc-node-badge">Bank Acc. Ledger • Apply Invoices</text>
+        <text x="222" y="94" text-anchor="middle" class="bc-node-subdetail">Pelunasan Utang/Piutang & Pencocokan Rekening Koran</text>
       </g>
 
-      <!-- 6. General Ledger -->
-      <g class="bc-node-group" transform="translate(550, 330)">
-        <rect width="380" height="120" rx="8" class="bc-node-rect" />
-        <rect width="380" height="4" rx="2" fill="var(--bc-accent)" />
-        <text x="190" y="30" text-anchor="middle" class="bc-node-title">6. General Ledger & Reporting</text>
-        <text x="190" y="52" text-anchor="middle" class="bc-node-subtitle">Chart of Accounts • G/L Entries • G/L Register</text>
-        <text x="190" y="74" text-anchor="middle" class="bc-node-badge">Financial Reports (Neraca & Laba Rugi)</text>
-        <text x="190" y="94" text-anchor="middle" class="bc-node-subdetail">Audit Trail Terpadu (Debit = Kredit Otomatis)</text>
+      <!-- 6. General Ledger (535 s.d. 980) -->
+      <g class="bc-node-group" transform="translate(535, 330)">
+        <rect width="445" height="120" rx="8" class="bc-node-rect" />
+        <rect width="445" height="4" rx="2" fill="var(--bc-accent)" />
+        <text x="222" y="30" text-anchor="middle" class="bc-node-title">6. General Ledger & Reporting</text>
+        <text x="222" y="52" text-anchor="middle" class="bc-node-subtitle">Chart of Accounts • G/L Entries • G/L Register</text>
+        <text x="222" y="74" text-anchor="middle" class="bc-node-badge">Financial Reports (Neraca & Laba Rugi)</text>
+        <text x="222" y="94" text-anchor="middle" class="bc-node-subdetail">Audit Trail Terpadu (Debit = Kredit Otomatis)</text>
       </g>
 
-      <!-- TINGKAT 4: INTEGRASI & EXTENSIBILITY -->
+      <!-- TINGKAT 4: INTEGRASI & EXTENSIBILITY (40 s.d. 980, Rata Penuh) -->
       <!-- 7. Integrasi -->
-      <g class="bc-node-group" transform="translate(70, 515)">
-        <rect width="880" height="85" rx="8" class="bc-node-rect" />
-        <rect width="880" height="4" rx="2" fill="var(--bc-info)" />
-        <text x="440" y="28" text-anchor="middle" class="bc-node-title">7. Ekosistem Integrasi & Extensibility</text>
-        <text x="440" y="50" text-anchor="middle" class="bc-node-subtitle">Standard APIs (v2.0) • Custom API Pages • Webhooks • Power Automate • Per-Tenant Extension (AL)</text>
-        <text x="440" y="68" text-anchor="middle" class="bc-node-badge">Sinkronisasi Data Real-time & Pertukaran Data Pihak Ketiga</text>
+      <g class="bc-node-group" transform="translate(40, 515)">
+        <rect width="940" height="85" rx="8" class="bc-node-rect" />
+        <rect width="940" height="4" rx="2" fill="var(--bc-info)" />
+        <text x="470" y="28" text-anchor="middle" class="bc-node-title">7. Ekosistem Integrasi & Extensibility</text>
+        <text x="470" y="50" text-anchor="middle" class="bc-node-subtitle">Standard APIs (v2.0) • Custom API Pages • Webhooks • Power Automate • Per-Tenant Extension (AL)</text>
+        <text x="470" y="68" text-anchor="middle" class="bc-node-badge">Sinkronisasi Data Real-time & Pertukaran Data Pihak Ketiga</text>
       </g>
     </svg>
   </div>
@@ -171,6 +180,48 @@
   </figcaption>
 </figure>
 
+<script>
+  import Panzoom from '@panzoom/panzoom';
+
+  const wrapper = document.querySelector<HTMLElement>('.bc-ecosystem-diagram-wrapper');
+  const svg = document.querySelector<SVGElement>('.bc-ecosystem-svg');
+  const zoomInBtn = document.getElementById('bc-zoom-in');
+  const zoomOutBtn = document.getElementById('bc-zoom-out');
+  const zoomResetBtn = document.getElementById('bc-zoom-reset');
+  const fsBtn = document.getElementById('bc-fullscreen-btn');
+  const fsText = fsBtn?.querySelector('.bc-fs-text');
+
+  if (svg) {
+    const panzoom = Panzoom(svg, {
+      maxScale: 4,
+      minScale: 1,
+      contain: 'inside',
+    });
+
+    zoomInBtn?.addEventListener('click', () => panzoom.zoomIn());
+    zoomOutBtn?.addEventListener('click', () => panzoom.zoomOut());
+    zoomResetBtn?.addEventListener('click', () => panzoom.reset());
+
+    if (fsBtn && wrapper) {
+      fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          wrapper.requestFullscreen?.().catch(() => {});
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        const isFull = !!document.fullscreenElement;
+        if (fsText) {
+          fsText.textContent = isFull ? 'Keluar Layar Penuh' : 'Layar Penuh';
+        }
+        panzoom.reset();
+      });
+    }
+  }
+</script>
+
 <style>
   .bc-ecosystem-diagram-wrapper {
     margin: var(--bc-space-4) 0;
@@ -178,8 +229,14 @@
     border: var(--bc-border-width) solid var(--bc-border);
     border-radius: var(--bc-radius-md);
     background: var(--bc-surface);
+    position: relative;
   }
   .bc-diagram-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--bc-space-2);
     margin-bottom: var(--bc-space-3);
     padding-bottom: var(--bc-space-2);
     border-bottom: var(--bc-border-width) solid var(--bc-border);
@@ -190,6 +247,48 @@
     color: var(--bc-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+  .bc-diagram-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bc-space-1);
+  }
+  .bc-diagram-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    font-size: var(--bc-text-sm);
+    font-weight: 600;
+    color: var(--bc-text);
+    background: var(--bc-surface-2);
+    border: var(--bc-border-width) solid var(--bc-border);
+    border-radius: var(--bc-radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .bc-diagram-tool-btn:hover {
+    border-color: var(--bc-accent);
+    color: var(--bc-accent);
+  }
+  .bc-diagram-expand-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bc-space-1);
+    font-size: var(--bc-text-xs);
+    font-weight: 500;
+    color: var(--bc-text);
+    background: var(--bc-surface-2);
+    border: var(--bc-border-width) solid var(--bc-border);
+    border-radius: var(--bc-radius-sm);
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .bc-diagram-expand-btn:hover {
+    border-color: var(--bc-accent);
+    color: var(--bc-accent);
   }
   .bc-ecosystem-diagram-viewport {
     width: 100%;
@@ -238,5 +337,33 @@
     text-align: center;
     font-size: var(--bc-text-xs);
     color: var(--bc-text-muted);
+  }
+
+  /* Fullscreen Native Browser Styling */
+  .bc-ecosystem-diagram-wrapper:fullscreen {
+    margin: 0;
+    padding: var(--bc-space-6);
+    border: none;
+    border-radius: 0;
+    background: var(--bc-bg);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    z-index: 99999;
+  }
+  .bc-ecosystem-diagram-wrapper:fullscreen .bc-ecosystem-diagram-viewport {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .bc-ecosystem-diagram-wrapper:fullscreen .bc-ecosystem-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 85vh;
   }
 </style>
