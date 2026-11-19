@@ -110,7 +110,6 @@ test('shortcut dan dialog search tetap berfungsi', async ({ page }) => {
   const result = dialog.getByRole('link').first();
   await expect(result).toBeVisible();
   const resultUrl = new URL((await result.getAttribute('href'))!, page.url());
-  const [newTab] = await Promise.all([page.waitForEvent('popup'), result.click()]);
-  await expect(newTab).toHaveURL(resultUrl.href);
-  await expect(page).toHaveURL('/');
+  await result.click();
+  await expect(page).toHaveURL(resultUrl.href);
 });
