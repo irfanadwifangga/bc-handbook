@@ -1,0 +1,84 @@
+---
+title: "AL — Event dan Pola Ekstensibilitas"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 20
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+**Ringkasan:** Arsitektur event-driven memisahkan kode extension dari base app. Gunakan pola subscriber yang aman, periksa IsHandled, dan berikan actionable feedback via ErrorInfo.
+
+### 1. Struktur Atribut EventSubscriber
+
+```text
+[EventSubscriber(
+    ObjectType::Codeunit,               // Tipe objek publisher
+    Codeunit::"Sales-Post",             // ID atau nama objek publisher
+    'OnBeforePostSalesDoc',             // Nama event persis dari publisher
+    '',                                 // Element name (kosongkan kecuali event field tabel)
+    false,                              // SkipOnMissingLicense (biasanya false)
+    false)]                             // SkipOnMissingPermission (biasanya false)
+local procedure OnBeforePostSalesDocHandler(
+    var SalesHeader: Record "Sales Header";
+    var IsHandled: Boolean)
+begin
+    // Logika penanganan event
+end;
+```
+
+### 2. Cara Menemukan Event di Symbols
+
+| Alat / Metode | Langkah Kerja | Keuntungan |
+| --- | --- | --- |
+| **AL Explorer** | Tekan `Ctrl+Alt+E` → Pilih Tab Events atau Objek → Search nama | Visualisasi hierarki, signature parameter lengkap |
+| **Go to Definition** | Klik kanan nama codeunit/tabel → Go to Definition pada file dal metadata | Melihat konteks pemicu event tepat di kode asli |
+| **Snippet Intellisense** | Ketik `teventsub` pada file codeunit untuk generate template | Cepat dan meminimalkan salah ketik parameter atribut |
+
+### 3. Pola Eksekusi IsHandled
+
+```text
+[EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnCheckSalesDoc', '', false, false)]
+local procedure HandleCustomCheck(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+begin
+    if IsHandled then
+        exit; // Jangan timpa jika subscriber sebelumnya sudah menangani
+
+    if SalesHeader."Document Type" = SalesHeader."Document Type"::Order then begin
+        // Jalankan pengecekan khusus
+        IsHandled := true; // Tandai selesai agar proses standar dilewati jika diperlukan
+    end;
+end;
+```
+
+### 4. Pola Modern ErrorInfo dan Actionable Fix
+
+```text
+local procedure ValidateWithAction(DocNo: Code[20])
+var
+    ErrInfo: ErrorInfo;
+begin
+    ErrInfo.Title('Validasi Dokumen Gagal');
+    ErrInfo.Message(StrSubstNo('Nomor dokumen %1 belum diverifikasi supervisor.', DocNo));
+    ErrInfo.DetailedMessage('Pastikan status approval sudah Released sebelum melanjutkan.');
+    ErrInfo.AddNavigationAction('Buka Setup Persetujuan');
+    ErrInfo.PageNumber(Page::"Approval User Setup");
+    Error(ErrInfo);
+end;
+```
+
+## Sumber resmi
+
+- [eventsinal](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-events-in-al).
+- [errorinfoclass](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/errorinfo/errorinfo-data-type).
+
+</div>

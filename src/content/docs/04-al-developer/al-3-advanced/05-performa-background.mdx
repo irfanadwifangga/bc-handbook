@@ -1,0 +1,96 @@
+---
+title: "AL-3.5 Pemrosesan background dan manajemen performa"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Mengoptimalkan pemrosesan data masif dengan operasi set-based, mengendalikan durasi locking transaksi, serta mendelegasikan komputasi berat ke Task Scheduler dan Page Background Task.
+
+## Konsep singkat
+
+Eksekusi modifikasi baris demi baris (`repeat ... Modify(true)`) pada jutaan record memicu lonjakan lalu lintas round-trip ke database dan mengunci sumber daya dalam waktu lama. Untuk skenario tanpa trigger logika per baris, operasi set-based (`ModifyAll` atau `DeleteAll`) mengirim instruksi tunggal langsung ke SQL server.
+
+Untuk tugas pemrosesan berdurasi panjang, pengembang memanfaatkan pemrosesan asinkron seperti `TaskScheduler.CreateTask` atau `Job Queue`. Sedangkan untuk kalkulasi berat pada antarmuka halaman tanpa memblokir interaksi pengguna, Business Central menyediakan Page Background Task (PBT).
+
+> ⚠️ Verifikasi: Pemanggilan `ModifyAll` tidak memicu trigger `OnModify` pada record kecuali parameter `RunTrigger` diset `true`, yang akan mengubah perilakunya kembali menjadi row-by-row di tingkat platform.
+
+## Langkah di BC
+
+1. Evaluasi proses manipulasi batch: jika tidak ada kalkulasi trigger khusus, gantikan loop modifikasi dengan `Record.ModifyAll("Field", Nilai, false)` untuk efisiensi set-based.
+2. Tunda pemanggilan `LockTable` atau operasi penulisan transaksi sesaat sebelum proses commit aktual guna memperkecil jendela penguncian tabel dan mencegah deadlock antar-sesi pengguna.
+3. Untuk pekerjaan latar belakang berkala atau proses berat asinkron, jadwalkan tugas melalui `TaskScheduler.CreateTask(CodeunitId, FailureCodeunitId, true, CompanyName(), CurrentDateTime())`.
+4. Jika hasil kalkulasi hanya dibutuhkan pada tampilan kartu/list pengguna, buat codeunit terpisah untuk Page Background Task.
+5. Daftarkan tugas PBT pada trigger halaman `OnAfterGetCurrRecord` menggunakan `CurrPage.EnqueueBackgroundTask(TaskId, CodeunitId, Parameters)`.
+6. Tangkap hasil kalkulasi PBT pada trigger halaman `OnPageBackgroundTaskCompleted` dan perbarui variabel tampilan antarmuka.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50203 "MYP Staging Background Worker"
+{
+    trigger OnRun()
+    begin
+        ProcessStagingInBulk();
+    end;
+
+    local procedure ProcessStagingInBulk()
+    var
+        Customer: Record Customer;
+    begin
+        // Operasi Set-Based: modifikasi instan tanpa loop per baris
+        Customer.SetRange(Blocked, Customer.Blocked::" ");
+        Customer.SetRange("MYP Verified", false);
+        if not Customer.IsEmpty() then
+            Customer.ModifyAll("MYP Verified", true, false);
+    end;
+
+    procedure ScheduleWorker()
+    var
+        TaskID: Guid;
+    begin
+        TaskID := TaskScheduler.CreateTask(Codeunit::"MYP Staging Background Worker", 0, true, CompanyName(), CurrentDateTime() + 60000);
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Utamakan ModifyAll/DeleteAll untuk manipulasi data masif.
+- Parameter RunTrigger=false memastikan operasi set-based SQL.
+- Minimalkan rentang waktu antara LockTable dan akhir transaksi.
+- Gunakan TaskScheduler untuk proses asinkron yang terisolasi.
+- Gunakan Page Background Task (PBT) agar UI tidak freezing.
+- Hindari loop tanpa filter ketat pada tabel transaksi besar.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memasang `LockTable` di awal alur proses yang panjang atau menyisipkan dialog konfirmasi pengguna di tengah-tengah transaksi aktif yang menahan kunci database.
+:::
+
+## Latihan terkait
+
+[Capstone AL — Invoice Staging](/latihan/al/capstone-al-invoice-staging/).
+
+## Sumber resmi
+
+- [Performance Articles for Developers](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer).
+- [Page Background Tasks](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-page-background-tasks).
+- [Task Scheduler in AL](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/taskscheduler/taskscheduler-data-type).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

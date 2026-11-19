@@ -1,0 +1,80 @@
+---
+title: "AL — Testing dan debugging"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 21
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+| Elemen Pengujian | Tipe / Deskripsi | Peran Utama |
+| --- | --- | --- |
+| Subtype = Test | Properti Codeunit | Menandai unit tes; isolasi transaksi otomatis |
+| [Test] | Atribut Prosedur | Menandai metode eksekusi pengujian |
+| [HandlerFunctions] | Atribut Delegasi UI | Menangani Confirm, Message, ModalPage tanpa memblokir runner |
+| TestPage | Tipe Data Simulasi | Membuka dan menguji interaksi field/action pada halaman |
+| Library - Assert | Codeunit Pustaka | Validasi kondisi nilai (Assert.AreEqual, Assert.IsTrue) |
+| Feature Telemetry | Modul Sistem | Mengirim telemetri terstruktur ke Application Insights |
+
+```text
+// Kerangka Test Codeunit
+codeunit 50205 "MYP Quick Test"
+{
+    Subtype = Test;
+    TestPermissions = Disabled;
+
+    [Test]
+    [HandlerFunctions('ConfirmHandler')]
+    procedure TestVendorValidation()
+    var
+        Vendor: Record Vendor;
+    begin
+        // Given: Vendor baru
+        Vendor.Init();
+        Vendor."No." := 'V-TEST';
+        Vendor.Insert();
+        // When & Then: Panggil validasi dan pastikan tidak error
+    end;
+
+    [ConfirmHandler]
+    procedure ConfirmHandler(Question: Text[1024]; var Reply: Boolean)
+    begin
+        Reply := true;
+    end;
+}
+```
+
+| Diagnosa & Telemetri | Metode / Kueri | Fungsi |
+| --- | --- | --- |
+| Breakpoint | VS Code (F5 / F9) | Menelusuri baris kode dan variabel di sandbox |
+| Snapshot Debug | launch.json "snapshot" | Menangkap call stack sesi tanpa menghentikan user |
+| AL Profiler | .alcpuprofile | Mengukur durasi komputasi dan menemukan hotspot |
+| LogUsage / LogError | Feature Telemetry | Mencatat siklus hidup fitur dan galat operasional |
+
+```text
+// Contoh KQL Application Insights:
+traces
+| where timestamp > ago(24h)
+| where customDimensions.eventId == '0000MYE'
+| project timestamp, customDimensions.alCallerCodeunit, message, customDimensions.ErrorCode
+| order by timestamp desc
+```
+
+[AL-3.1 Testing](/04-al-developer/al-3-advanced/01-testing/) · [AL-3.2 Debugging](/04-al-developer/al-3-advanced/02-debug-diagnosa/) · [Latihan AL7](/latihan/al/al7-testing/).
+
+## Sumber resmi
+
+- [Testing in Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-testing-application).
+- [Snapshot Debugging](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-snapshot-debugging).
+- [Feature Telemetry](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-feature-telemetry).
+
+</div>

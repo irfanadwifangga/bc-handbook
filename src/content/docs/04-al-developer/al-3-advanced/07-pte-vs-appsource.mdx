@@ -1,0 +1,80 @@
+---
+title: "AL-3.7 PTE vs AppSource"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 7
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menentukan strategi arsitektur antara Per-Tenant Extension (PTE) dan aplikasi AppSource, serta memahami persyaratan kepatuhan validasi teknis Microsoft Marketplace.
+
+## Konsep singkat
+
+Per-Tenant Extension (PTE) ditujukan untuk kustomisasi spesifik satu pelanggan tertentu menggunakan rentang ID 50000–99999. Pengembangannya cepat dan divalidasi oleh `PerTenantExtensionCop` tanpa kewajiban pendaftaran afiks resmi ke Microsoft.
+
+Sebaliknya, aplikasi AppSource dirancang untuk distribusi massal multi-penyewa melalui Microsoft Commercial Marketplace. AppSource mewajibkan pendaftaran afiks (prefix/suffix) unik di Partner Center, alokasi rentang ID komersial khusus, kepatuhan mutlak pada `AppSourceCop`, serta jaminan tanpa breaking changes dengan validasi terhadap versi baseline sebelumnya.
+
+> ⚠️ Verifikasi: Publikasi ke AppSource mewajibkan verifikasi teknis otomatis dan kurasi manual oleh Microsoft di Partner Center sebelum paket ekstensi tersedia untuk umum.
+
+## Langkah di BC
+
+1. Evaluasi kebutuhan bisnis: jika fungsionalitas hanya digunakan oleh satu perusahaan/grup penyewa internal, pilih jalur PTE untuk efisiensi siklus rilis.
+2. Jika produk ditujukan untuk dijual ke banyak pelanggan publik, daftarkan akun penerbit di Microsoft Partner Center dan pesan alokasi jangkauan ID resmi (di luar 50000–99999).
+3. Ajukan permohonan reservasi prefix/suffix 3–4 karakter unik (misal: `MYP`) untuk seluruh nama objek, field, dan simbol aplikasi AppSource.
+4. Konfigurasikan penganalisis `AppSourceCop` dengan menyertakan paket rilis sebelumnya sebagai referensi baseline untuk mendeteksi perubahan destruktif pada skema database.
+5. Sediakan materi pendukung: dokumentasi panduan pengguna, kebijakan privasi, syarat dan ketentuan lisensi, serta video demonstrasi produk.
+6. Unggah paket ekstensi (`.app`) ke portal Partner Center dan pantau hasil laporan validasi teknis otomatis Microsoft.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+// Perbandingan Karakteristik Teknis:
+// Parameter               | PTE                       | AppSource
+// ------------------------|---------------------------|--------------------------
+// Target Pengguna         | 1 Pelanggan Spesifik      | Publik Multi-Tenant
+// Rentang ID Objek        | 50000 – 99999             | Alokasi Partner Center
+// Code Analyzer Wajib     | PerTenantExtensionCop     | AppSourceCop
+// Reservasi Prefix/Suffix | Direkomendasikan          | Wajib Terdaftar
+// Jalur Distribusi        | Admin Center / Extension  | Microsoft AppSource Store
+// Validasi Breaking Change| Internal Tim              | Baseline Otomatis MS
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Pilih PTE untuk kustomisasi khusus kebutuhan satu tenant.
+- Gunakan AppSource untuk produk komersial multi-pelanggan.
+- AppSource mewajibkan registrasi prefix/suffix di Partner Center.
+- Gunakan AppSourceCop untuk memblokir breaking changes pada API/skema.
+- Rentang 50000-99999 diperuntukkan bagi lingkungan PTE.
+- Siapkan dokumentasi dan materi kepatuhan lisensi untuk AppSource.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mengembangkan modul komersial umum menggunakan rentang ID PTE (50000–99999) atau mengubah tanda tangan prosedur publik yang merusak kompatibilitas ekstensi konsumen di AppSource.
+:::
+
+## Latihan terkait
+
+[Capstone AL — Invoice Staging](/latihan/al/capstone-al-invoice-staging/).
+
+## Sumber resmi
+
+- [Differences between PTE and AppSource](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-apps-and-extensions).
+- [AppSource Technical Validation](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-checklist-submission).
+- [Prefix and Suffix in AL](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-affixes).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

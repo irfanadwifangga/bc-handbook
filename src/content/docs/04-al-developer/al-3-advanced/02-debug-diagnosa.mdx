@@ -1,0 +1,95 @@
+---
+title: "AL-3.2 Debugging tingkat lanjut dan diagnosa"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Mengisolasi masalah produksi tanpa menghentikan sesi pengguna melalui snapshot debugging dan AL profiler, serta memancarkan telemetri terstruktur ke Azure Application Insights dengan KQL.
+
+## Konsep singkat
+
+Debugging lingkungan cloud produksi tidak memungkinkan breakpoint interaktif yang menghentikan eksekusi transaksi. Sebagai gantinya, Business Central menyediakan Snapshot Debugging untuk menangkap call stack dan variabel saat eksekusi selesai, serta AL Profiler untuk menganalisis durasi komputasi per baris kode.
+
+Untuk pemantauan jangka panjang, pengembang menyematkan telemetri kustom menggunakan `Session.LogMessage` atau modul standar `Feature Telemetry`. Data ini dikirim ke Azure Application Insights dan dianalisis menggunakan Kusto Query Language (KQL).
+
+> ⚠️ Verifikasi: Fitur Snapshot Debugging memerlukan izin konfigurasi sesi debugging pada Business Central Admin Center dan pengaturan parameter snapshot khusus pada file `launch.json`.
+
+## Langkah di BC
+
+1. Konfigurasikan konfigurasi `snapshot` pada file `.vscode/launch.json` dengan mengarahkan `environmentType` dan `environmentName` target sandbox atau production yang diizinkan.
+2. Inisiasi sesi snapshot dari VS Code (`AL: Initialize Snapshot Debugging`), jalankan transaksi di Business Central oleh pengguna, lalu selesaikan perekaman (`AL: Finish Snapshot Debugging`).
+3. Muat file profil performa `.alcpuprofile` hasil perekaman untuk menemukan baris kode dengan durasi komputasi tertinggi (hotspot).
+4. Terapkan pemanggilan `Feature Telemetry` pada ekstensi kustom MYP untuk mencatat siklus adopsi fitur (LogUptake, LogUsage, dan LogError) dengan dimensi telemetri terstruktur.
+5. Konfigurasikan koneksi Application Insights Connection String pada konfigurasi environment di Business Central Admin Center.
+6. Buat kueri KQL pada Azure Application Insights untuk melacak lonjakan galat kustom, durasi panggilan API eksternal, atau kegagalan pemrosesan background.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50201 "MYP Diagnostic Telemetry"
+{
+    procedure LogProcessingEvent(BatchNo: Code[20]; Success: Boolean)
+    var
+        CustomDim: Dictionary of [Text, Text];
+        FeatureTelemetry: Codeunit "Feature Telemetry";
+    begin
+        CustomDim.Add('BatchNo', BatchNo);
+        CustomDim.Add('ProcessedAt', Format(CurrentDateTime(), 0, 9));
+
+        if Success then
+            FeatureTelemetry.LogUsage('0000MYP', 'Vendor Staging', 'Batch Processed', CustomDim)
+        else begin
+            CustomDim.Add('ErrorCode', 'ERR_VALIDATION_FAILED');
+            FeatureTelemetry.LogError('0000MYE', 'Vendor Staging', 'Batch Failed', 'Validasi gagal pada staging batch', '', CustomDim);
+        end;
+    end;
+}
+
+// Contoh KQL di Application Insights:
+// traces
+// | where customDimensions.eventId == '0000MYE'
+// | project timestamp, message, customDimensions.BatchNo, customDimensions.ErrorCode
+// | order by timestamp desc
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Gunakan snapshot debugging untuk analisa tanpa memblokir sesi.
+- Analisis alcpuprofile untuk mengidentifikasi bottleneck eksekusi.
+- Pakai Feature Telemetry untuk standarisasi LogUsage/LogError.
+- Berikan Event ID unik pada setiap titik pemancaran telemetri.
+- Hindari mencatat data pribadi/kredensial ke telemetri.
+- Analisis pola kegagalan produksi via kueri KQL di Azure.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Merekam data rahasia seperti token otentikasi, password, atau identitas pribadi (PII) ke dalam parameter pesan telemetri, atau mengandalkan breakpoint interaktif pada environment operasional aktif.
+:::
+
+## Latihan terkait
+
+[Latihan AL7 — Testing otomatis](/latihan/al/al7-testing/).
+
+## Sumber resmi
+
+- [Snapshot Debugging in Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-snapshot-debugging).
+- [AL Profiler Overview](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-profiler-overview).
+- [Feature Telemetry Codeunit](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-feature-telemetry).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

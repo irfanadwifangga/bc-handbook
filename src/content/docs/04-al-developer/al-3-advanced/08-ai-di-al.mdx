@@ -1,0 +1,122 @@
+---
+title: "AL-3.8 Eksplorasi AI dan agent di AL"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 8
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Mengintegrasikan kapabilitas kecerdasan buatan ke antarmuka Business Central menggunakan PromptDialog, mendaftarkan kapabilitas Copilot, serta memahami arsitektur pemanggilan model bahasa.
+
+## Konsep singkat
+
+Business Central menyediakan kerangka kerja ekstensibilitas AI untuk memungkinkan pengembang menyematkan pengalaman Copilot langsung ke dalam proses bisnis. Antarmuka pengguna berbasis AI diimplementasikan menggunakan tipe halaman khusus `PageType = PromptDialog` yang mendukung interaksi prompt, tinjauan hasil generasi sementara, dan aksi persetujuan.
+
+Di lapisan backend AL, pengembang dapat memanfaatkan modul sistem Azure OpenAI resmi atau menyusun orkestrasi agen otomatis. Pendekatan ini wajib mematuhi prinsip Responsible AI, yaitu menempatkan manusia sebagai pengambil keputusan akhir (human-in-the-loop).
+
+> ⚠️ Verifikasi: Status ketersediaan fitur agen mandiri (autonomous agents) dan kuota model bahasa Azure OpenAI pada Business Central dapat berbeda antara status Preview dan General Availability (GA), serta memerlukan konfigurasi persetujuan privasi data di tingkat tenant.
+
+## Langkah di BC
+
+1. Daftarkan kapabilitas Copilot kustom pada codeunit inisialisasi menggunakan modul sistem `Copilot Capability`.
+2. Buat halaman baru dengan properti `PageType = PromptDialog` untuk memberikan antarmuka percakapan terpadu yang memuat input prompt dan tampilan pratinjau data saran.
+3. Siapkan prosedur AL yang memanggil model bahasa (melalui modul Azure OpenAI client di Business Central) untuk mengirim instruksi sistem dan konteks data transaksi yang relevan.
+4. Tangani hasil respon model, validasi struktur data kembali ke record Business Central, dan tampilkan pada area saran PromptDialog.
+5. Sediakan tombol aksi `Generate`, `Regenerate`, dan `Keep it` untuk memastikan pengguna meninjau dan menyetujui data sebelum disimpan ke basis data produksi.
+6. Pantau konsumsi kuota token, latensi pemanggilan API eksternal, dan catat telemetri galat inferensi menggunakan `Feature Telemetry`.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+page 50204 "MYP Vendor Invoice Draft AI"
+{
+    PageType = PromptDialog;
+    Caption = 'Draft Invoice Assistant';
+    Extensible = false;
+
+    layout
+    {
+        area(Prompt)
+        {
+            field(InputPrompt; PromptText)
+            {
+                ApplicationArea = All;
+                Caption = 'Instruksi Ekstraksi';
+                MultiLine = true;
+            }
+        }
+        area(Content)
+        {
+            field(SuggestedVendor; TargetVendorNo)
+            {
+                ApplicationArea = All;
+                Caption = 'Vendor Disarankan';
+                Editable = false;
+            }
+        }
+    }
+
+    actions
+    {
+        area(SystemActions)
+        {
+            systemaction(Generate)
+            {
+                Caption = 'Analisis';
+                trigger OnAction()
+                begin
+                    // Panggil model logika AI dan isi TargetVendorNo
+                end;
+            }
+            systemaction(Ok)
+            {
+                Caption = 'Terapkan ke Dokumen';
+            }
+        }
+    }
+
+    var
+        PromptText: Text;
+        TargetVendorNo: Code[20];
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Gunakan PageType = PromptDialog untuk pengalaman interaktif Copilot.
+- Daftarkan fitur melalui modul sistem Copilot Capability.
+- Terapkan prinsip human-in-the-loop: tinjau sebelum commit.
+- Lindungi data kredensial dan kunci Azure OpenAI di backend.
+- Periksa status fitur antara Preview dan General Availability.
+- Pantau kuota token dan latensi inferensi jaringan.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyimpan hasil inferensi AI secara langsung ke buku besar atau dokumen transaksi operasional tanpa verifikasi dan persetujuan eksplisit dari operator manusia.
+:::
+
+## Latihan terkait
+
+[Capstone AL — Invoice Staging](/latihan/al/capstone-al-invoice-staging/).
+
+## Sumber resmi
+
+- [Integrating AI into Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/ai-overview).
+- [PromptDialog Page Type](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-page-type-promptdialog).
+- [Responsible AI Guidelines](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-responsible-ai-overview).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

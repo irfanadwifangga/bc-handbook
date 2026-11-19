@@ -1,0 +1,88 @@
+---
+title: "AL-3.6 Praktik DevOps dan CI/CD"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menyusun alur kerja version control Git, mengonfigurasi otomatisasi CI/CD menggunakan AL-Go for GitHub, memahami kontainerisasi build dengan BcContainerHelper, dan mengelola terjemahan XLIFF.
+
+## Konsep singkat
+
+Manajemen kode AL modern mengandalkan Git dengan repositori yang terisolasi dari artefak biner (`.alpackages/`, `.app`). Microsoft menyediakan AL-Go for GitHub, yaitu template workflow GitHub Actions siap pakai untuk mengotomatisasi kompilasi, eksekusi test runner, verifikasi analyzer, dan publikasi ekstensi ke lingkungan Business Central secara konsisten.
+
+Untuk eksekusi build dan pengujian yang dapat direproduksi, pipeline sering memanfaatkan BcContainerHelper yang memutar kontainer Docker Business Central secara otomatis. Selain itu, fitur lokalisasi bahasa dikelola melalui file terjemahan standar XLIFF (`.xlf`).
+
+> ⚠️ Verifikasi: Pipeline AL-Go memerlukan konfigurasi GitHub Secrets (seperti `AuthContext` atau kredensial service principal Azure) dan runner dengan kapasitas komputasi yang memadai untuk menjalankan kontainer build.
+
+## Langkah di BC
+
+1. Inisialisasi repositori Git dan pastikan file `.gitignore` mengabaikan folder `.alpackages`, file `.app`, cache VS Code, dan file kredensial `launch.json`.
+2. Aktifkan pembuatan file terjemahan otomatis pada manifest `app.json` dengan menambahkan `"features": [ "TranslationFile" ]`.
+3. Buat repositori baru menggunakan template resmi `AL-Go-PTE` dari GitHub Microsoft untuk ekstensi per-tenant.
+4. Daftarkan rahasia otentikasi target environment di pengaturan GitHub Secrets (menggunakan identitas Azure AD / App Registration berizin).
+5. Buat pull request pada branch utama untuk memicu pipeline otomatis: validasi kompilasi kode, eksekusi test codeunit, dan pemeriksaan CodeCop.
+6. Pantau artefak rilis (`.app`) yang dihasilkan otomatis oleh job CI dan verifikasi log status pengujian sebelum mengizinkan penggabungan kode (merge).
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+// Fragmen konfigurasi app.json untuk lokalisasi otomatis
+{
+    "id": "11111111-2222-3333-4444-555555555555",
+    "name": "MYP Advanced DevOps Demo",
+    "publisher": "MYP Publisher",
+    "version": "1.0.0.0",
+    "features": [
+        "TranslationFile"
+    ]
+}
+
+// Struktur file proyek standar:
+// .github/workflows/ (AL-Go workflows)
+// src/ (file .al objek aplikasi)
+// test/ (file .al test codeunit)
+// Translations/ (file .xlf terjemahan)
+// .gitignore (abaikan .alpackages dan *.app)
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Abaikan folder .alpackages dan file .app di dalam .gitignore.
+- Gunakan template AL-Go for GitHub untuk standarisasi CI/CD.
+- Jalankan kompilasi dan suite pengujian otomatis pada setiap PR.
+- Manfaatkan BcContainerHelper untuk lingkungan build deterministik.
+- Aktifkan fitur TranslationFile untuk ekspor string ke format XLIFF.
+- Amankan kredensial deployment melalui GitHub Secrets tersanitasi.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyimpan file biner package `.app` atau kredensial tenant (client secret / username password) ke dalam repositori Git publik maupun privat.
+:::
+
+## Latihan terkait
+
+[Latihan AL9 — CI/CD AL-Go](/latihan/al/al9-ci-pipeline/).
+
+## Sumber resmi
+
+- [AL-Go for GitHub Overview](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-algo-overview).
+- [Working with Translation Files](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-work-with-translation-files).
+- [BcContainerHelper Documentation](https://github.com/microsoft/navcontainerhelper).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

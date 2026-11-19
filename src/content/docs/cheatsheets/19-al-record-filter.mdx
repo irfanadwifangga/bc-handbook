@@ -1,0 +1,78 @@
+---
+title: "AL — Record dan Filter"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 19
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+**Ringkasan:** Akses data efisien di AL berbasis Set-based operation. Pilih method query yang tepat sesuai kebutuhan jumlah baris data dan field yang dibaca.
+
+### 1. Navigasi dan Pencarian Record
+
+| Method | Penggunaan Utama | Catatan Kinerja / Return |
+| --- | --- | --- |
+| `Get(PK...)` | Ambil 1 record pasti berdasarkan Primary Key | Return boolean jika ditampung; runtime error jika tidak ada record |
+| `FindSet()` | Loop sekumpulan record hasil filter | Optimal untuk iterasi maju; bawaan buffer chunk |
+| `FindFirst()` | Ambil tepat 1 baris pertama hasil filter | Pakai SQL `TOP 1`; jangan gunakan dalam loop `repeat..until` |
+| `FindLast()` | Ambil tepat 1 baris terakhir hasil filter | Urutan terbalik; efisien untuk nomor urut terakhir |
+| `IsEmpty()` | Cek keberadaan record tanpa fetch data | Mengembalikan boolean; paling hemat memori & IO |
+
+### 2. Sintaks Filter (SetRange vs SetFilter)
+
+```text
+// SetRange: filter nilai eksak atau rentang kontinu sederhana
+Customer.SetRange("No.", 'CUST001');                 // nilai tunggal
+Customer.SetRange("Balance (LCY)", 1000, 5000);      // rentang nilai
+Customer.SetRange(Blocked);                          // reset filter field
+
+// SetFilter: ekspresi filter kompleks
+Customer.SetFilter("No.", '%1|%2', 'C10', 'C20');    // OR (|)
+Customer.SetFilter(Name, '@*corp*');                 // case-insensitive (@) & wildcard (*)
+Customer.SetFilter("Balance (LCY)", '>0&<=10000');   // gabungan ekspresi (&)
+Customer.SetFilter(City, '<>%1', 'JAKARTA');         // negasi (<>)
+```
+
+### 3. Optimasi: SetLoadFields, CalcFields, dan CalcSums
+
+```text
+// Partial Records: load field yang dibutuhkan saja (hemat network & IO)
+Customer.SetLoadFields("No.", Name, "Balance (LCY)");
+if Customer.FindSet() then
+    repeat
+        Customer.CalcFields("Balance (LCY)"); // Hitung FlowField virtual
+    until Customer.Next() = 0;
+
+// CalcSums: agregasi server via SIFT (SumIndexField), tanpa fetch per row
+CustLedger.SetCurrentKey("Customer No.", Open);
+CustLedger.SetRange("Customer No.", 'CUST001');
+CustLedger.SetRange(Open, true);
+CustLedger.CalcSums("Remaining Amt. (LCY)");
+TotalBalance := CustLedger."Remaining Amt. (LCY)";
+```
+
+### 4. Manipulasi Record dan Triggers
+
+| Operasi | Sintaks | Perilaku Trigger (`RunTrigger`) |
+| --- | --- | --- |
+| Insert | `Rec.Insert(true)` | `true`: jalankan trigger OnInsert & penomoran No. Series; `false`: abaikan |
+| Modify | `Rec.Modify(true)` | `true`: jalankan trigger OnModify & validasi timestamp; `false`: abaikan |
+| ModifyAll | `Rec.ModifyAll(Field, Val, false)` | Bulk SQL update langsung ke database; lewati trigger baris demi performa |
+| DeleteAll | `Rec.DeleteAll(true)` | Hapus massal; jalankan OnDelete untuk tiap baris bila parameter `true` |
+
+## Sumber resmi
+
+- [recordmethods](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/record/record-data-type).
+- [filtersyntax](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/record/record-setfilter-method).
+
+</div>

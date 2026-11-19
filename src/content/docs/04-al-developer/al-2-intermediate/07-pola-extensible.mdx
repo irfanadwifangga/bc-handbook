@@ -1,0 +1,134 @@
+---
+title: "AL-2.7 Pola extensible"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 7
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menerapkan pola desain extensible di AL menggunakan interface, implements, extensible enum, dan menyediakan custom integration event untuk extension lain.
+
+## Konsep singkat
+
+Pola extensible memungkinkan aplikasi di-extend tanpa memodifikasi kode inti melalui modifikasi langsung. **Interface** di AL mendefinisikan kontrak method tanpa implementasi. Suatu codeunit mengimplementasikan interface melalui kata kunci `implements`.
+
+Kombinasi **extensible enum** dan interface memungkinkan polymorphic dispatch: enum mendefinisikan daftar opsi yang dapat ditambah oleh extension lain via `enumextension`, dan setiap value enum dapat dihubungkan ke implementasi interface tertentu via syntax `DefaultImplementation` atau pemetaan manual.
+
+Selain mengonsumsi event base app, extension yang baik juga **menerbitkan event sendiri** (publisher) melalui atribut `[IntegrationEvent]` atau `[BusinessEvent]`. Hal ini memungkinkan add-on lain mengaitkan logika tanpa perlu meminta perubahan kode inti kepada developer extension utama.
+
+## Langkah di BC
+
+1. Buat file interface `MYPDiscountCalculator.al` yang mendefinisikan method kalkulasi diskon (misal `CalculateDiscount`).
+2. Buat `enum` extensible (ID 50216) yang mengimplementasikan interface tersebut.
+3. Buat dua codeunit implementasi berbeda (misal Standar dan Volume/VIP) yang mengimplementasikan interface.
+4. Buat codeunit publisher dengan method event `[IntegrationEvent(false, false)]` sebelum dan sesudah kalkulasi dijalankan.
+5. Compile dan uji di Sandbox: ganti opsi enum pada konfigurasi, verifikasi implementasi yang dieksekusi berubah sesuai pilihan tanpa `case` statement bercabang panjang.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+interface "MYP Discount Calculator"
+{
+    procedure CalculateDiscount(Amount: Decimal): Decimal;
+}
+
+enum 50216 "MYP Discount Type" implements "MYP Discount Calculator"
+{
+    Extensible = true;
+    DefaultImplementation = "MYP Discount Calculator" = "MYP Standard Discount";
+
+    value(0; Standard)
+    {
+        Implementation = "MYP Discount Calculator" = "MYP Standard Discount";
+    }
+    value(1; Tiered)
+    {
+        Implementation = "MYP Discount Calculator" = "MYP Tiered Discount";
+    }
+}
+
+codeunit 50216 "MYP Standard Discount" implements "MYP Discount Calculator"
+{
+    procedure CalculateDiscount(Amount: Decimal): Decimal
+    begin
+        exit(Amount * 0.05);
+    end;
+}
+
+codeunit 50217 "MYP Tiered Discount" implements "MYP Discount Calculator"
+{
+    procedure CalculateDiscount(Amount: Decimal): Decimal
+    begin
+        if Amount > 1000 then
+            exit(Amount * 0.15);
+        exit(Amount * 0.08);
+    end;
+}
+```
+
+```text
+codeunit 50218 "MYP Calc Event Publisher"
+{
+    procedure ProcessCalculation(CalcType: Enum "MYP Discount Type"; BaseAmount: Decimal): Decimal
+    var
+        Calculator: Interface "MYP Discount Calculator";
+        FinalAmount: Decimal;
+    begin
+        OnBeforeCalculate(BaseAmount);
+        Calculator := CalcType;
+        FinalAmount := Calculator.CalculateDiscount(BaseAmount);
+        OnAfterCalculate(BaseAmount, FinalAmount);
+        exit(FinalAmount);
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCalculate(BaseAmount: Decimal)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterCalculate(BaseAmount: Decimal; FinalAmount: Decimal)
+    begin
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Interface mendefinisikan kontrak tanpa implementasi.
+- Enum extensible mengikat value ke codeunit via implements.
+- Menghilangkan switch/case bercabang panjang untuk plugin logic.
+- IntegrationEvent membuka titik integrasi bagi extension lain.
+- Gunakan false, false untuk IncludeSender dan GlobalVarAccess.
+- Ekstensi pihak ketiga dapat menambah value enum baru.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menulis `Extensible = false` pada enum yang diharapkan bisa diperluas oleh modul lain. Lupa menambahkan `DefaultImplementation` sehingga runtime error terjadi jika value kosong. Mengubah signature procedure pada interface yang sudah dipakai extension lain.
+:::
+
+## Latihan terkait
+
+Pola extensible mendasari pembuatan modul modular dan integrasi yang diuji di [AL4 — Event subscriber](/latihan/al/al4-event-subscriber/).
+
+## Sumber resmi
+
+- [interfaces](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-interfaces-in-al).
+- [extensibleenums](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-extensible-enums).
+- [integrationevents](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-creating-and-raising-events).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

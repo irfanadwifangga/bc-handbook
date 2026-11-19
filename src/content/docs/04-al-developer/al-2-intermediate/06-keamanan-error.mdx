@@ -1,0 +1,116 @@
+---
+title: "AL-2.6 Keamanan dan error handling"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 6
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menerapkan pengelolaan permission set group, InherentPermissions, penyimpanan rahasia dengan IsolatedStorage dan SecretText, serta penanganan error tingkat lanjut dengan ErrorInfo dan collectible errors.
+
+## Konsep singkat
+
+Keamanan objek AL diatur melalui **permission set** dan **permission set group**. Di level procedure, atribut **InherentPermissions** memberi hak akses sementara pada tabel tertentu tanpa memberi izin penuh kepada user di UI. Atribut **DataClassification** pada setiap field wajib diisi untuk kepatuhan perlindungan data (misal `CustomerContent`, `SystemMetadata`).
+
+Untuk data sensitif seperti API key atau token autentikasi, jangan simpan di tabel biasa atau teks polos. Gunakan **IsolatedStorage** dengan scope User atau Company. Untuk parameter rahasia di memori, manfaatkan tipe **SecretText** agar nilai tidak bocor lewat log telemetri atau debugger.
+
+> ⚠️ Verifikasi: Ketersediaan dan dukungan method `SecretText` pada IsolatedStorage (misalnya `IsolatedStorage.Get` dengan `SecretText`) perlu dicocokkan dengan symbols runtime 18.0 pada BC 29.x.
+
+Dalam penanganan error, **TryFunction** mengembalikan boolean tanpa rollback otomatis pada database jika terjadi error di dalamnya, namun memiliki batasan ketat (tidak boleh ada operasi tulis sebelum error). Standar modern mengutamakan **ErrorInfo** yang mendukung **collectible errors** via `[ErrorBehavior(ErrorBehavior::Collect)]`, memungkinkan validasi mengumpulkan semua error form sebelum menampilkan daftar lengkap ke pengguna.
+
+## Langkah di BC
+
+1. Buka AL Explorer (Ctrl+Alt+E) dan periksa permission set bawaan untuk memetakan hak akses objek demo.
+2. Definisikan `permissionsetgroup` baru (ID 50214, prefix MYP) yang menggabungkan beberapa permission set modular.
+3. Buat codeunit penyimpanan kredensial menggunakan `IsolatedStorage` dan parameter bertipe `SecretText`.
+4. Buat procedure validasi data dengan atribut `[ErrorBehavior(ErrorBehavior::Collect)]` dan objek `ErrorInfo` untuk mengumpulkan banyak kesalahan sekaligus.
+5. Uji skenario di Sandbox: pastikan token tersimpan aman, error kolektif muncul bersamaan, dan field baru memiliki DataClassification valid.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50214 "MYP Security Storage"
+{
+    Access = Internal;
+    InherentPermissions = X;
+
+    procedure SaveApiKey(KeyName: Text; KeyValue: SecretText)
+    begin
+        if IsolatedStorage.Contains(KeyName, DataScope::Company) then
+            IsolatedStorage.Delete(KeyName, DataScope::Company);
+        IsolatedStorage.Set(KeyName, KeyValue, DataScope::Company);
+    end;
+
+    [NonDebuggable]
+    procedure GetApiKey(KeyName: Text) ReturnValue: SecretText
+    begin
+        if IsolatedStorage.Contains(KeyName, DataScope::Company) then
+            IsolatedStorage.Get(KeyName, DataScope::Company, ReturnValue);
+    end;
+}
+```
+
+> ⚠️ Verifikasi: Syntax overload `IsolatedStorage.Get(Key, DataScope, SecretText)` dan atribut `[NonDebuggable]` perlu diverifikasi terhadap symbols BC 29.x.
+
+```text
+codeunit 50215 "MYP Collectible Error Demo"
+{
+    [ErrorBehavior(ErrorBehavior::Collect)]
+    procedure ValidateCustomerBatch(var Cust: Record Customer)
+    var
+        ErrInfo: ErrorInfo;
+    begin
+        if Cust.Name = '' then begin
+            ErrInfo := ErrorInfo.Create('Nama customer tidak boleh kosong.', true);
+            ErrInfo.RecordId := Cust.RecordId;
+            Error(ErrInfo);
+        end;
+
+        if Cust."Gen. Bus. Posting Group" = '' then begin
+            ErrInfo := ErrorInfo.Create('Posting Group wajib dipilih.', true);
+            ErrInfo.RecordId := Cust.RecordId;
+            Error(ErrInfo);
+        end;
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- InherentPermissions beri akses tabel lokal tanpa izin global user.
+- IsolatedStorage simpan token per Company atau User.
+- SecretText cegah kebocoran token di telemetri dan call stack.
+- DataClassification wajib pada setiap field tabel baru.
+- ErrorBehavior::Collect kumpulkan banyak error sebelum dieksekusi.
+- TryFunction dilarang menjalankan write database sebelum gagal.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menyimpan API secret atau token di tabel biasa tanpa enkripsi. Mengabaikan atribut DataClassification pada field custom. Menulis transaksi database di dalam TryFunction yang mengakibatkan runtime error transaksi terbuka.
+:::
+
+## Latihan terkait
+
+Penerapan penanganan error dipraktikkan langsung pada [AL4 — Event subscriber](/latihan/al/al4-event-subscriber/) dan [AL6 — HTTP dan JSON](/latihan/al/al6-http-al/).
+
+## Sumber resmi
+
+- [isolatedstorage](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-isolated-storage).
+- [secrettext](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/secrettext/secrettext-data-type).
+- [collectibleerrors](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-collectible-errors).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

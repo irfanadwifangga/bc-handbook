@@ -6,11 +6,11 @@
 
 ## Ringkasan status terkini — 2026-11-19
 
-- Konten Fase 5.0–5.7a selesai sebagai materi situs. Track BA, API dan AL-1 Fundamentals tersedia; Fase 5.7a mencakup 7 modul AL-1, indeks jalur AL, cheatsheet #17–#18, latihan AL1–AL3. Kelulusan latihan/UAT, koneksi BC dan kompilasi AL tetap memerlukan bukti sandbox pemilik.
+- Konten Fase 5.0–5.7c selesai sebagai materi situs. Track BA, API, serta seluruh Jalur AL Developer (AL-1 Fundamentals, AL-2 Intermediate, AL-3 Advanced) telah lengkap dengan 22 cheatsheet, latihan B1–B8, M1–M10, E1–E6, AL1–AL9, dan 2 capstone (BA/API Spreadsheet-to-BC & AL Invoice Staging). Kelulusan latihan/UAT, koneksi BC dan kompilasi AL tetap memerlukan bukti sandbox pemilik.
 - U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
-- Verifikasi terakhir: build 109 halaman, 3 tes Bun, 504 tes Playwright penuh, audit AL-1 124 tes lulus / 12 dilewati (60 kondisi unik + 2 cetak A4). Seluruh 14.740 tautan internal/anchor valid. Commit `562e904`. Tidak ada push/deploy.
+- Verifikasi terakhir: build 139 halaman, 3 tes Bun, 23.033 tautan internal/anchor valid tanpa target hilang. Fase 5.8 dan 5.9 tetap terbuka. Tidak ada push/deploy.
 - Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
 
 ## Fase Pembangunan Situs
@@ -24,12 +24,20 @@
 - [x] **5.6** — Level 3 Track 3A (Business Analysis) + cheatsheet #15–#16 + latihan E1–E3
 - [x] **5.7** — Track 3B (API) + cheatsheet API & AL + latihan E4–E6 + capstone
 - [x] **5.7a** — AL-1 Fundamentals + cheatsheet #17–#18 + latihan AL1–AL3
-- [ ] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
-- [ ] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
+- [x] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
+- [x] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
 - [ ] **5.8** — Glosarium, referensi, release checklist, progress tracker component
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.7b & 5.7c — 2026-11-19
+
+- Ditambahkan seluruh modul AL-2 Intermediate (9 modul + indeks), AL-3 Advanced (8 modul + indeks), cheatsheet #19–#22, latihan AL4–AL9, dan Capstone AL (total 30 file baru).
+- Sidebar di `astro.config.mjs` diperbarui memuat grup AL-2 Intermediate dan AL-3 Advanced.
+- Indeks ketersediaan diperbarui di `04-al-developer/index.md`, `cheatsheets/index.md`, `latihan/al/index.md`, dan `index.mdx`.
+- Verifikasi nyata: `bun run build` menghasilkan 139 halaman statis dengan Pagefind index; `bun test` 3 lulus; audit 23.033 tautan internal dan anchor berhasil 100% tanpa tautan rusak. Snippet AL berstatus Belum dikompilasi dengan fence teks.
+- Commit message: `docs: add al developer path level 2, level 3, cheatsheets and capstone`.
 
 ### Draf Fase 5.7a — 2026-11-19
 

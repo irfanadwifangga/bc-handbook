@@ -1,0 +1,104 @@
+---
+title: "AL-3.3 Siklus hidup dan pola upgrade"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Merancang codeunit instalasi dan upgrade dengan upgrade tags idempoten, mengelola siklus hidup deprecation objek, dan menaikkan target versi antar-wave tanpa breaking change.
+
+## Konsep singkat
+
+Ketika ekstensi dipasang pertama kali, codeunit `Subtype = Install` menginisialisasi parameter dasar per-perusahaan atau per-database. Saat versi ekstensi dinaikkan, codeunit `Subtype = Upgrade` bertugas memindahkan atau mentransformasi skema data lama ke struktur baru.
+
+Untuk memastikan skrip upgrade tidak dieksekusi berulang kali pada data yang sama (idempoten), pengembang wajib menggunakan pustaka `Upgrade Tag`. Perubahan skema juga harus mematuhi siklus deprecation terstruktur: dari `ObsoleteState = Pending` menuju `Removed`, dilengkapi `ObsoleteReason` dan `ObsoleteTag` agar tidak memicu breaking change bagi ekstensi lain.
+
+> ⚠️ Verifikasi: Eksekusi upgrade codeunit di lingkungan SaaS berjalan otomatis saat proses sinkronisasi versi, sedangkan pada pengujian lokal/sandbox docker memerlukan sinkronisasi skema manual via Sync-NAVApp / Start-NAVAppDataUpgrade.
+
+## Langkah di BC
+
+1. Buat codeunit instalasi (`Subtype = Install`) untuk mengisi konfigurasi bawaan pada trigger `OnInstallAppPerCompany`.
+2. Saat merombak struktur field (misal memperpanjang atau memecah field), jangan hapus field lama. Beri anotasi `ObsoleteState = Pending`, sertakan penjelasan pada `ObsoleteReason`, dan catat versi target pada `ObsoleteTag`.
+3. Buat codeunit upgrade (`Subtype = Upgrade`) dengan trigger `OnUpgradePerCompany`.
+4. Definisikan tag teks unik (misal: `MYP-Upgrade-FieldV2-20261119`) dan periksa keberadaannya menggunakan `UpgradeTag.HasUpgradeTag()`.
+5. Jalankan logika transformasi data antar tabel/field di dalam blok kondisi, lalu catat penyelesaian dengan `UpgradeTag.SetUpgradeTag()`.
+6. Naikkan versi aplikasi pada `app.json` (misal 1.0.0.0 ke 1.1.0.0) dan perbarui batas minimum `application` serta `runtime` sesuai rilis wave Business Central terbaru.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50202 "MYP App Upgrade Handler"
+{
+    Subtype = Upgrade;
+
+    trigger OnUpgradePerCompany()
+    begin
+        UpgradeCustomerLegacyField();
+    end;
+
+    local procedure UpgradeCustomerLegacyField()
+    var
+        UpgradeTag: Codeunit "Upgrade Tag";
+        Customer: Record Customer;
+    begin
+        if UpgradeTag.HasUpgradeTag(GetCustomerFieldUpgradeTag()) then
+            exit;
+
+        // Migrasi nilai dari field usang ke struktur baru
+        Customer.SetFilter("MYP Legacy Note", '<>%1', '');
+        if Customer.FindSet(true) then
+            repeat
+                Customer."MYP Updated Note" := Customer."MYP Legacy Note";
+                Customer.Modify(false);
+            until Customer.Next() = 0;
+
+        UpgradeTag.SetUpgradeTag(GetCustomerFieldUpgradeTag());
+    end;
+
+    internal procedure GetCustomerFieldUpgradeTag(): Text[250]
+    begin
+        exit('MYP-UPGRADE-CUSTNOTE-V29');
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Pisahkan tugas Install (inisialisasi) dan Upgrade (migrasi).
+- Selalu lindungi logika upgrade dengan Upgrade Tag unik.
+- Jangan pernah menghapus field aktif yang menyimpan data.
+- Tetapkan ObsoleteState = Pending sebelum menghapus field.
+- Isi ObsoleteReason dan ObsoleteTag secara deskriptif.
+- Validasi kompabilitas breaking change sebelum menaikkan wave.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menghapus field atau mengubah tipe data primary key secara langsung yang memicu kehilangan data (data loss) atau kegagalan kompilasi dependensi pihak ketiga.
+:::
+
+## Latihan terkait
+
+[Latihan AL8 — Upgrade dan deprecation](/latihan/al/al8-upgrade-obsolete/).
+
+## Sumber resmi
+
+- [Upgrading Extension Code](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-upgrading-extensions).
+- [Upgrade Tag Codeunit](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-upgrade-tag-codeunit).
+- [Deprecating Tables and Fields](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-deprecating-objects).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

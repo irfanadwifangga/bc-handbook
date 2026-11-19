@@ -1,0 +1,135 @@
+---
+title: "AL-2.8 HTTP dan JSON"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 8
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Memanfaatkan tipe data HttpClient dan JSON di AL untuk memanggil REST API eksternal, mengelola payload, menangani autentikasi token, dan menerapkan pola retry.
+
+## Konsep singkat
+
+Bahasa AL menyediakan tipe data native untuk operasi web: **HttpClient**, **HttpRequestMessage**, **HttpResponseMessage**, **HttpContent**, dan **HttpHeaders**. Untuk memanipulasi payload, AL menggunakan tipe JSON hierarkis: **JsonToken** (tipe dasar), **JsonObject**, **JsonArray**, dan **JsonValue**.
+
+Dalam pemanggilan API modern, integrasi sering kali memerlukan **OAuth 2.0 client credentials flow**. Token akses diambil terlebih dahulu melalui endpoint token eksternal, kemudian disematkan pada header `Authorization: Bearer <token>`.
+
+Jaringan eksternal bersifat tidak pasti (unreliable). Oleh karena itu, panggilan HTTP harus menyertakan **timeout configuration** dan **retry mechanism** (misalnya pengulangan maksimal 3 kali dengan jeda) ketika menemui status code `429 Too Many Requests` atau `503 Service Unavailable`. Hindari hardcoding endpoint dan credentials di dalam kode; simpan di tabel konfigurasi dan IsolatedStorage.
+
+## Langkah di BC
+
+1. Siapkan endpoint REST API pengujian (misalnya dummy API publik berprotokol HTTPS).
+2. Buat codeunit baru (ID 50219, prefix MYP) yang menginisialisasi `HttpClient` dan mengonfigurasi header request.
+3. Susun payload outgoing menggunakan `JsonObject.Add` dan konversi ke `HttpContent`.
+4. Kirim request dengan `Client.Send(RequestMessage, ResponseMessage)`. Periksa return value boolean (menunjukkan keberhasilan koneksi jaringan) sebelum membaca status code.
+5. Parse response body menggunakan `ResponseContent.ReadAs(ResponseText)` dan `JsonToken.ReadFrom(ResponseText)`.
+6. Implementasikan loop retry sederhana jika HTTP status code bernilai 429 atau 500-an.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50219 "MYP External API Client"
+{
+    procedure SendPayload(TargetUrl: Text; Payload: JsonObject): Text
+    var
+        Client: HttpClient;
+        RequestMessage: HttpRequestMessage;
+        ResponseMessage: HttpResponseMessage;
+        Headers: HttpHeaders;
+        Content: HttpContent;
+        PayloadText: Text;
+        ResponseText: Text;
+        Attempt: Integer;
+        Success: Boolean;
+    begin
+        Payload.WriteTo(PayloadText);
+        Content.WriteFrom(PayloadText);
+        Content.GetHeaders(Headers);
+        Headers.Remove('Content-Type');
+        Headers.Add('Content-Type', 'application/json');
+
+        RequestMessage.Method := 'POST';
+        RequestMessage.SetRequestUri(TargetUrl);
+        RequestMessage.Content := Content;
+
+        // Pola retry hingga 3 kali
+        Attempt := 0;
+        Success := false;
+        while (Attempt < 3) and (not Success) do begin
+            Attempt += 1;
+            Clear(ResponseMessage);
+            if Client.Send(RequestMessage, ResponseMessage) then begin
+                if ResponseMessage.IsSuccessStatusCode() then
+                    Success := true
+                else if ResponseMessage.HttpStatusCode() = 429 then
+                    Sleep(1000 * Attempt); // exponential/linear backoff
+            end else
+                Sleep(500);
+        end;
+
+        if not Success then
+            Error('Gagal memanggil API setelah 3 kali percobaan. Status code: %1', ResponseMessage.HttpStatusCode());
+
+        ResponseMessage.Content().ReadAs(ResponseText);
+        exit(ResponseText);
+    end;
+}
+```
+
+```text
+// Contoh parsing JSON response
+procedure ParseRates(JsonPayload: Text): Decimal
+var
+    JToken: JsonToken;
+    JObject: JsonObject;
+    RateToken: JsonToken;
+begin
+    if not JToken.ReadFrom(JsonPayload) then
+        Error('Format response bukan JSON valid.');
+
+    JObject := JToken.AsObject();
+    if JObject.Get('rate', RateToken) then
+        exit(RateToken.AsValue().AsDecimal());
+
+    exit(0);
+end;
+```
+
+## Cheat box
+
+<CheatBox>
+
+- HttpClient kirim request; periksa boolean result sebelum status code.
+- JsonObject dan JsonArray diakses melalui JsonToken dasar.
+- Selalu set header Content-Type application/json pada HttpContent.
+- Gunakan IsSuccessStatusCode untuk validasi respon HTTP 2xx.
+- Tangani HTTP 429 (rate limit) dengan jeda Sleep dan retry.
+- Jangan simpan bearer token atau client secret di kode AL.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Langsung membaca `ResponseMessage.HttpStatusCode()` tanpa mengecek hasil boolean dari `Client.Send` (menyebabkan crash saat timeout atau network failure). Mengabaikan Content-Type header pada HttpContent saat mengirim payload POST/PUT.
+:::
+
+## Latihan terkait
+
+[AL6 — HTTP dan JSON](/latihan/al/al6-http-al/).
+
+## Sumber resmi
+
+- [httpclient](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/httpclient/httpclient-data-type).
+- [jsontoken](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/jsontoken/jsontoken-data-type).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

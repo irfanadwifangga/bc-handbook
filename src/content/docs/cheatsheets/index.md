@@ -6,7 +6,7 @@ sidebar:
   order: 0
 ---
 
-Empat belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configuration Worksheet / RapidStart, Gap-Fit Analysis dan Process Mapping. Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 18 November 2026, tanpa menjalankan transaksi di sandbox.
+Dua puluh dua cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL (dasar & lanjutan), RapidStart, Gap-Fit, Process Mapping, serta 6 cheatsheet spesifik AL Developer (#17–#22). Gunakan contoh hanya di sandbox CRONUS; dokumentasi diperiksa pada 19 November 2026, tanpa menjalankan transaksi di sandbox.
 
 ## Navigasi & shortcut
 
@@ -63,3 +63,19 @@ Empat belas cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL, Configur
 ## AL Sintaks dan tipe data
 
 [Buka cheatsheet](./18-al-syntax/) — tipe, scope, kontrol alur dan validasi; snippet belum dikompilasi.
+
+## AL Record & Filter
+
+[Buka cheatsheet](./19-al-record-filter/) — Get/Find, SetRange/SetFilter, CalcFields, dan SetLoadFields.
+
+## AL Event & Pola Ekstensi
+
+[Buka cheatsheet](./20-al-event-pola/) — kerangka EventSubscriber, IsHandled, dan ErrorInfo.
+
+## AL Testing & Debugging
+
+[Buka cheatsheet](./21-al-testing-debugging/) — test codeunit, handler, dan query telemetri KQL.
+
+## AL Upgrade & Release Checklist
+
+[Buka cheatsheet](./22-al-upgrade-release/) — Install/Upgrade codeunit, ObsoleteState, dan verifikasi wave.

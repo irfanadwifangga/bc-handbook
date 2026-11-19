@@ -23,6 +23,8 @@ export default defineConfig({
           items: [
             { label: 'Jalur AL Developer', slug: '04-al-developer' },
             { label: 'AL-1 Fundamentals', items: [{ autogenerate: { directory: '04-al-developer/al-1-fundamentals' } }] },
+            { label: 'AL-2 Intermediate', items: [{ autogenerate: { directory: '04-al-developer/al-2-intermediate' } }] },
+            { label: 'AL-3 Advanced', items: [{ autogenerate: { directory: '04-al-developer/al-3-advanced' } }] },
           ],
         },
         { label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheets' } }] },

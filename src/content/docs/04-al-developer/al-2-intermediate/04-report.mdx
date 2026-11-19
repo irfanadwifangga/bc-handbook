@@ -1,0 +1,126 @@
+---
+title: "AL-2.4 Report"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Membuat Report dan ReportExtension, memahami layout Word/Excel/RDLC, dataset, dan request page.
+
+## Konsep singkat
+
+Report di BC memiliki dua bagian: **dataset** (data apa yang diambil) dan **layout** (bagaimana data ditampilkan). Dataset didefinisikan lewat `dataitem` yang merujuk tabel dan `column` yang memetakan field. Dataitem bisa bersarang (parent-child) untuk relasi master-detail.
+
+**Layout** tersedia dalam tiga format:
+- **Word** — template .docx, paling mudah diedit pengguna bisnis.
+- **Excel** — spreadsheet, cocok untuk data tabular yang perlu diproses lanjut.
+- **RDLC** — format paling fleksibel untuk pixel-perfect, tetapi kompleks.
+
+**Request page** adalah halaman filter dan opsi yang muncul sebelum report dijalankan. Didefinisikan dalam blok `requestpage` pada objek report.
+
+**ReportExtension** memungkinkan extension menambah column dan dataitem ke report yang sudah ada tanpa mengganti seluruh report.
+
+## Langkah di BC
+
+1. Buat report baru (ID 50211 "MYP Open Vendor Ledger") dengan dataitem "Vendor Ledger Entry" dan filter `Open = true`.
+2. Tambahkan column: "Entry No.", "Vendor No.", "Document Type", "Document No.", "Posting Date", "Amount", "Remaining Amount".
+3. Definisikan request page dengan field filter tambahan (misalnya Date filter).
+4. Buat layout Word: export default layout, edit template .docx — letakkan field di tabel Word, format header.
+5. Compile, publish, jalankan report dari Sandbox. Bandingkan hasil dengan data di Vendor Ledger Entries list.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+report 50211 "MYP Open Vendor Ledger"
+{
+    Caption = 'MYP Open Vendor Ledger Entries';
+    DefaultLayout = Word;
+    WordLayout = 'src/layout/MYPOpenVendorLedger.docx';
+
+    dataset
+    {
+        dataitem(VendorLedgerEntry; "Vendor Ledger Entry")
+        {
+            DataItemTableView = where(Open = const(true));
+            RequestFilterFields = "Vendor No.", "Posting Date";
+
+            column(EntryNo; "Entry No.") { }
+            column(VendorNo; "Vendor No.") { }
+            column(DocumentType; "Document Type") { }
+            column(DocumentNo; "Document No.") { }
+            column(PostingDate; "Posting Date") { }
+            column(Amount; Amount) { }
+            column(RemainingAmount; "Remaining Amount") { }
+        }
+    }
+
+    requestpage
+    {
+        layout
+        {
+            area(Content)
+            {
+                group(Options)
+                {
+                    Caption = 'Options';
+                }
+            }
+        }
+    }
+}
+```
+
+```text
+// ReportExtension: menambah column ke report standar
+reportextension 50212 "MYP Vendor Ledger Ext" extends "Vendor - Detail Trial Balance"
+{
+    dataset
+    {
+        add(VendorLedgerEntry)
+        {
+            column(MYPNote; "MYP Note") { }
+        }
+    }
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Dataset = dataitem (tabel) + column (field).
+- Layout: Word (.docx) paling mudah, RDLC paling fleksibel.
+- Request page = filter + opsi sebelum jalankan report.
+- DataItemTableView untuk filter statis (where Open = const(true)).
+- RequestFilterFields untuk filter yang bisa diubah pengguna.
+- ReportExtension menambah column tanpa mengganti report.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Tidak menambahkan column di dataset tetapi mencoba memakai field di layout — layout hanya bisa mengakses column yang didefinisikan. Lupa RequestFilterFields sehingga pengguna tidak bisa memfilter. Memakai RDLC untuk kebutuhan sederhana yang cukup Word.
+:::
+
+## Latihan terkait
+
+[AL5 — Report](/latihan/al/al5-report/).
+
+## Sumber resmi
+
+- [reports](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-reports).
+- [wordlayout](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-howto-report-layout).
+- [reportext](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-report-ext-object).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

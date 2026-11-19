@@ -1,0 +1,110 @@
+---
+title: "AL-2.1 Event-driven programming"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Memahami EventSubscriber, perbedaan integration dan business event, pola IsHandled, serta cara menemukan event yang tersedia.
+
+## Konsep singkat
+
+BC memakai model event-driven agar extension dapat bereaksi terhadap aksi base app tanpa mengubah kode aslinya. **Business event** didesain sebagai kontrak stabil yang tidak berubah antarversi; **integration event** memberi titik masuk teknis tetapi bisa berubah. Subscriber mendekorasi procedure dengan atribut `[EventSubscriber]` dan menerima parameter yang dikirim publisher.
+
+Pola **IsHandled** (parameter `var Boolean`) memungkinkan subscriber membatalkan logika default — subscriber pertama yang men-set `IsHandled := true` menandakan bahwa kasus sudah ditangani. Gunakan hati-hati: subscriber lain mungkin tidak dieksekusi setelahnya.
+
+**Menemukan event:** gunakan AL Explorer di VS Code (Ctrl+Alt+E) → filter Object Type = Codeunit/Table, lalu cari nama event. Periksa signature (parameter, var/non-var) di panel detail sebelum menulis subscriber.
+
+**SingleInstance** pada codeunit subscriber berarti satu instance per session — berguna untuk caching, tetapi state tersimpan sepanjang session dan bisa menyebabkan bug jika tidak di-reset. **Manual binding** (`BindSubscription`/`UnbindSubscription`) memberi kontrol kapan subscriber aktif, berbeda dari binding otomatis default.
+
+## Langkah di BC
+
+1. Buka VS Code, Download Symbols, lalu buka AL Explorer (Ctrl+Alt+E). Filter ke Codeunit 80 (Sales-Post) dan telusuri event yang tersedia — perhatikan prefix `OnBefore`/`OnAfter`.
+2. Buat codeunit subscriber baru (ID 50205, prefix MYP). Tambahkan `[EventSubscriber]` dengan ObjectType, ObjectId, EventName, Element, dan SkipOnMissingLicense/Permission.
+3. Tulis logika sederhana di dalam subscriber — misalnya log ke Message atau validasi field.
+4. Untuk manual binding, buat codeunit dengan property `SingleInstance = true`, lalu panggil `BindSubscription(MySubscriberCU)` pada titik yang diinginkan.
+5. Compile dan publish ke Sandbox. Lakukan aksi yang men-trigger event, periksa apakah subscriber dieksekusi.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50205 "MYP Sales Post Subscriber"
+{
+    // Binding otomatis (default)
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post",
+        'OnBeforePostSalesDoc', '', false, false)]
+    local procedure OnBeforePostSalesDoc(
+        var SalesHeader: Record "Sales Header";
+        var IsHandled: Boolean)
+    begin
+        if IsHandled then
+            exit;
+        // Contoh: validasi field kustom sebelum posting
+        SalesHeader.TestField("MYP Approval Note");
+    end;
+}
+```
+
+> ⚠️ Verifikasi: Nama event `OnBeforePostSalesDoc` dan signature-nya perlu dicocokkan dengan symbols Codeunit 80 pada BC 29.x melalui AL Explorer.
+
+```text
+// Manual binding
+codeunit 50206 "MYP Manual Bind Demo"
+{
+    SingleInstance = true;
+
+    var
+        Subscriber: Codeunit "MYP Sales Post Subscriber";
+
+    procedure StartListening()
+    begin
+        BindSubscription(Subscriber);
+    end;
+
+    procedure StopListening()
+    begin
+        UnbindSubscription(Subscriber);
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Business event = kontrak stabil; integration event = bisa berubah.
+- IsHandled: set true → logika default di-skip.
+- AL Explorer (Ctrl+Alt+E) untuk menemukan event.
+- SingleInstance = satu instance per session, hati-hati state.
+- BindSubscription/UnbindSubscription untuk manual binding.
+- Periksa signature (var/non-var) sebelum subscribe.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Tidak memeriksa IsHandled di awal subscriber sehingga logika dijalankan ganda. Lupa bahwa SingleInstance menyimpan state antarpemanggilan. Subscribe ke integration event lalu kode pecah saat upgrade karena signature berubah.
+:::
+
+## Latihan terkait
+
+[AL4 — Event subscriber](/latihan/al/al4-event-subscriber/).
+
+## Sumber resmi
+
+- [events](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-events-in-al).
+- [eventsubscriber](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/attributes/devenv-eventsubscriber-attribute).
+- [alexplorertool](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-explorer).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

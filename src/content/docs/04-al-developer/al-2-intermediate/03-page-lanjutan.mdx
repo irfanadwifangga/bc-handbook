@@ -1,0 +1,150 @@
+---
+title: "AL-2.3 Page lanjutan"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 3
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menguasai action grouping, FactBox, Document page, visibilitas dinamis, dan page background task.
+
+## Konsep singkat
+
+Page di BC lebih dari sekadar daftar field. **Actions** dikelompokkan dalam area: `Processing`, `Navigation`, `Reporting`. Masing-masing bisa punya sub-group. Pengelompokan yang baik memudahkan pengguna menemukan fungsi tanpa membaca dokumentasi.
+
+**FactBox** adalah panel samping yang menampilkan informasi terkait record saat ini — misalnya statistik customer saat melihat Sales Order. FactBox bisa berupa CardPart, ListPart, atau SystemPart (Notes, Links).
+
+**Document page** adalah pola standar BC untuk dokumen transaksional (Sales Order, Purchase Order): header di atas, lines di subpage. PageType = Document dengan Subpage (Lines) di-embed via `part`.
+
+**Visibilitas dinamis** menggunakan property `Visible` yang terikat variabel boolean — field/group muncul atau sembunyi berdasarkan kondisi runtime. Hitung variabel di trigger `OnAfterGetCurrRecord`.
+
+**Page background task** memindahkan kalkulasi berat ke session terpisah agar UI tidak freeze. Gunakan `CurrPage.EnqueueBackgroundTask` dengan codeunit yang mengembalikan hasil via dictionary.
+
+## Langkah di BC
+
+1. Buat page baru (ID 50209, PageType = Card) dengan action groups: Processing → "Post", Navigation → "Related Documents", Reporting → "Print".
+2. Tambahkan FactBox area: `part` yang menunjuk ke Page statistik (ListPart atau CardPart).
+3. Untuk Document page, buat page header (PageType = Document) dan subpage lines (PageType = ListPart), lalu embed subpage via `part(Lines; "MYP Doc Lines")`.
+4. Implementasikan visibilitas dinamis: tambah boolean variable `ShowAdvanced`, toggle lewat action, dan set `Visible = ShowAdvanced` pada group field.
+5. Untuk background task: buat codeunit dengan procedure `OnRun` yang mengembalikan Dictionary, panggil `EnqueueBackgroundTask` di `OnAfterGetCurrRecord`, dan tangkap hasil di `OnPageBackgroundTaskCompleted`.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+page 50209 "MYP Sample Card"
+{
+    PageType = Card;
+    SourceTable = "MYP Sample Table";
+
+    layout
+    {
+        area(Content)
+        {
+            group(General)
+            {
+                field("No."; Rec."No.") { }
+                field(Description; Rec.Description) { }
+            }
+            group(Advanced)
+            {
+                Visible = ShowAdvanced;
+                field("Detail Field"; Rec."Detail Field") { }
+            }
+        }
+        area(FactBoxes)
+        {
+            part(Stats; "MYP Stats FactBox")
+            {
+                SubPageLink = "No." = field("No.");
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(Post)
+            {
+                Caption = 'Post';
+                Image = PostDocument;
+                trigger OnAction()
+                begin
+                    Message('Posted.');
+                end;
+            }
+        }
+        area(Navigation)
+        {
+            action(RelatedDocs)
+            {
+                Caption = 'Related Documents';
+                RunObject = page "MYP Related List";
+            }
+        }
+    }
+
+    var
+        ShowAdvanced: Boolean;
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        ShowAdvanced := Rec."Has Details";
+    end;
+}
+```
+
+```text
+// Page background task (codeunit yang di-enqueue)
+codeunit 50210 "MYP Background Calc"
+{
+    trigger OnRun()
+    var
+        Results: Dictionary of [Text, Text];
+    begin
+        // Kalkulasi berat di sini
+        Results.Add('Total', Format(12345));
+        Page.SetBackgroundTaskResult(Results);
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Action area: Processing, Navigation, Reporting.
+- FactBox = panel samping (CardPart/ListPart/SystemPart).
+- Document page: header Card + embedded ListPart lines.
+- Visible = variabel, hitung di OnAfterGetCurrRecord.
+- EnqueueBackgroundTask agar UI tidak freeze.
+- Hasil background task via OnPageBackgroundTaskCompleted.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Menaruh action di area yang salah sehingga pengguna tidak menemukan tombol. Lupa SubPageLink pada FactBox sehingga data tidak tersinkron dengan record aktif. Menjalankan kalkulasi berat di OnAfterGetRecord tanpa background task sehingga list page lambat.
+:::
+
+## Latihan terkait
+
+Tidak ada latihan khusus untuk modul ini. Pola page dipakai di [AL5 — Report](/latihan/al/al5-report/) saat melihat request page.
+
+## Sumber resmi
+
+- [pages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-page-types-and-layouts).
+- [actions](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-actions-overview).
+- [backgroundtask](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-page-background-tasks).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

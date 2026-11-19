@@ -1,0 +1,132 @@
+---
+title: "AL-2.2 Posting dokumen"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 2
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Memahami alur posting Sales dan Purchase, menambah field ke dokumen terposting, serta menangani error dengan ErrorInfo.
+
+## Konsep singkat
+
+Posting di BC mengubah dokumen (Sales Order/Invoice) menjadi ledger entry. Alur utama melewati **Codeunit 80 "Sales-Post"** untuk penjualan dan **Codeunit 90 "Purch.-Post"** untuk pembelian. Kedua codeunit ini memanggil puluhan event di setiap tahap: validasi header, validasi line, pembuatan ledger entry, dan finalisasi.
+
+> ⚠️ Verifikasi: Nomor Codeunit 80 untuk Sales-Post dan Codeunit 90 untuk Purch.-Post perlu dikonfirmasi pada symbols BC 29.x. Nama dan nomor bisa berubah antarversi.
+
+Untuk **menambah field kustom ke dokumen terposting**, kamu perlu: (a) TableExtension pada tabel sumber dan tabel terposting, (b) subscriber pada event yang menyalin field dari dokumen ke posted document.
+
+**ErrorInfo** adalah tipe data yang membungkus informasi error termasuk pesan, action yang bisa dilakukan pengguna, dan navigasi. Gunakan `Error(ErrorInfo)` alih-alih `Error('teks')` agar pengguna mendapat konteks yang actionable.
+
+## Langkah di BC
+
+1. Telusuri Codeunit 80 di AL Explorer. Cari event `OnBeforePostSalesDoc`, `OnAfterPostSalesDoc`, `OnBeforeSalesInvHeaderInsert` — ini titik-titik kunci untuk extension.
+2. Buat TableExtension pada "Sales Header" dan "Sales Invoice Header" yang menambah field kustom (misal `MYP Delivery Note`, ID 50207).
+3. Buat subscriber pada event `OnBeforeSalesInvHeaderInsert` untuk menyalin nilai field dari Sales Header ke Sales Invoice Header.
+4. Untuk validasi dengan ErrorInfo, buat subscriber pada `OnBeforePostSalesDoc`, periksa field, lalu kirim Error(ErrorInfo) jika gagal.
+5. Compile, publish, lalu posting Sales Invoice dari Sandbox. Periksa Posted Sales Invoice — field kustom harus tersalin.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+tableextension 50207 "MYP Sales Header Ext" extends "Sales Header"
+{
+    fields
+    {
+        field(50207; "MYP Delivery Note"; Text[100])
+        {
+            Caption = 'MYP Delivery Note';
+            DataClassification = CustomerContent;
+        }
+    }
+}
+```
+
+```text
+tableextension 50208 "MYP Sales Inv Header Ext" extends "Sales Invoice Header"
+{
+    fields
+    {
+        field(50207; "MYP Delivery Note"; Text[100])
+        {
+            Caption = 'MYP Delivery Note';
+            FieldClass = Normal;
+            DataClassification = CustomerContent;
+        }
+    }
+}
+```
+
+```text
+codeunit 50208 "MYP Copy Fields On Post"
+{
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post",
+        'OnBeforeSalesInvHeaderInsert', '', false, false)]
+    local procedure CopyDeliveryNote(
+        var SalesInvHeader: Record "Sales Invoice Header";
+        SalesHeader: Record "Sales Header")
+    begin
+        SalesInvHeader."MYP Delivery Note" := SalesHeader."MYP Delivery Note";
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post",
+        'OnBeforePostSalesDoc', '', false, false)]
+    local procedure ValidateBeforePost(
+        var SalesHeader: Record "Sales Header";
+        var IsHandled: Boolean)
+    var
+        MyErrorInfo: ErrorInfo;
+    begin
+        if IsHandled then
+            exit;
+        if SalesHeader."MYP Delivery Note" = '' then begin
+            MyErrorInfo.DataClassification(DataClassification::SystemMetadata);
+            MyErrorInfo.Message('MYP Delivery Note harus diisi sebelum posting.');
+            MyErrorInfo.DetailedMessage('Buka Sales Order, isi field MYP Delivery Note.');
+            MyErrorInfo.AddNavigationAction('Buka Sales Order');
+            Error(MyErrorInfo);
+        end;
+    end;
+}
+```
+
+> ⚠️ Verifikasi: Nama event `OnBeforeSalesInvHeaderInsert` dan parameter signature-nya perlu dicocokkan dengan symbols Codeunit 80 pada BC 29.x.
+
+## Cheat box
+
+<CheatBox>
+
+- Codeunit 80 = Sales-Post, Codeunit 90 = Purch.-Post (⚠️ verifikasi).
+- Tambah field: TableExt sumber + TableExt posted + subscriber copy.
+- ErrorInfo memberi pesan + action navigasi ke pengguna.
+- Periksa IsHandled sebelum validasi di subscriber.
+- Event OnBefore*/OnAfter* ada di setiap tahap posting.
+- Selalu uji posting positif dan negatif di Sandbox.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Lupa membuat TableExtension pada tabel terposting sehingga field hilang setelah posting. Menulis `Error('teks')` tanpa ErrorInfo sehingga pengguna tidak tahu cara memperbaiki masalah. Menyalin field di event yang salah (terlalu awal/terlambat).
+:::
+
+## Latihan terkait
+
+[AL4 — Event subscriber](/latihan/al/al4-event-subscriber/).
+
+## Sumber resmi
+
+- [posting](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-sales-posting).
+- [errorinfo](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/errorinfo/errorinfo-data-type).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

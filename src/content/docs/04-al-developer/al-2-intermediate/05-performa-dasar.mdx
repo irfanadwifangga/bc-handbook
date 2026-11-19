@@ -1,0 +1,125 @@
+---
+title: "AL-2.5 Performa dasar"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 5
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Memahami Query object, SetCurrentKey, CalcSums, operasi bulk, SetLoadFields, dan implikasi performa di BC 29.x.
+
+## Konsep singkat
+
+**Query object** mengambil data dari satu atau lebih tabel dengan join, grouping, dan aggregasi (Sum, Count, Average) langsung di server — lebih efisien daripada loop record untuk analisis data.
+
+**SetCurrentKey** mengubah urutan sorting dan menentukan key mana yang dipakai. Key yang tepat memungkinkan **CalcSums** dan **CalcFields** berjalan di server SQL tanpa loop AL. Gunakan SumIndexField pada key yang sering diaggregasi.
+
+**Operasi bulk:** `ModifyAll` dan `DeleteAll` menjalankan satu statement SQL untuk banyak record sekaligus, jauh lebih cepat daripada loop Modify/Delete. Namun trigger OnModify/OnDelete **tidak** dijalankan oleh operasi bulk — gunakan parameter `RunTrigger := true` jika trigger diperlukan.
+
+**SetLoadFields** (partial record) memberi tahu server untuk hanya mengambil field tertentu dari database, mengurangi transfer data secara signifikan. Di BC 29.x, partial record semakin penting karena tabel sistem makin besar dan performa jaringan menjadi faktor.
+
+> ⚠️ Verifikasi: Implikasi spesifik v29.x terhadap performa (misalnya perubahan perilaku SetLoadFields atau indeks baru) perlu dikonfirmasi dengan release note resmi BC 2026 wave 2.
+
+## Langkah di BC
+
+1. Buat Query object (ID 50213) yang menjoin "Sales Invoice Header" dengan "Sales Invoice Line", group by "Sell-to Customer No.", dan hitung Sum of Amount.
+2. Bandingkan hasil Query dengan loop manual Record — perhatikan jumlah SQL statement di debugger (AL Profiler).
+3. Gunakan SetCurrentKey dan CalcSums pada "Customer Ledger Entry" untuk menghitung total "Remaining Amount" per customer tanpa loop.
+4. Ganti loop `Modify` dengan `ModifyAll` pada skenario update massal field. Ukur perbedaan waktu.
+5. Tambahkan SetLoadFields sebelum FindSet pada loop yang hanya membaca 2–3 field dari tabel besar. Periksa dampak di AL Profiler.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+query 50213 "MYP Sales by Customer"
+{
+    Caption = 'MYP Sales by Customer';
+
+    elements
+    {
+        dataitem(SalesInvHeader; "Sales Invoice Header")
+        {
+            column(CustomerNo; "Sell-to Customer No.") { }
+
+            dataitem(SalesInvLine; "Sales Invoice Line")
+            {
+                DataItemLink = "Document No." = SalesInvHeader."No.";
+                SqlJoinType = InnerJoin;
+
+                column(TotalAmount; Amount)
+                {
+                    Method = Sum;
+                }
+            }
+        }
+    }
+}
+```
+
+```text
+// CalcSums dengan SetCurrentKey
+procedure GetCustomerBalance(CustNo: Code[20]): Decimal
+var
+    CustLedger: Record "Cust. Ledger Entry";
+begin
+    CustLedger.SetCurrentKey("Customer No.", Open);
+    CustLedger.SetRange("Customer No.", CustNo);
+    CustLedger.SetRange(Open, true);
+    CustLedger.CalcSums("Remaining Amt. (LCY)");
+    exit(CustLedger."Remaining Amt. (LCY)");
+end;
+```
+
+```text
+// SetLoadFields — partial record
+procedure ListCustomerNames()
+var
+    Cust: Record Customer;
+begin
+    Cust.SetLoadFields("No.", Name);
+    if Cust.FindSet() then
+        repeat
+            Message('%1: %2', Cust."No.", Cust.Name);
+        until Cust.Next() = 0;
+end;
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Query object = join + aggregasi di server, bukan loop AL.
+- SetCurrentKey + CalcSums = aggregasi tanpa loop.
+- ModifyAll/DeleteAll = bulk SQL, trigger tidak jalan (default).
+- SetLoadFields = ambil field tertentu saja, hemat bandwidth.
+- AL Profiler untuk mengukur SQL statement dan waktu.
+- v29.x: periksa release note untuk perubahan performa.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memakai loop FindSet + Modify untuk ribuan record alih-alih ModifyAll. Lupa SetCurrentKey sebelum CalcSums sehingga server melakukan table scan. Tidak memakai SetLoadFields pada tabel besar sehingga seluruh row di-transfer.
+:::
+
+## Latihan terkait
+
+Teknik performa ini dipakai di semua latihan AL; relevan khususnya pada [AL5 — Report](/latihan/al/al5-report/) saat membuat dataset.
+
+## Sumber resmi
+
+- [queryobject](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-query-object).
+- [setloadfields](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/record/record-setloadfields-method).
+- [bulkops](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-bulk-operations).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

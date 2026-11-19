@@ -1,0 +1,63 @@
+---
+title: "AL — Upgrade dan rilis"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 22
+tableOfContents: false
+---
+
+<div class="bc-cheatsheet">
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+| Properti / Elemen | Nilai / Contoh | Keterangan & Tujuan |
+| --- | --- | --- |
+| Subtype = Install | Codeunit | Mengisi data setup awal saat ekstensi pertama dipasang |
+| Subtype = Upgrade | Codeunit | Memindahkan/mengonversi data antarversi aplikasi |
+| Upgrade Tag | Codeunit "Upgrade Tag" | Memastikan proses migrasi berjalan tepat 1 kali (idempoten) |
+| ObsoleteState | Pending / Removed | Status deprecation bertahap sebelum penghapusan permanen |
+| ObsoleteReason | Text[250] | Alasan deprecation dan petunjuk field pengganti |
+| ObsoleteTag | Text[50] | Versi target kapan simbol akan dihapus permanen |
+
+```text
+// Contoh Properti Deprecation pada Field
+field(50200; "MYP Old Code"; Code[20])
+{
+    Caption = 'Old Reference Code';
+    ObsoleteState = Pending;
+    ObsoleteReason = 'Digantikan oleh field MYP New Code dengan tipe Text[50]';
+    ObsoleteTag = '29.0';
+}
+```
+
+| Checklist Rilis Setiap Wave | Hal yang Wajib Dicek | Tindakan Pengembang |
+| --- | --- | --- |
+| Runtime Manifest | Nilai runtime di `app.json` | Naikkan runtime (contoh: BC 29 = runtime 18.0) |
+| Dependency Application | Target aplikasi minimum | Cocokkan dengan versi minor rilis wave target |
+| AppSourceCop Baseline | Deteksi breaking changes | Unduh symbols versi lama sebagai acuan baseline |
+| Deprecated Warnings | Pesan compiler AL0432 | Ganti pemanggilan prosedur usang dengan API baru |
+| Breaking Schema Changes | Penghapusan kolom/tabel | Terapkan ObsoleteState = Pending, jangan drop kolom |
+
+```text
+// Pola Upgrade Tag Idempoten
+if not UpgradeTag.HasUpgradeTag('MYP-TAG-V29-20261119') then begin
+    // Jalankan migrasi data
+    UpgradeTag.SetUpgradeTag('MYP-TAG-V29-20261119');
+end;
+```
+
+[AL-3.3 Upgrade](/04-al-developer/al-3-advanced/03-siklus-hidup-upgrade/) · [AL-3.7 PTE vs AppSource](/04-al-developer/al-3-advanced/07-pte-vs-appsource/) · [Latihan AL8](/latihan/al/al8-upgrade-obsolete/).
+
+## Sumber resmi
+
+- [Upgrading Extension Code](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-upgrading-extensions).
+- [Deprecating Objects in AL](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-deprecating-objects).
+- [AL Choosing Runtime](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-choosing-runtime).
+
+</div>

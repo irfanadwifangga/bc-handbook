@@ -1,0 +1,126 @@
+---
+title: "AL-2.9 Custom API page"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Intermediate
+sidebar:
+  order: 9
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Membuat Custom API Page di AL, mengonfigurasi endpoint API standar, memahami ODataKeyFields menggunakan SystemId, dan memahami status deprecation web service SOAP/OData lama.
+
+## Konsep singkat
+
+Untuk mengekspos entitas data ke sistem eksternal tanpa overhead UI, BC menyediakan **PageType = API**. Page tipe ini tidak memiliki representasi visual di client browser, melainkan otomatis menghasilkan REST endpoint OData v4 yang dioptimalkan untuk throughput tinggi.
+
+Properti kunci pada API Page meliputi:
+- `APIPublisher`: namespace organisasi/publisher (misal `myp`).
+- `APIGroup`: kelompok modul fungsional (misal `integration`).
+- `APIVersion`: versi kontrak API (misal `v1.0` atau `v2.0`).
+- `EntityName` dan `EntitySetName`: nama tunggal dan jamak entitas (camelCase/kebabCase) yang membentuk URL segmen.
+- `ODataKeyFields = SystemId`: menggunakan GUID immutable internal record sebagai primary identifier, bukan nomor dokumen yang bisa berubah atau memerlukan URL encoding rumit.
+
+Endpoint yang dihasilkan mengikuti format standar:
+`/api/<APIPublisher>/<APIGroup>/<APIVersion>/companies(<Company_Id>)/<EntitySetName>`
+
+**Konteks Deprecation:** Web service berbasis SOAP dan OData v3/v4 page standar (web service daftar Page) telah dideprecate secara bertahap demi API Page khusus. API Page dirancang bebas trigger UI, lebih ringan, dan mendukung bulk/batch operation secara native.
+
+## Langkah di BC
+
+1. Buat file page baru (ID 50220, prefix MYP) dengan `PageType = API`.
+2. Tentukan `APIPublisher = 'myp'`, `APIGroup = 'demo'`, `APIVersion = 'v1.0'`.
+3. Tentukan `EntityName = 'mypInvoiceStaging'` dan `EntitySetName = 'mypInvoiceStagings'`.
+4. Set `DelayedInsert = true` dan `ODataKeyFields = SystemId`.
+5. Petakan field-field tabel ke dalam layout area(Content) dengan penamaan camelCase.
+6. Compile, publish ke Sandbox, lalu uji panggil endpoint GET dan POST menggunakan Postman atau curl dengan basic/bearer token demo.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+page 50220 "MYP Custom Staging API"
+{
+    PageType = API;
+    Caption = 'MYP Invoice Staging API';
+    APIPublisher = 'myp';
+    APIGroup = 'demo';
+    APIVersion = 'v1.0';
+    EntityName = 'mypInvoiceStaging';
+    EntitySetName = 'mypInvoiceStagings';
+    SourceTable = "MYP Vendor Invoice Staging";
+    DelayedInsert = true;
+    ODataKeyFields = SystemId;
+
+    layout
+    {
+        area(Content)
+        {
+            repeater(Group)
+            {
+                field(id; Rec.SystemId)
+                {
+                    Caption = 'Id';
+                    Editable = false;
+                }
+                field(externalDocumentNo; Rec."External Doc. No.")
+                {
+                    Caption = 'External Document No.';
+                }
+                field(vendorNo; Rec."Vendor No.")
+                {
+                    Caption = 'Vendor No.';
+                }
+                field(postingDate; Rec."Posting Date")
+                {
+                    Caption = 'Posting Date';
+                }
+                field(amount; Rec.Amount)
+                {
+                    Caption = 'Amount';
+                }
+                field(status; Rec.Status)
+                {
+                    Caption = 'Status';
+                }
+            }
+        }
+    }
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- PageType = API menghasilkan REST OData v4 endpoint resmi.
+- APIPublisher, APIGroup, dan APIVersion membentuk path URL.
+- EntitySetName menjadi nama koleksi resource URL.
+- ODataKeyFields = SystemId menjamin ID stabil berbasis GUID.
+- DelayedInsert = true wajib untuk penanganan payload relasional.
+- Hindari logic UI (Confirm, Message, Dialog) di API Page.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Memasang dialog interaktif seperti `Confirm()` atau `Message()` di dalam trigger API Page yang menyebabkan request HTTP hang atau error. Menggunakan field teks primary key sebagai ODataKeyFields alih-alih `SystemId`. Memakai nama field dengan spasi atau karakter khusus dalam camelCase JSON.
+:::
+
+## Latihan terkait
+
+Pola ini menjadi fondasi implementasi antarmuka pada [Capstone AL — Invoice Staging](/latihan/al/capstone-al-invoice-staging/).
+
+## Sumber resmi
+
+- [apipages](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-api-pagetype).
+- [odatakeyfields](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/properties/devenv-odatakeyfields-property).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

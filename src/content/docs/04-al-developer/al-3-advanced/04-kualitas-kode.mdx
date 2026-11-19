@@ -1,0 +1,93 @@
+---
+title: "AL-3.4 Kualitas kode dan analyzer"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 4
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Mengaktifkan dan mengonfigurasi penganalisis kode statis (CodeCop, UICop, PerTenantExtensionCop, AppSourceCop), menyusun file ruleset kustom, serta menerapkan standar kode komunitas.
+
+## Konsep singkat
+
+Compiler AL menyediakan empat penganalisis kode statis bawaan: CodeCop (kebijakan bahasa dan logika umum), UICop (standar desain halaman dan interaksi pengguna), PerTenantExtensionCop (aturan khusus ekstensi PTE), dan AppSourceCop (aturan ketat validasi backward compatibility dan registrasi AppSource).
+
+Pengembang mengontrol tingkat keparahan (severity) setiap peringatan penganalisis melalui file ruleset berbasis JSON. Aturan yang tidak relevan dapat diturunkan levelnya (menjadi Warning, Info, atau Hidden), sementara aturan krusial dapat dinaikkan menjadi Error untuk menghentikan kompilasi pipeline.
+
+> ⚠️ Verifikasi: Penganalisis AppSourceCop membutuhkan konfigurasi baseline package pada pengaturan ekstensi VS Code atau parameter compiler agar mampu mendeteksi breaking changes terhadap versi terdahulu.
+
+## Langkah di BC
+
+1. Buka konfigurasi `.vscode/settings.json` dan tambahkan daftar penganalisis pada properti `al.codeAnalyzers` (misal: `CodeCop`, `UICop`, `PerTenantExtensionCop`).
+2. Buat file ruleset khusus `AppRuleset.ruleset.json` di direktori proyek ekstensi.
+3. Tentukan aturan spesifik berdasarkan Rule ID, misalnya menaikkan peringatan field tanpa ToolTip (UICop) menjadi Error atau mengabaikan peringatan afiks tertentu pada konteks latihan internal.
+4. Tautkan file ruleset pada `settings.json` melalui properti `al.ruleSetPath`.
+5. Jalankan kompilasi proyek di VS Code (`Ctrl+Shift+B`) dan periksa daftar peringatan pada panel Problems.
+6. Terapkan konvensi penamaan standar komunitas (affix 3-4 karakter konsisten pada seluruh objek dan field kustom) serta bersihkan trigger atau variabel yang tidak digunakan.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+// Contoh file ruleset: AppRuleset.ruleset.json
+{
+    "name": "MYP Development Ruleset",
+    "description": "Aturan kualitas kode untuk ekstensi demo MYP",
+    "rules": [
+        {
+            "id": "AA0008",
+            "action": "Error",
+            "justification": "Mengharuskan tanda kurung pada pemanggilan fungsi"
+        },
+        {
+            "id": "AW0006",
+            "action": "Warning",
+            "justification": "ToolTip wajib ada pada kontrol halaman pengguna"
+        },
+        {
+            "id": "PTE0001",
+            "action": "Error",
+            "justification": "Mencegah penggunaan ID di luar jangkauan PTE yang diizinkan"
+        }
+    ]
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Aktifkan CodeCop untuk mendeteksi pelanggaran sintaks dan performa.
+- Gunakan UICop untuk memastikan kelengkapan elemen UI dan ToolTip.
+- Pasang PerTenantExtensionCop pada seluruh project kustom penyewa.
+- Gunakan AppSourceCop dan baseline package untuk validasi rilis publik.
+- Kelola pengecualian aturan melalui file ruleset terstruktur.
+- Terapkan prefix/suffix wajib untuk mencegah benturan nama simbol.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Mematikan semua analyzer saat menghadapi banyak peringatan daripada memperbaiki akar penyebab masalah, atau mengabaikan kewajiban ToolTip pada halaman pengguna.
+:::
+
+## Latihan terkait
+
+[Latihan AL7 — Testing otomatis](/latihan/al/al7-testing/).
+
+## Sumber resmi
+
+- [Using the Code Analysis Tool](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-using-code-analysis-tool).
+- [Ruleset File Reference](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-rule-set-syntax-for-code-analysis-tools).
+- [AppSourceCop Analyzer](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/analyzers/appsourcecop).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.

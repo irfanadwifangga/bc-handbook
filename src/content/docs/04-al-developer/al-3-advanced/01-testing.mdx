@@ -1,0 +1,118 @@
+---
+title: "AL-3.1 Testing otomatis dan AL Test Tool"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+level: Expert
+sidebar:
+  order: 1
+---
+
+import CheatBox from '../../../../components/CheatBox.astro';
+
+## Tujuan belajar
+
+Menyusun test codeunit terisolasi dengan struktur Given-When-Then, menguji UI dengan TestPage dan HandlerFunctions, serta mengeksekusi rangkaian pengujian pada AL Test Tool.
+
+## Konsep singkat
+
+Pengujian otomatis di Business Central dibangun menggunakan codeunit khusus bertipe `Subtype = Test`. Setiap prosedur pengujian ditandai atribut `[Test]`. Untuk mensimulasikan interaksi pengguna tanpa memblokir runner otomatis, Business Central menyediakan TestPage dan handler khusus (seperti `[ConfirmHandler]`, `[MessageHandler]`, atau `[ModalPageHandler]`).
+
+Eksekusi pengujian dijalankan melalui runner seperti AL Test Tool dengan tingkat isolasi tertentu (Codeunit atau Disabled) agar data transaksi uji di-rollback secara otomatis setelah pengujian selesai.
+
+> ⚠️ Verifikasi: Dependensi library pengujian standar (seperti `Library - Sales`, `Library - Assert`, `Library - Random`) memerlukan referensi aplikasi pengujian resmi Microsoft (Test Runner / Tests-TestLibraries) pada manifest `app.json` lingkungan target.
+
+## Langkah di BC
+
+1. Tambahkan dependensi test runner dan test library Microsoft pada manifest `app.json` jika menggunakan fungsi pustaka pembantu standar.
+2. Buat objek Codeunit baru dengan atribut `Subtype = Test` dan properti `TestIsolation = Codeunit` pada test runner terkait untuk mencegah polusi data uji ke basis data.
+3. Tulis metode pengujian beranotasi `[Test]` dengan urutan logika jelas: Given (persiapan data dummy), When (eksekusi aksi bisnis), dan Then (verifikasi assertion hasil).
+4. Gunakan variabel `TestPage` saat menguji alur halaman atau interaksi form, serta delegasikan pesan dialog modal menggunakan atribut `[HandlerFunctions('NamaHandler')]`.
+5. Buka halaman AL Test Tool di Business Central (Page 130451 atau Test Runner suite), muat suite pengujian ekstensi MYP, lalu jalankan seluruh prosedur uji.
+6. Analisis laporan kegagalan: verifikasi apakah pesan kesalahan assertion mencerminkan kondisi bisnis aktual sebelum mengubah kode produksi.
+
+:::caution[Belum dikompilasi]
+Semua snippet AL di halaman ini belum dikompilasi atau dijalankan. Cocokkan nama objek/field/properti dengan symbols target, pilih ID range demo bebas konflik, lalu uji di sandbox sendiri. Setelah ada bukti, catat versi BC dan tanggal kompilasi/uji.
+:::
+
+Bahasa AL belum tersedia pada highlighter situs; contoh ditampilkan sebagai teks biasa.
+
+```text
+codeunit 50200 "MYP Customer Discount Test"
+{
+    Subtype = Test;
+    TestPermissions = Disabled;
+
+    [Test]
+    procedure TestValidDiscountApplication()
+    var
+        Customer: Record Customer;
+        DiscountAmt: Decimal;
+    begin
+        // [GIVEN] Customer aktif dengan status normal
+        Customer.Init();
+        Customer."No." := 'CUST-DEMO-01';
+        Customer.Insert();
+
+        // [WHEN] Menghitung diskon 15% untuk transaksi 1000
+        DiscountAmt := CalculateDiscount(1000, 15);
+
+        // [THEN] Diskon yang dihasilkan harus tepat 150
+        if DiscountAmt <> 150 then
+            Error('Ekspektasi diskon 150, aktual: %1', DiscountAmt);
+    end;
+
+    [Test]
+    [HandlerFunctions('ConfirmPostHandler')]
+    procedure TestPostConfirmationPrompt()
+    var
+        CustomerCard: TestPage "Customer Card";
+    begin
+        // [GIVEN] Membuka TestPage Customer Card
+        CustomerCard.OpenEdit();
+        // [WHEN & THEN] Handler menangani interaksi dialog modal
+        CustomerCard.Close();
+    end;
+
+    [ConfirmHandler]
+    procedure ConfirmPostHandler(Question: Text[1024]; var Reply: Boolean)
+    begin
+        Reply := true;
+    end;
+
+    local procedure CalculateDiscount(Amount: Decimal; Pct: Decimal): Decimal
+    begin
+        exit(Amount * (Pct / 100));
+    end;
+}
+```
+
+## Cheat box
+
+<CheatBox>
+
+- Tetapkan Subtype = Test pada codeunit pengujian.
+- Gunakan pola Given-When-Then yang konsisten.
+- Gunakan TestPage untuk simulasi alur halaman antarmuka.
+- Delegasikan interaksi modal lewat HandlerFunctions.
+- Aktifkan TestIsolation agar data uji di-rollback.
+- Catat dependensi Microsoft Test Libraries pada app.json.
+
+</CheatBox>
+
+## Kesalahan umum
+
+:::danger[Kesalahan umum]
+Membiarkan dialog konfirmasi atau pesan UI muncul tanpa handler yang menyebabkan runner pengujian macet (hung), atau menguji tanpa isolasi transaksi sehingga mencemari data operasional sandbox.
+:::
+
+## Latihan terkait
+
+[Latihan AL7 — Testing otomatis](/latihan/al/al7-testing/).
+
+## Sumber resmi
+
+- [Testing in Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-testing-application).
+- [TestPage Object](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/testpage/testpage-data-type).
+- [HandlerFunctions Attribute](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/attributes/devenv-handlerfunctions-attribute).
+
+Dokumentasi diperiksa 19 November 2026; symbols tenant, kompilasi/publish dan praktik sandbox belum dijalankan penulis.
