@@ -10,7 +10,7 @@
 - U1–U2 selesai. Perbaikan layout/TOC di commit `34fd767` dan urutan latihan di `91b7022`. U3 belum dimulai; sebagian navigasi terkait U4 sudah disesuaikan, tetapi U4 belum ditutup. U5–U6 belum selesai.
 - Pilot FlowPlayer Sales dan ReferenceVideo sudah tersedia. Favicon lokal masih belum dilacak Git. Indeks Expert/latihan/cheatsheet/landing sudah diselaraskan dan ekspektasi 404 Business Analysis yang usang sudah diperbaiki.
 - Lampiran kurikulum terbaru menambah jalur AL prioritas tinggi, Fase 5.7a–5.7c, cheatsheet #17–#22, latihan AL1–AL9 dan capstone AL; semuanya masih rencana, belum dikerjakan. Fase 5.7a–5.7c, 5.8 dan 5.9 tetap terbuka.
-- Verifikasi terakhir: build 139 halaman, 3 tes Bun, 23.033 tautan internal/anchor valid tanpa target hilang. Fase 5.8 dan 5.9 tetap terbuka. Tidak ada push/deploy.
+- Verifikasi terakhir: build 140 halaman, 3 tes Bun, 23.366 tautan internal/anchor valid tanpa target hilang. Fase 5.8 selesai, Fase 5.9 (Audit final) tersisa. Tidak ada push/deploy.
 - Log di bawah bersifat historis: kalimat “belum dimulai” atau “menunggu persetujuan” pada entri lama merujuk waktu entri tersebut, bukan status terkini.
 
 ## Fase Pembangunan Situs
@@ -26,10 +26,19 @@
 - [x] **5.7a** — AL-1 Fundamentals + cheatsheet #17–#18 + latihan AL1–AL3
 - [x] **5.7b** — AL-2 Intermediate + cheatsheet #19–#20 + latihan AL4–AL6
 - [x] **5.7c** — AL-3 Advanced + cheatsheet #21–#22 + latihan AL7–AL9 + capstone AL
-- [ ] **5.8** — Glosarium, referensi, release checklist, progress tracker component
+- [x] **5.8** — Glosarium, referensi, release checklist, progress tracker component
 - [ ] **5.9** — Audit: link rusak, `last_verified`, data rahasia, uji mobile
 
 ## Log
+
+### Hasil Fase 5.8 — 2026-11-19
+
+- Glosarium lengkap (`src/content/docs/glosarium.md`) selesai: tabel istilah Bahasa Indonesia ↔ English untuk Finance, Penjualan, Pembelian, Persediaan, RapidStart, dan Pengembang AL.
+- Referensi resmi (`src/content/docs/referensi.md`) selesai: tautan ke dokumentasi Microsoft Learn, repositori GitHub (BCTech, AL-Go, ALAppExtensions), Study Guide MB-800/MB-820, dan roadmap AI at Work.
+- Cheatsheet #12 Release & Upgrade Checklist (`src/content/docs/cheatsheets/12-release-upgrade-checklist.mdx`) selesai dan terdaftar pada indeks cheatsheet.
+- Komponen `src/components/ProgressChecklist.astro` selesai: pelacak progres interaktif berbasis localStorage dengan touch target >= 44px, penghitung persentase/rasio selesai, dan terpasang pada halaman landing (`index.mdx`).
+- Verifikasi nyata: `bun run build` sukses 140 halaman statis, Pagefind index selesai; `bun test` 3 lulus; audit 23.366 tautan internal/anchor valid tanpa tautan rusak.
+- Commit message: `feat: glossary, references, progress tracker`.
 
 ### Hasil Fase 5.7b & 5.7c — 2026-11-19
 

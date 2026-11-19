@@ -44,6 +44,10 @@ Dua puluh dua cheatsheet tersedia: tujuh ringkasan harian, API/OData, AL (dasar 
 
 [Buka cheatsheet](./10-al/) — ringkasan extension/API, status Belum dikompilasi; contoh entity demo pada [modul 3B.6](/03-expert/integrasi-api/06-custom-api/).
 
+## Release & Upgrade Checklist
+
+[Buka cheatsheet](./12-release-upgrade-checklist/) — checklist upgrade wave 1/2, fitur mandatory, dan uji kompatibilitas.
+
 ## Configuration Worksheet / RapidStart
 
 [Buka cheatsheet](./14-configuration-worksheet/) — alur inisialisasi company baru; latihan terkait [M9](/latihan/intermediate/m9-rapidstart/).

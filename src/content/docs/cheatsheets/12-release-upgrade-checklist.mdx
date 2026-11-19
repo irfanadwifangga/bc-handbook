@@ -1,0 +1,51 @@
+---
+title: "Cheatsheet 12: Release & Upgrade Checklist"
+bc_version_verified: "29.x"
+last_verified: "2026-11-19"
+sidebar:
+  order: 12
+---
+
+Panduan ringkas persiapan dan eksekusi upgrade dua siklus tahunan (*Release Wave 1* April & *Release Wave 2* Oktober) untuk Business Analyst, Administrator, dan Pengembang.
+
+## Jadwal & Tahapan Siklus Upgrade
+
+| Fase Waktu | Fokus Kegiatan | Titik Verifikasi Kritis |
+|---|---|---|
+| **T-60 Hari** (Pra-Rilis) | Analisis Roadmap & Preview | Baca *What's New* dan daftar fitur yang dihentikan (*Deprecated Platform Features*). |
+| **T-30 Hari** (Uji Sandbox) | Deployment Preview Sandbox | Buat sandbox tipe Preview di Admin Center; unduh symbols versi wave baru. |
+| **T-14 Hari** (Uji Ekstensi) | Validasi PTE & AppSource | Jalankan regresi otomatis via AL Test Tool; pastikan tidak ada peringatan compiler pemblokir. |
+| **T-0 Hari** (Jendela Rilis) | Penjadwalan Upgrade | Tentukan *Update Window* di Business Central Admin Center di luar jam operasional. |
+| **T+7 Hari** (Pasca-Rilis) | Monitoring & Pembersihan | Periksa telemetri Application Insights, pantau Job Queue, dan aktifkan fitur mandatori. |
+
+## Checklist Pemeriksaan Teknis & Fungsional
+
+| Kategori | Tindakan yang Harus Dilakukan | Penanggung Jawab |
+|---|---|---|
+| **Feature Management** | Tinjau halaman *Feature Management*; aktifkan fitur baru yang akan menjadi mandatori pada wave berikutnya. | Business Analyst |
+| **Obsolete Code & Fields** | Telusuri peringatan kompilasi `AL0432` (*ObsoleteState = Pending*). Alihkan logika ke API pengganti. | AL Developer |
+| **AppSource Dependencies** | Pastikan seluruh vendor aplikasi pihak ketiga telah merilis versi kompatibel wave baru di AppSource. | Administrator |
+| **Jalur Integrasi API** | Uji endpoint REST v2.0 dan custom API; pastikan sistem eksternal siap menangani pembatasan OData/SOAP. | Integrator / BA |
+| **Job Queue & Background** | Pastikan antrean Job Queue dijeda (*On Hold*) saat upgrade dan diaktifkan kembali setelah verifikasi. | Administrator |
+| **Jejak Telemetri** | Pantau sinyal KQL `traces` pada Application Insights untuk mendeteksi lonjakan error runtime baru. | DevOps / Lead |
+
+## Matriks Penanganan Obsolete State
+
+| Status Obsolete | Makna Teknis | Tindakan Tim |
+|---|---|---|
+| **Pending** | Fitur/field ditandai usang namun masih dapat dieksekusi normal. | Buat rencana refactoring; jangan gunakan pada pengembangan baru. |
+| **Removed** | Objek atau prosedur telah dihapus permanen oleh platform. | Wajib diganti sebelum compile ulang; kompilasi gagal jika masih dirujuk. |
+
+## Perintah Cepat Verifikasi Telemetri KQL
+
+```text
+// Cari error eksekusi AL setelah upgrade pada Application Insights
+traces
+| where timestamp > ago(24h)
+| where customDimensions.alObjectId != ""
+| where customDimensions.eventId == "AL0000E26" or severityLevel >= 3
+| project timestamp, customDimensions.alObjectName, message
+| order by timestamp desc
+```
+
+Sumber resmi: [Microsoft Lifecycle Policy for Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform). Dokumentasi diverifikasi untuk versi 29.x.

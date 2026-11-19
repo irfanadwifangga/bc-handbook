@@ -1,0 +1,419 @@
+---
+// ProgressChecklist.astro - Pelacak progres belajar interaktif dengan localStorage
+---
+
+<div class="bc-progress-tracker" id="bc-progress-tracker">
+  <div class="bc-tracker-header">
+    <div class="bc-tracker-summary">
+      <span class="bc-tracker-title">Progres Pembelajaran Anda</span>
+      <span class="bc-tracker-counter" id="bc-overall-counter">0/35 selesai (0%)</span>
+    </div>
+    <div class="bc-tracker-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="bc-progress-bar-wrap">
+      <div class="bc-tracker-bar-fill" id="bc-overall-fill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <div class="bc-tracker-sections">
+    <!-- Level 0 -->
+    <details class="bc-tracker-group" open>
+      <summary class="bc-tracker-group-header">
+        <span class="bc-tracker-group-title">Level 0: Orientasi</span>
+        <span class="bc-tracker-group-badge" id="badge-level-0">0/1</span>
+      </summary>
+      <div class="bc-tracker-items">
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="o0" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>O0:</strong> Membuka sandbox, ganti company, navigasi Tell Me, dan verifikasi Role Center</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- Level 1 -->
+    <details class="bc-tracker-group" open>
+      <summary class="bc-tracker-group-header">
+        <span class="bc-tracker-group-title">Level 1: Basic (Operasional Inti)</span>
+        <span class="bc-tracker-group-badge" id="badge-level-1">0/8</span>
+      </summary>
+      <div class="bc-tracker-items">
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b1" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B1:</strong> Navigasi, Tell Me, filter, dan personalisasi view</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b2" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B2:</strong> Master data Customer, Vendor, dan Item dengan templat</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b3" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B3:</strong> General Journal, posting buku besar, dan Trial Balance</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b4" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B4:</strong> Siklus Sales Order-to-Cash end-to-end</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b5" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B5:</strong> Siklus Purchasing Purchase-to-Pay end-to-end</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b6" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B6:</strong> Item Journal, Item Ledger Entries vs Value Entries</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b7" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B7:</strong> Koreksi transaksi, Cancel/Correct Invoice, dan Credit Memo</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="b8" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>B8:</strong> Laporan standar, Aged Receivables/Payables, dan ekspor Excel</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- Level 2 -->
+    <details class="bc-tracker-group">
+      <summary class="bc-tracker-group-header">
+        <span class="bc-tracker-group-title">Level 2: Intermediate (Konfigurasi & Otomasi)</span>
+        <span class="bc-tracker-group-badge" id="badge-level-2">0/10</span>
+      </summary>
+      <div class="bc-tracker-items">
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m1" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M1:</strong> Debugging dan perbaikan General Posting Setup</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m2" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M2:</strong> Setup PPN/VAT Posting Setup dan verifikasi akun</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m3" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M3:</strong> Dimensi analisis (Department, Project) dan pembatasan</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m4" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M4:</strong> Approval Workflow untuk pesanan pembelian</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m5" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M5:</strong> Rekonsiliasi Bank otomatis dengan rekening koran</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m6" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M6:</strong> Fixed Assets, depreciation book, dan posting penyusutan</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m7" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M7:</strong> Migrasi data via Edit in Excel</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m8" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M8:</strong> Konfigurasi Permission Set least-privilege</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m9" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M9:</strong> RapidStart Configuration Worksheet, Package & Apply</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="m10" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>M10:</strong> Pengelolaan Job Queue background dan error recovery</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- Level 3 -->
+    <details class="bc-tracker-group">
+      <summary class="bc-tracker-group-header">
+        <span class="bc-tracker-group-title">Level 3: Expert (BA, Integrasi API & Capstone)</span>
+        <span class="bc-tracker-group-badge" id="badge-level-3">0/7</span>
+      </summary>
+      <div class="bc-tracker-items">
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e1" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E1:</strong> Process mapping as-is/to-be dan identifikasi pain point</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e2" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E2:</strong> Matriks analisis Gap-Fit untuk migrasi spreadsheet ke BC</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e3" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E3:</strong> Penyusunan rencana dan skenario eksekusi UAT</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e4" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E4:</strong> Konsumsi API v2.0 via OAuth S2S (GET, filtering, paging)</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e5" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E5:</strong> Pembuatan invoice via API, ETag PATCH, dan posting</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="e6" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>E6:</strong> Pembuatan dan pengujian Custom API Page</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="capstone-ba" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>Capstone:</strong> Proyek "Spreadsheet-to-BC" (BRD, Gap-Fit, Setup & API Import)</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- AL Developer -->
+    <details class="bc-tracker-group">
+      <summary class="bc-tracker-group-header">
+        <span class="bc-tracker-group-title">Jalur AL Developer (AL-1 → AL-3 & Capstone)</span>
+        <span class="bc-tracker-group-badge" id="badge-level-al">0/10</span>
+      </summary>
+      <div class="bc-tracker-items">
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al1" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL1:</strong> Hello extension (tableext + pageext + manifest v29)</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al2" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL2:</strong> Akses data, filtering, SetLoadFields, dan CalcSums</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al3" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL3:</strong> Single-record setup dan dokumen bernomor kustom</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al4" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL4:</strong> EventSubscriber dengan validasi ErrorInfo</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al5" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL5:</strong> Report dataset dengan Word layout PDF</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al6" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL6:</strong> HTTP Client eksternal dan parsing JSON</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al7" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL7:</strong> Test codeunit otomatis dengan AL Test Tool</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al8" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL8:</strong> Deprecation lifecycle dan Upgrade codeunit</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="al9" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>AL9:</strong> Pipeline CI/CD AL-Go for GitHub</span>
+        </label>
+        <label class="bc-tracker-item">
+          <input type="checkbox" data-id="capstone-al" class="bc-tracker-input" />
+          <span class="bc-tracker-text"><strong>Capstone AL:</strong> BC-side Invoice Staging & automated processing</span>
+        </label>
+      </div>
+    </details>
+  </div>
+
+  <div class="bc-tracker-footer">
+    <button type="button" class="bc-tracker-reset-btn" id="bc-tracker-reset">Reset Progres Lokal</button>
+  </div>
+</div>
+
+<style>
+  .bc-progress-tracker {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    background-color: var(--sl-color-gray-6);
+    border-radius: 8px;
+  }
+  .bc-tracker-header {
+    margin-bottom: 1.25rem;
+  }
+  .bc-tracker-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .bc-tracker-title {
+    font-weight: 600;
+  }
+  .bc-tracker-counter {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+  }
+  .bc-tracker-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: var(--sl-color-gray-5);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bc-tracker-bar-fill {
+    height: 100%;
+    background-color: var(--sl-color-text-accent);
+    transition: width 0.3s ease;
+  }
+  .bc-tracker-group {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    background-color: var(--sl-color-bg);
+  }
+  .bc-tracker-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    user-select: none;
+    min-height: 44px;
+  }
+  .bc-tracker-group-badge {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+    background-color: var(--sl-color-gray-5);
+    border-radius: 12px;
+  }
+  .bc-tracker-items {
+    padding: 0.5rem 1rem 0.75rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .bc-tracker-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.35rem 0;
+    cursor: pointer;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .bc-tracker-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.2rem;
+    cursor: pointer;
+    accent-color: var(--sl-color-text-accent);
+    flex-shrink: 0;
+  }
+  .bc-tracker-text {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .bc-tracker-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+  .bc-tracker-reset-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    background: transparent;
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-gray-3);
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .bc-tracker-reset-btn:hover {
+    color: var(--sl-color-text);
+    border-color: var(--sl-color-gray-4);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const STORAGE_KEY = 'bc_handbook_progress_v1';
+    const totalItems = 35;
+
+    function getSavedProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveProgress(data) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (e) {
+        // fallback jika localStorage diblokir
+      }
+    }
+
+    function updateUI() {
+      const data = getSavedProgress();
+      const checkboxes = document.querySelectorAll('.bc-tracker-input');
+      let completedCount = 0;
+
+      const groupCounts = {
+        '0': { total: 1, checked: 0 },
+        '1': { total: 8, checked: 0 },
+        '2': { total: 10, checked: 0 },
+        '3': { total: 7, checked: 0 },
+        'al': { total: 10, checked: 0 }
+      };
+
+      checkboxes.forEach((cb) => {
+        const id = cb.getAttribute('data-id');
+        const isChecked = !!data[id];
+        cb.checked = isChecked;
+
+        if (isChecked) {
+          completedCount++;
+          if (id.startsWith('o')) groupCounts['0'].checked++;
+          else if (id.startsWith('b')) groupCounts['1'].checked++;
+          else if (id.startsWith('m')) groupCounts['2'].checked++;
+          else if (id.startsWith('e') || id === 'capstone-ba') groupCounts['3'].checked++;
+          else if (id.startsWith('al') || id === 'capstone-al') groupCounts['al'].checked++;
+        }
+      });
+
+      const pct = Math.round((completedCount / totalItems) * 100);
+      const overallCounter = document.getElementById('bc-overall-counter');
+      const overallFill = document.getElementById('bc-overall-fill');
+      const progressWrap = document.getElementById('bc-progress-bar-wrap');
+
+      if (overallCounter) overallCounter.textContent = `${completedCount}/${totalItems} selesai (${pct}%)`;
+      if (overallFill) overallFill.style.width = `${pct}%`;
+      if (progressWrap) progressWrap.setAttribute('aria-valuenow', String(pct));
+
+      for (const [key, val] of Object.entries(groupCounts)) {
+        const badge = document.getElementById(`badge-level-${key}`);
+        if (badge) badge.textContent = `${val.checked}/${val.total}`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+
+      document.querySelectorAll('.bc-tracker-input').forEach((cb) => {
+        cb.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-id');
+          const data = getSavedProgress();
+          data[id] = e.target.checked;
+          saveProgress(data);
+          updateUI();
+        });
+      });
+
+      const resetBtn = document.getElementById('bc-tracker-reset');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (confirm('Apakah Anda yakin ingin mereset seluruh progres checklist lokal?')) {
+            saveProgress({});
+            updateUI();
+          }
+        });
+      }
+    });
+
+    // Inisialisasi awal bila DOMContentLoaded sudah lewat
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(updateUI, 0);
+    }
+  })();
+</script>
